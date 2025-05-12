@@ -347,6 +347,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#mkdocs" class="md-nav__link">
+    <span class="md-ellipsis">
+      mkdocs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       配置文件
@@ -413,9 +422,32 @@ systemctl start auto-cpufreq
 <li><code>git config --global credential.helper store</code>。再进行一次push/pull，
    需要密码的时候输入token，就存下来了。</li>
 </ul>
+<h2 id="mkdocs">mkdocs</h2>
+<p>用mkdocs+github pages做个人网站，学习曲线比较平，适合不太想学新语言的。
+按照github官网的教程设置个人网站，新建一个repo，然后根据mkdocs的<a href="https://www.mkdocs.org/user-guide/deploying-your-docs/" target="_blank">教
+程
+</a>
+来发布到github上。有些小改动：</p>
+<ul>
+<li>如果用miniconda装的python，有可能出现系统自带python
+找不到pip包的报错，则需要进入<code>/usr/bin/mkdocs</code>修改python路径。</li>
+<li>github上
+的默认branch现在是main，需要修正命令为<code>mkdocs gh-deploy --config-file
+&lt;path&gt;/mkdocs.yml --remote-branch main</code>。我把这个写到deploy.sh里，直接
+跑.deploy.sh。</li>
+</ul>
+<p>如果链接需要在浏览器开新tab，在链接结尾加上<code>{:target="_blank"}</code>。完整版本
+是<code>[text](example.com){:target="_blank"}</code></p>
+<p>yaml里加上</p>
+<pre><code class="language-yaml">markdown_extensions:
+  - def_list
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - attr_list
+</code></pre>
 <h2 id="_2">配置文件</h2>
 <p>.emacs.d/init.el</p>
-<pre><code>(tool-bar-mode -1)
+<pre><code class="language-lisp">(tool-bar-mode -1)
 (setq use-dialog-box t)
 (setq use-file-dialog nil)
 (setq-default frame-title-format '(&quot;%b  -  GNU Emacs&quot;))
