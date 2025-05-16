@@ -382,23 +382,28 @@
 
 <h1 id="dual-boot-arch-linux-win-11">Dual boot arch linux + win 11</h1>
 <h2 id="windowsarch-linux">基本系统安装：双启动windows和arch linux</h2>
-<p>笔记本出厂自带windows。看arch wiki看个大概理论，找youtube上最新的视频
-教程，一步步跟着就差不多了。几个注意点：</p>
+<p>笔记本出厂自带windows，保留windows的情况下加塞arch linux。官网下载安装
+用的iso，一步步跟着提示走，有问题查arch wiki就差不多了。几个注意点：</p>
 <ul>
-<li>装linux之前先在windows里登陆账户把机器关联上，确认一下账号上能找到recovery key，翻车大蓝
-   屏的时候需要用。</li>
+<li>给linux留多一点分区。以后嫌多了缩小容易，嫌小了扩展难。我建议至少留
+   个200G。如果犯了跟我一样的规划错误，可以参考<a href="../update_root_partition/">这篇</a>来修正。</li>
+<li>装linux之前先在windows里登陆账户把机器关联上，确认一下账号上能找到
+   recovery key，翻车大蓝屏的时候需要用。</li>
 <li>硬盘分区名称每台电脑不一样，注意修改</li>
 <li>fdisk操作的时候看清楚，不要手滑把windows分区格式化了</li>
 <li>纸上记下每个分区号，若干重要地方需要用</li>
-<li>启动列表用edk2-shell来配置，往linux装的启动配置里加windows。grub管上层逻辑，不管底层。</li>
+<li>启动列表用edk2-shell来配置，往linux装的启动配置里加windows。跟着<a href="https://www.youtube.com/watch?v=QTVQpvSoSIA" target="_blank">这个视
+   频</a>可以无脑抄答案。</li>
 <li>bitlocker很容易被触发，需要用recovery key来解锁进入windows。在win下面把encryption整个
    disable，可以解决一部分问题，但有时候还是莫名其妙windows的启动分区变为首选，直接跳过linux，
    需要重启进BIOS改。</li>
 </ul>
-<p>劝退点
- - 双系统下面无法让dropbox管理共享分区，因为dropbox在win上不支持ext4，在linux上只支持ext4。
-   这个本质问题是dropbox只能用native filesystem跟踪文件有没有更新，没法hack。
- - 系统启动依然没有很稳定的每次都进入linux boot menu，有时直接跳win，有时候蓝屏（bitlocker）。</p>
+<p>劝退点</p>
+<ul>
+<li>双系统下面无法让dropbox管理共享分区，因为dropbox在win上不支持ext4，在linux上只支持ext4。
+   这个本质问题是dropbox只能用native filesystem跟踪文件有没有更新，没法hack。</li>
+<li>系统启动依然没有很稳定地每次都进入linux boot menu，有时直接跳win，有时候蓝屏（bitlocker）。</li>
+</ul>
 <h2 id="_1">基本工具</h2>
 <ul>
 <li>tree: 在终端进行树状文件浏览，辅助ls</li>
@@ -415,6 +420,18 @@
 systemctl enable auto-cpufreq
 systemctl start auto-cpufreq
 </code></pre>
+<ul>
+<li>darktable：照片编辑和管理。据说用过之后就不想用lightroom了</li>
+<li>RawTherapee：也是照片编辑和管理，各有优点。</li>
+<li>krita：替代photoshop</li>
+<li>imagemagick；一系列处理图片的命令行。虽然听着反直觉，但是有些小东西
+   还挺方便，比如terminal直接看图<code>display a.jpg</code>。批量给图片加边框也很
+   方便。</li>
+<li>yazi：鸭子。终端模式的文件管理器。</li>
+<li>kwin：kde自带，适合只想用平铺式窗口管理的一部分功能，不想全盘切换的
+   人。bspwm是另一个选项，也很多人用，就是需要多折腾一些。</li>
+<li>conky：轻量级、可以显示在桌面上的系统监视器，有海量的配置可以直接抄。</li>
+</ul>
 <h2 id="git">配置git</h2>
 <ul>
 <li>首先需要拿到access token。进入Settings -&gt; Developer Settings -&gt;
@@ -444,6 +461,13 @@ systemctl start auto-cpufreq
   - pymdownx.tasklist:
       custom_checkbox: true
   - attr_list
+
+plugins:
+  - search
+  - mkdocs-jupyter:
+      execute: false
+      include_requirejs: true
+      custom_mathjax_url: &quot;https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS_CHTML-full,Safe&quot;
 </code></pre>
 <h2 id="_2">配置文件</h2>
 <p>.emacs.d/init.el</p>

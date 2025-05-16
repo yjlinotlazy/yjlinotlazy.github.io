@@ -1,5 +1,10 @@
-duel boot arch linux + win 11
-看arch wiki看个大概理论，找youtube上最新的视频教程，一步步跟着就差不多了。几个注意点：
+# Dual boot arch linux + win 11
+
+## 基本系统安装：双启动windows和arch linux
+
+笔记本出厂自带windows。看arch wiki看个大概理论，找youtube上最新的视频
+教程，一步步跟着就差不多了。几个注意点：
+
  - 装linux之前先在windows里登陆账户把机器关联上，确认一下账号上能找到recovery key，翻车大蓝
    屏的时候需要用。
  - 硬盘分区名称每台电脑不一样，注意修改
@@ -16,24 +21,69 @@ duel boot arch linux + win 11
  - 系统启动依然没有很稳定的每次都进入linux boot menu，有时直接跳win，有时候蓝屏（bitlocker）。
 
 
-基本工具
- - tree: browse files recursively
- - nano: terminal editor
- - less: view files in terminal
+## 基本工具
+
+ - tree: 在终端进行树状文件浏览，辅助ls
+ - nano: 对于不喜欢vim的人来说，这个在终端用很合适，我只要有terminal就
+   会配置一个
+ - less: 预览文件。arch linux连这个都不预装是我没想到的。。
  - emacs: 这几年emacs热度骤降，市场份额比vim低一个数量级，但org mode还是香。不想折腾的可以用下
    面给的基本配置。
  - tilix: 可以平铺窗口的终端
  - code: VS code的linux版
-
-据说是省电小助手
+ - auto-cpufreq: 据说是省电小助手
 ```
 sudo pacman -S auto-cpufreq
 systemctl enable auto-cpufreq
 systemctl start auto-cpufreq
 ```
 
-.emacs.d/init.el
+## 配置git
+
+ - 首先需要拿到access token。进入Settings -> Developer Settings ->
+   Personal access tokens。我选择的是Personal access tokens (classic)
+ - `git config --global credential.helper store`。再进行一次push/pull，
+   需要密码的时候输入token，就存下来了。
+
+## mkdocs
+
+用mkdocs+github pages做个人网站，学习曲线比较平，适合不太想学新语言的。
+按照github官网的教程设置个人网站，新建一个repo，然后根据mkdocs的[教
+程
+](https://www.mkdocs.org/user-guide/deploying-your-docs/){:target="_blank"}
+来发布到github上。有些小改动：
+
+ - 如果用miniconda装的python，有可能出现系统自带python
+找不到pip包的报错，则需要进入`/usr/bin/mkdocs`修改python路径。
+ - github上
+的默认branch现在是main，需要修正命令为`mkdocs gh-deploy --config-file
+<path>/mkdocs.yml --remote-branch main`。我把这个写到deploy.sh里，直接
+跑.deploy.sh。
+
+如果链接需要在浏览器开新tab，在链接结尾加上`{:target="_blank"}`。完整版本
+是`[text](example.com){:target="_blank"}`
+
+yaml里加上
+
+```yaml
+markdown_extensions:
+  - def_list
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - attr_list
+
+plugins:
+  - search
+  - mkdocs-jupyter:
+      execute: false
+      include_requirejs: true
+      custom_mathjax_url: "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS_CHTML-full,Safe"
 ```
+
+## 配置文件
+
+.emacs.d/init.el
+```lisp
 (tool-bar-mode -1)
 (setq use-dialog-box t)
 (setq use-file-dialog nil)

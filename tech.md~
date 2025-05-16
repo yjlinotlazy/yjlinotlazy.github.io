@@ -1,0 +1,14 @@
+# Tech notes 技术笔记
+
+## Machine Learning / Data Science From Scratch
+
+Most notebooks are available in [this github repo](https://github.com/yjlinotlazy/datascience_watersplash/tree/master/wooden_wheels){:target="_blank"}.
+
+ * [Genetic Algorithm - an optimization method inspired by evolution](tech/ml/genetic_algorithm.ipynb)
+ * [Linear Regression](tech/ml/linear_regression.ipynb)
+ * [Random Forest](tech/ml/random_forest.ipynb)
+ * [Basic Neural Network](tech/ml/basic_neural_net.ipynb)
+ 
+## Misc 其它
+ * [Arch Linux + windows 11 双启动](tech/archlinux_win.md)
+ * [从零开始做个人网站，一个失败的项目回顾](tech/website_from_scratch.md)
