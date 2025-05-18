@@ -387,6 +387,8 @@
 <ul>
 <li>给linux留多一点分区。以后嫌多了缩小容易，嫌小了扩展难。我建议至少留
    个200G。如果犯了跟我一样的规划错误，可以参考<a href="../update_root_partition/">这篇</a>来修正。</li>
+<li>给/boot也多留点。/boot是fat32，我至今没找到安全resize的办法。网上有
+   些地方推荐的512只能说勉强够用，建议留干脆留几个G。</li>
 <li>装linux之前先在windows里登陆账户把机器关联上，确认一下账号上能找到
    recovery key，翻车大蓝屏的时候需要用。</li>
 <li>硬盘分区名称每台电脑不一样，注意修改</li>
@@ -397,6 +399,14 @@
 <li>bitlocker很容易被触发，需要用recovery key来解锁进入windows。在win下面把encryption整个
    disable，可以解决一部分问题，但有时候还是莫名其妙windows的启动分区变为首选，直接跳过linux，
    需要重启进BIOS改。</li>
+<li>睁眼睡觉的问题：默认行为的休眠是假休眠，电池掉的飞快，醒来机器也是
+   热的。需要如下修改：<ul>
+<li><code>cat /sys/power/mem_sleep</code>。出来的结果应该是<code>[s2idle] deep</code>，说明
+ 目前是浅层睡眠s2ide模式，但是支持休眠deep模式。</li>
+<li><code>echo deep | sudo tee /sys/power/mem_sleep</code>。再次查看mem_sleep，
+ 出来的结果就应该是<code>s2idle [deep]</code>了。</li>
+</ul>
+</li>
 </ul>
 <p>劝退点</p>
 <ul>

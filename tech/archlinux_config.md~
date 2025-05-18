@@ -1,5 +1,24 @@
 # 小霸王机器学习机配置
 
+初衷是配一个具备一些可定制功能，又容易上手的系统用来学习机器学习。试过
+hyprland,bspwm都被直接菜鸟劝退。KDE plasma出厂可用，图形界面点鼠标就能
+实现不少花里胡哨的配置，所以作为基本的傻瓜型窗口管理器很合格。另一个选
+择是xfce，不过我想试点新玩具，而xfce曾经是我的主力。
+
+我的下一组要求是，在不放弃鼠标操作的条件下，有平铺式窗口管理和键盘操作
+的选项。plasma自带的kwin就能满足，依靠几个快捷键来把选定窗口放到事先设
+定好的平铺格子里。另外emacs, tilix本身就带平铺功能，不依赖于窗口管理器。
+
+下一个要求是，看见别人有漂亮的小窗口部件，也想抄一个。conky配置失败，
+发现eww是当红选择，也有很多作业抄。我看上了[这个github
+repo](github/bspwm-dots-2.0/Configs/bspwm/){:target="_blank"}的配置。
+这个repo是eww+bspwm的组合，效果图非常漂亮，但我需要的只有eww，所以把
+autostart里不相关的部分删掉，并让kde的autostart跑这个脚本。另一个需要
+改动的是eww的样式，因为跟当前显示器相关，直接抄的作业不一定适合。我改
+了边界留白。其中`:y "0px"`删掉顶部留白，`:distance "50px"`使得bar和下
+面窗口之间正好有一点空隙。在以下这样的段落里改：
+
+```
 ;; Central bar 
 (defwindow bar_center
   :geometry 
@@ -14,6 +33,9 @@
     (struts 
       :distance "50px" 
       :side "top")
-  :windowtype "dock"
-  :wm-ignore "false"
-  (widgets_center))
+...
+```
+
+最终效果，香蕉是鼠标指针
+
+![img](screenshot1.png)
