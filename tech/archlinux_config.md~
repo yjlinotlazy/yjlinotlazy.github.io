@@ -1,5 +1,7 @@
 # 小霸王机器学习机配置
 
+## KDE(自带kwin)
+
 初衷是配一个具备一些可定制功能，又容易上手的系统用来学习机器学习。试过
 hyprland,bspwm都被直接菜鸟劝退。KDE plasma出厂可用，图形界面点鼠标就能
 实现不少花里胡哨的配置，所以作为基本的傻瓜型窗口管理器很合格。另一个选
@@ -8,6 +10,8 @@ hyprland,bspwm都被直接菜鸟劝退。KDE plasma出厂可用，图形界面�
 我的下一组要求是，在不放弃鼠标操作的条件下，有平铺式窗口管理和键盘操作
 的选项。plasma自带的kwin就能满足，依靠几个快捷键来把选定窗口放到事先设
 定好的平铺格子里。另外emacs, tilix本身就带平铺功能，不依赖于窗口管理器。
+
+## eww+polybar
 
 下一个要求是，看见别人有漂亮的小窗口部件，也想抄一个。conky配置失败，
 发现eww是当红选择，也有很多作业抄。我看上了[这个github
@@ -38,4 +42,48 @@ autostart里不相关的部分删掉，并让kde的autostart跑这个脚本。�
 
 最终效果，香蕉是鼠标指针
 
-![img](screenshot1.png)
+![img](screenshot.png)
+
+## 背景图片
+
+用的是SDDM显示管理器，但是基本原理和操作应该是共通的。
+
+首先，重要路径是`/usr/share/sddm/themes/breeze`，其中的breeze按需替换
+为主题名字。这个文件夹下有两种配置文件，`theme.conf`和
+`theme.conf.user`。背景图片由`background=<path>`来制定。不确定的话就都
+改。这个path貌似还不能是特定用户下的`/home/<username>`里，所以我选择保
+留原本的图片路径来覆盖。
+
+lock screen的默认背景路径在哪个config里写的，我愣是没找到，不过可以在
+系统设置Screen Locking里把图片路径改成自己的。
+
+虽然依靠系统设置可以改背景，不过不能实现这个蛋疼需求：随机切换背景，达
+成每次休眠/开机/登出后都有惊喜。我的思路是，每次登出的时候跑一个script，
+随机复制一个图片替换掉conf里写死的图片。为了保证权限，我把这个图片改成
+了开放权限：`sudo chmod a+w wallpaper.jpg`这样的。
+
+总结下来，我需要让一个script随机修改两个图片：
+```
+/usr/share/sddm/themes/sequoia_2/sddm.jpg
+/home/$USER/.config/wallpaper/lock.jpg
+```
+
+以下这样就可以了，存为logout.sh，改为可执行`chmod +x logout.sh`，在系
+统设置，autostart里，加入登出时运行脚本即可。
+
+```
+#!/bin/bash
+
+lock=$(ls /home/yli/.config/wallpaper/candidates | shuf -n 1)
+sddm=$(ls /home/yli/.config/wallpaper/candidates | shuf -n 1)
+
+cp $sddm /usr/share/sddm/themes/sequoia_2/sddm.jpg
+cp $lock /home/yli/.config/wallpaper/lock.jpg
+```
+
+插播：快速改图片格式可以用imageMagick，例子：
+
+```
+magick sample.jpg sample.png
+display sample.png # 确认成功
+```

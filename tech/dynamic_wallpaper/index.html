@@ -16,7 +16,7 @@
     
     
       
-        <title>Dual boot arch linux + win 11 - 存盘强迫症</title>
+        <title>动态登陆背景，锁屏背景图 - 存盘强迫症</title>
       
     
     
@@ -58,7 +58,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#dual-boot-arch-linux-win-11" class="md-skip">
+        <a href="#_1" class="md-skip">
           Skip to content
         </a>
       
@@ -94,7 +94,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Dual boot arch linux + win 11
+              动态登陆背景，锁屏背景图
             
           </span>
         </div>
@@ -313,50 +313,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#windowsarch-linux" class="md-nav__link">
-    <span class="md-ellipsis">
-      基本系统安装：双启动windows和arch linux
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      基本工具
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#git" class="md-nav__link">
-    <span class="md-ellipsis">
-      配置git
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      配置文件
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -371,101 +327,39 @@
 
 
 
-<h1 id="dual-boot-arch-linux-win-11">Dual boot arch linux + win 11</h1>
-<h2 id="windowsarch-linux">基本系统安装：双启动windows和arch linux</h2>
-<p>笔记本出厂自带windows，保留windows的情况下加塞arch linux。官网下载安装
-用的iso，一步步跟着提示走，有问题查arch wiki就差不多了。几个注意点：</p>
-<ul>
-<li>给linux留多一点分区。以后嫌多了缩小容易，嫌小了扩展难。我建议至少留
-   个200G。如果犯了跟我一样的规划错误，可以参考<a href="../update_root_partition/">这篇</a>来修正。</li>
-<li>给/boot也多留点。/boot是fat32，我至今没找到安全resize的办法。网上有
-   些地方推荐的512只能说勉强够用，建议留干脆留几个G。</li>
-<li>装linux之前先在windows里登陆账户把机器关联上，确认一下账号上能找到
-   recovery key，翻车大蓝屏的时候需要用。</li>
-<li>硬盘分区名称每台电脑不一样，注意修改</li>
-<li>fdisk操作的时候看清楚，不要手滑把windows分区格式化了</li>
-<li>纸上记下每个分区号，若干重要地方需要用</li>
-<li>启动列表用edk2-shell来配置，往linux装的启动配置里加windows。跟着<a href="https://www.youtube.com/watch?v=QTVQpvSoSIA" target="_blank">这个视
-   频</a>可以无脑抄答案。</li>
-<li>bitlocker很容易被触发，需要用recovery key来解锁进入windows。在win下面把encryption整个
-   disable，可以解决一部分问题，但有时候还是莫名其妙windows的启动分区变为首选，直接跳过linux，
-   需要重启进BIOS改。</li>
-<li>睁眼睡觉的问题：默认行为的休眠是假休眠，电池掉的飞快，醒来机器也是
-   热的。需要如下修改：<ul>
-<li><code>cat /sys/power/mem_sleep</code>。出来的结果应该是<code>[s2idle] deep</code>，说明
- 目前是浅层睡眠s2ide模式，但是支持休眠deep模式。</li>
-<li><code>echo deep | sudo tee /sys/power/mem_sleep</code>。再次查看mem_sleep，
- 出来的结果就应该是<code>s2idle [deep]</code>了。</li>
-<li>我注意到以上文件会自己切回去，不知道为啥。如果出现这种事，就手动
-  修改<code>/etc/systmd/sleep.conf</code>，加上<code>MemorySleepMode=deep</code></li>
-</ul>
-</li>
-</ul>
-<p>劝退点</p>
-<ul>
-<li>双系统下面无法让dropbox管理共享分区，因为dropbox在win上不支持ext4，在linux上只支持ext4。
-   这个本质问题是dropbox只能用native filesystem跟踪文件有没有更新，没法hack。</li>
-<li>系统启动依然没有很稳定地每次都进入linux boot menu，有时直接跳win，有时候蓝屏（bitlocker）。</li>
-</ul>
-<h2 id="_1">基本工具</h2>
-<ul>
-<li>tree: 在终端进行树状文件浏览，辅助ls</li>
-<li>nano: 对于不喜欢vim的人来说，这个在终端用很合适，我只要有terminal就
-   会配置一个</li>
-<li>less: 预览文件。arch linux连这个都不预装是我没想到的。。</li>
-<li>emacs: 这几年emacs热度骤降，市场份额比vim低一个数量级，但org mode还是香。不想折腾的可以用下
-   面给的基本配置。</li>
-<li>tilix: 可以平铺窗口的终端</li>
-<li>code: VS code的linux版</li>
-<li>auto-cpufreq: 据说是省电小助手</li>
-</ul>
-<pre><code>sudo pacman -S auto-cpufreq
-systemctl enable auto-cpufreq
-systemctl start auto-cpufreq
+<h1 id="_1">动态登陆背景，锁屏背景图</h1>
+<p>用的是SDDM显示管理器，但是基本原理和操作应该是共通的。</p>
+<p>首先，重要路径是<code>/usr/share/sddm/themes/breeze</code>，其中的breeze按需替换
+为主题名字。这个文件夹下有两种配置文件，<code>theme.conf</code>和
+<code>theme.conf.user</code>。背景图片由<code>background=&lt;path&gt;</code>来制定。不确定的话就都
+改。这个path貌似还不能是特定用户下的<code>/home/&lt;username&gt;</code>里，所以我选择保
+留原本的图片路径来覆盖。</p>
+<p>lock screen的默认背景路径在哪个config里写的，我愣是没找到，不过可以在
+系统设置Screen Locking里把图片路径改成自己的。</p>
+<p>虽然依靠系统设置可以改背景，不过不能实现这个蛋疼需求：随机切换背景，达
+成每次休眠/开机/登出后都有惊喜。我的思路是，每次登出的时候跑一个script，
+随机复制一个图片替换掉conf里写死的图片。为了保证权限，我把这个图片改成
+了开放权限：<code>sudo chmod a+w wallpaper.jpg</code>这样的。</p>
+<p>总结下来，我需要让一个script随机修改两个图片：</p>
+<pre><code>/usr/share/sddm/themes/sequoia_2/sddm.jpg
+/home/$USER/.config/wallpaper/lock.jpg
 </code></pre>
-<ul>
-<li>darktable：照片编辑和管理。据说用过之后就不想用lightroom了</li>
-<li>RawTherapee：也是照片编辑和管理，各有优点。</li>
-<li>krita：替代photoshop</li>
-<li>imagemagick；一系列处理图片的命令行。虽然听着反直觉，但是有些小东西
-   还挺方便，比如terminal直接看图<code>display a.jpg</code>。批量给图片加边框也很
-   方便。</li>
-<li>yazi：鸭子。终端模式的文件管理器。</li>
-<li>kwin：kde自带，适合只想用平铺式窗口管理的一部分功能，不想全盘切换的
-   人。bspwm是另一个选项，也很多人用，就是需要多折腾一些。</li>
-<li>conky：轻量级、可以显示在桌面上的系统监视器，有海量的配置可以直接抄。</li>
-</ul>
-<h2 id="git">配置git</h2>
-<ul>
-<li>首先需要拿到access token。进入Settings -&gt; Developer Settings -&gt;
-   Personal access tokens。我选择的是Personal access tokens (classic)</li>
-<li><code>git config --global credential.helper store</code>。再进行一次push/pull，
-   需要密码的时候输入token，就存下来了。</li>
-</ul>
-<h2 id="_2">配置文件</h2>
-<p>.emacs.d/init.el</p>
-<pre><code class="language-lisp">(tool-bar-mode -1)
-(setq use-dialog-box t)
-(setq use-file-dialog nil)
-(setq-default frame-title-format '(&quot;%b  -  GNU Emacs&quot;))
+<p>以下这样就可以了，存为logout.sh，改为可执行<code>chmod +x logout.sh</code>，在系
+统设置，autostart里，加入登出时运行脚本即可。</p>
+<pre><code>#!/bin/bash
 
-;; Hide the startup screen
-(setq inhibit-startup-screen t)
+path=/home/yli/.config/wallpaper/candidates
 
-(setq completion-ignore-case t)
-(setq case-fold-search t)
+lock=$(ls $path | shuf -n 1)
 
-;; case insensitive search
-(setq read-file-name-completion-ignore-case t
-      read-buffer-completion-ignore-case t
-      completion-ignore-case t
-      completion-category-defaults nil
-      completion-category-overrides nil
-      completion-styles '(basic))
+sddm=$(ls $path | shuf -n 1)
 
-(add-to-list 'load-path &quot;~/.emacs.d/auto-dark/&quot;)
-(require 'auto-dark)
-(auto-dark-mode)
+cp &quot;$path/$sddm&quot; /usr/share/sddm/themes/sequoia_2/sddm.jpg
+cp &quot;$path/$lock&quot; /home/yli/.config/wallpaper/lock.jpg
+</code></pre>
+<p>插播：快速改图片格式可以用imageMagick，例子：</p>
+<pre><code>magick sample.jpg sample.png
+display sample.png # 确认成功
 </code></pre>
 
 

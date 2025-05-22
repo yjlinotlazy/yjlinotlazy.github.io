@@ -19,6 +19,14 @@
  - bitlocker很容易被触发，需要用recovery key来解锁进入windows。在win下面把encryption整个
    disable，可以解决一部分问题，但有时候还是莫名其妙windows的启动分区变为首选，直接跳过linux，
    需要重启进BIOS改。
+ - 睁眼睡觉的问题：默认行为的休眠是假休眠，电池掉的飞快，醒来机器也是
+   热的。需要如下修改：
+    - `cat /sys/power/mem_sleep`。出来的结果应该是`[s2idle] deep`，说明
+     目前是浅层睡眠s2ide模式，但是支持休眠deep模式。
+    - `echo deep | sudo tee /sys/power/mem_sleep`。再次查看mem_sleep，
+     出来的结果就应该是`s2idle [deep]`了。
+    - 我注意到以上文件会自己切回去，不知道为啥。如果出现这种事，就手动
+      修改`/etc/systmd/sleep.conf`，加上`MemorySleepMode=deep`
 
 劝退点
 
