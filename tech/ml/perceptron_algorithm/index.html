@@ -1154,6 +1154,8 @@ plt.show()</div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="add-training-methods-to-the-perceptron">Add training methods to the perceptron<a class="anchor-link" href="#add-training-methods-to-the-perceptron">¶</a></h2><p>To improve the perceptron, we want it to adjust its weights while going through training samples one by one. We need to add a learning rate to determine how fast we go with gradient descent.</p>
+<p>To do gradient descent, we first calculate the difference between predicted and expected classification. This can only be 0, -1, or 1 and essentially means a direction rather than a magnitude. The magnitude is determined by x itself, tuned by the learning rate.</p>
+<p>To gain an intuition, suppose y=1 and prediction=0, this means the weighted sum is below the activation threshold. w_i needs to be bigger whenever x_i is positive and smaller whenever x_i is negative. So if we set the error term as y_true - y_pred, then we want to move towards the direction of this term.</p>
 </div>
 </div>
 </div>
