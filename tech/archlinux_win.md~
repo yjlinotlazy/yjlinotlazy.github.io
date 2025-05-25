@@ -69,41 +69,6 @@ systemctl start auto-cpufreq
  - `git config --global credential.helper store`。再进行一次push/pull，
    需要密码的时候输入token，就存下来了。
 
-## mkdocs
-
-用mkdocs+github pages做个人网站，学习曲线比较平，适合不太想学新语言的。
-按照github官网的教程设置个人网站，新建一个repo，然后根据mkdocs的[教
-程
-](https://www.mkdocs.org/user-guide/deploying-your-docs/){:target="_blank"}
-来发布到github上。有些小改动：
-
- - 如果用miniconda装的python，有可能出现系统自带python
-找不到pip包的报错，则需要进入`/usr/bin/mkdocs`修改python路径。
- - github上
-的默认branch现在是main，需要修正命令为`mkdocs gh-deploy --config-file
-<path>/mkdocs.yml --remote-branch main`。我把这个写到deploy.sh里，直接
-跑.deploy.sh。
-
-如果链接需要在浏览器开新tab，在链接结尾加上`{:target="_blank"}`。完整版本
-是`[text](example.com){:target="_blank"}`
-
-yaml里加上
-
-```yaml
-markdown_extensions:
-  - def_list
-  - pymdownx.tasklist:
-      custom_checkbox: true
-  - attr_list
-
-plugins:
-  - search
-  - mkdocs-jupyter:
-      execute: false
-      include_requirejs: true
-      custom_mathjax_url: "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS_CHTML-full,Safe"
-```
-
 ## 配置文件
 
 .emacs.d/init.el

@@ -212,6 +212,28 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../projects/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Projects
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../" class="md-nav__link">
         
   
@@ -946,9 +968,6 @@ df['mod_y'] = df.base_y.apply(lambda y: y + 10 * np.random.normal())</div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="solution">Solution<a class="anchor-link" href="#solution">¶</a></h3><p>Suppose the real line is $y = ax + b$, then the sum of squared error is</p>
-<p>$$
-P\left (X_1, X_2, X_3, ..., X_n\right ) = \prod_{i=1}^{n} P\left (X_i | Par\left (X_i\right )\right )
-$$</p>
 <p>$(ax_1+b-y_1)^2 + (ax_2+b-y_2)^2... + (ax_n+b-y_n)^2$</p>
 <p>To minimize error w.r.t. $b$, take derivative w.r.t. it and set to 0:</p>
 <p>$2(ax_1+b-y_1) + 2(ax_2+b-y_2)... + 2(ax_n+b-y_n) = 0$, simplified to</p>

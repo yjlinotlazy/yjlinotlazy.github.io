@@ -16,7 +16,7 @@
     
     
       
-        <title>Update root partition 修改根分区所在硬盘或者分区 - 存盘强迫症</title>
+        <title>水彩课，2012 - 存盘强迫症</title>
       
     
     
@@ -58,7 +58,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#update-root-partition" class="md-skip">
+        <a href="#2012" class="md-skip">
           Skip to content
         </a>
       
@@ -94,7 +94,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Update root partition 修改根分区所在硬盘或者分区
+              水彩课，2012
             
           </span>
         </div>
@@ -234,7 +234,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../" class="md-nav__link">
+      <a href="../../tech/" class="md-nav__link">
         
   
   
@@ -278,7 +278,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pictures/" class="md-nav__link">
+      <a href="../" class="md-nav__link">
         
   
   
@@ -335,6 +335,86 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#417" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.17
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#424" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.24
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#58" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.8
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#515" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.15
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#521" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.21
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#65" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.5
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#612" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.12
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -349,55 +429,39 @@
 
 
 
-<h1 id="update-root-partition">Update root partition 修改根分区所在硬盘或者分区</h1>
-<p>只适用于EFI系统</p>
-<p>一般来说root分区一旦敲定就不需要改了，需要这个蛋疼操作的时候并不多，只
-有一开始硬盘分区没有规划好，或者买了新硬盘需要这么做。所以搜了很久才拼
-接出解决方案，我没有找到一篇能直接采用的，所以记录一下。</p>
-<p>我之所以需要重新挂载，是因为要把linux分区整个搬家：当初跟着教程走没过
-脑子，让linux分区跟其它分区间隔了一个EFI OS，导致无法扩展（不连续不可
-捣），大概是这样的：</p>
-<pre><code>windows 450G | shared 400G | EFI OS | linux 100G
-</code></pre>
-<p>要扩展arch linux的空间，只能干脆跟共享分区掉个个儿。此处可以用gparted
-live CD来处理，把linux全盘复制到shared的位置。新电脑shared里没东西所以
-不用备份。有一个隐患是，gparted会把旧分区的UUID复制成新分区的，得改掉。
-我选择给旧分区新生成一个UUID。</p>
-<p>空间整理好，下一步是让启动程序认得新的分区。这个需要用arch linux live
-CD。重新搞一下usb，换ISO文件。</p>
-<p>用arch linux live启动后，先做一些查看工作</p>
-<pre><code class="language-bash"># 列出所有分区，记下各自是什么盘
-fdisk -l
-
-# 列出分区的一些号，记得UUID和PARTUUID是不同的东西，分别要用
-blkid
-</code></pre>
-<p>然后把新分区和EFI OS都挂载。旧分区随意，我没有用上就忽略了</p>
-<pre><code class="language-bash"># 新root
-mkdir /mnt/new_root
-mount /dev/&lt;新分区路径&gt; /mnt/new_root
-
-# 挂载启动盘
-mkdir /mnt/new_root/boot/efi
-mount /dev/&lt;EFI OS路径&gt; /mnt/new_root/boot/efi
-</code></pre>
-<p>进入新的分区并假装它是系统盘</p>
-<pre><code class="language-bash">arch-chroot /mnt/new_root
-</code></pre>
-<p>按需修改fstab，把<code>/</code>对应的UUID修改成新分区的。这是为了进操作系统时能正确挂载。</p>
-<pre><code>nano /etc/fstab
-</code></pre>
-<p>但这一步不够，因为EFI OS还是会从旧的分区去启动系统，不认识新分区。此处
-我找到的教程都建议重新装个bootloader比如grub, systemd-boot。但是EFI OS
-本身就足够作为bootloader，本着精简的arch(btw)原则，我决定直接改EFI OS
-设置，结果意外的容易。启动界面列出来的选项全都在
-<code>/boot/efi/loader/entries/</code>，前提是进行过上面的步骤挂载了EFI盘。在里面
-找出包含arch linux的文件（名字可能不明显，得看内容），把之前抄下来的
-PARTUUID替换过来就完成了。</p>
-<p>重启，记得把USB拔掉。登陆进去检查一下硬盘，确认成功。</p>
-<p>总结，回头看来其实很简单，就俩关键文件，<code>/etc/fstab</code>，
-<code>/efi/loader/entries/*</code>。我感觉这个方案应该比较能广泛应用，没有牵扯到
-太多arch linux特色。更多是针对EFI系统启动管理方案。</p>
+<h1 id="2012">水彩课，2012</h1>
+<p>到hydepark art center上了一学期水彩，每周一节课，每课两个半小时。一学
+期说短也短，别的正事歪事都磨洋工，唯独水彩练习稿积累了一叠。</p>
+<h3 id="417">4.17</h3>
+<p>简单物体，尽量简化着画。用加互补色来表达阴影，而不是调整同一色的深浅。</p>
+<p><img alt="img" src="../Watercolor/fwc20100725a.jpg" /></p>
+<h3 id="424">4.24</h3>
+<p>学调灰色，尝试用铅笔打稿和不打稿的区别，这节课之后就不事先用铅笔打稿了。</p>
+<p><img alt="img" src="../Watercolor/fwc20100725b.jpg" /></p>
+<h3 id="51">5.1</h3>
+<p>静物</p>
+<p><img alt="img" src="../Watercolor/fwc20100725c.jpg" /></p>
+<h3 id="58">5.8</h3>
+<p>土豆土豆土豆</p>
+<p><img alt="img" src="../Watercolor/fwc20100725f.jpg" />
+<img alt="img" src="../Watercolor/fwc20100725g.jpg" /></p>
+<h3 id="515">5.15</h3>
+<p>模特。不穿衣服还好画些，一穿，就画得不男不女了。</p>
+<p><img alt="img" src="../Watercolor/fwc20100725h.jpg" /></p>
+<p><img alt="img" src="../Watercolor/fwc20100725i.jpg" /></p>
+<h3 id="521">5.21</h3>
+<p>脸。先水彩，再用线条笔勾画和修正。</p>
+<p><img alt="img" src="../Watercolor/fwc20100725j.jpg" /></p>
+<p><img alt="img" src="../Watercolor/fwc20100725k.jpg" /></p>
+<p><img alt="img" src="../Watercolor/fwc20100725l.jpg" /></p>
+<h3 id="65">6.5</h3>
+<p>各种白菜</p>
+<p><img alt="img" src="../Watercolor/fwc20100725m.jpg" /></p>
+<p><img alt="img" src="../Watercolor/fwc20100725n.jpg" /></p>
+<h3 id="612">6.12</h3>
+<p>再次感叹我怎么画女模特都像男的</p>
+<p><img alt="img" src="../Watercolor/fwc20100725o.jpg" /></p>
+<p><img alt="img" src="../Watercolor/fwc20100725p.jpg" /></p>
 
 
 
