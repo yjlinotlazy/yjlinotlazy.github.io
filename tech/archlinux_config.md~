@@ -43,3 +43,57 @@ autostart里不相关的部分删掉，并让kde的autostart跑这个脚本。�
 最终效果，香蕉是鼠标指针
 
 ![img](screenshot.png)
+
+系统资源占用
+
+![img](personal_web_imgs/sys_usage.png)
+
+可以看出，plasma本身没有太夸张，X，eww，kwin就贡献了不少。brave浏览器
+也占了可观的一部分，但还是比chrome好多。如果不做任何特殊任务，基本内存
+消耗大约3-4G。如果要使用IDE或者大部头应用，就另说了。
+
+## zsh
+
+火起来的bash替代品，智能很多，插件也很多。我忘记从哪里装的了，但是官网
+是[这里](https://ohmyz.sh/)
+
+比较流行的主题是agnoster，我的小修改是删掉用户登录信息。在.zshrc里末尾
+加上
+
+```
+prompt_context() {}
+```
+
+## kitty
+
+加了透明背景，并且把shell改成了zsh。在.config/kitty/kitty.conf写
+
+```
+background_opacity 0.85
+shell zsh
+```
+
+## 终端下的文件夹背景色
+
+默认配置下，ls如果遇到权限过宽的文件夹（比如777），背景会被高亮。这对
+于强制开放windows分区共享的双系统就很不方便。可以按照[这个答
+案
+](https://unix.stackexchange.com/questions/241726/fix-ls-colors-for-directories-with-777-permission)
+解决。
+
+同时也需要改变zsh自动补全用采用的配色：
+
+```
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+```
+
+就清净了，没有烦人的高亮色了
+
+## emacs
+
+透明背景如下实现：
+
+```
+(set-frame-parameter nil 'alpha-background 85)
+(add-to-list 'default-frame-alist '(alpha-background . 85))
+```

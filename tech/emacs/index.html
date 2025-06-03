@@ -16,7 +16,7 @@
     
     
       
-        <title>小霸王机器学习机配置 - 存盘强迫症</title>
+        <title>emacs配置 - 存盘强迫症</title>
       
     
     
@@ -58,7 +58,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#_1" class="md-skip">
+        <a href="#emacs" class="md-skip">
           Skip to content
         </a>
       
@@ -94,7 +94,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              小霸王机器学习机配置
+              emacs配置
             
           </span>
         </div>
@@ -335,77 +335,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#kdekwin" class="md-nav__link">
-    <span class="md-ellipsis">
-      KDE(自带kwin)
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#ewwpolybar" class="md-nav__link">
-    <span class="md-ellipsis">
-      eww+polybar
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#zsh" class="md-nav__link">
-    <span class="md-ellipsis">
-      zsh
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#kitty" class="md-nav__link">
-    <span class="md-ellipsis">
-      kitty
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      终端下的文件夹背景色
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#emacs" class="md-nav__link">
-    <span class="md-ellipsis">
-      emacs
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      其它
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -420,80 +349,157 @@
 
 
 
-<h1 id="_1">小霸王机器学习机配置</h1>
-<h2 id="kdekwin">KDE(自带kwin)</h2>
-<p>初衷是配一个具备一些可定制功能，又容易上手的系统用来学习机器学习。试过
-hyprland,bspwm都被直接菜鸟劝退。KDE plasma出厂可用，图形界面点鼠标就能
-实现不少花里胡哨的配置，所以作为基本的傻瓜型窗口管理器很合格。另一个选
-择是xfce，不过我想试点新玩具，而xfce曾经是我的主力。</p>
-<p>我的下一组要求是，在不放弃鼠标操作的条件下，有平铺式窗口管理和键盘操作
-的选项。plasma自带的kwin就能满足，依靠几个快捷键来把选定窗口放到事先设
-定好的平铺格子里。另外emacs, tilix本身就带平铺功能，不依赖于窗口管理器。</p>
-<h2 id="ewwpolybar">eww+polybar</h2>
-<p>下一个要求是，看见别人有漂亮的小窗口部件，也想抄一个。conky配置失败，
-发现eww是当红选择，也有很多作业抄。我看上了<a href="github/bspwm-dots-2.0/Configs/bspwm/" target="_blank">这个github
-repo</a>的配置。
-这个repo是eww+bspwm的组合，效果图非常漂亮，但我需要的只有eww，所以把
-autostart里不相关的部分删掉，并让kde的autostart跑这个脚本。另一个需要
-改动的是eww的样式，因为跟当前显示器相关，直接抄的作业不一定适合。我改
-了边界留白。其中<code>:y "0px"</code>删掉顶部留白，<code>:distance "50px"</code>使得bar和下
-面窗口之间正好有一点空隙。在以下这样的段落里改：</p>
-<pre><code>;; Central bar 
-(defwindow bar_center
-  :geometry 
-    (geometry 
-      :anchor &quot;top center&quot;
-      :x &quot;0px&quot;
-      :y &quot;0px&quot;
-      :width &quot;930px&quot;
-      :height &quot;50px&quot;)
-  :stacking &quot;bg&quot;
-  :reserve 
-    (struts 
-      :distance &quot;50px&quot; 
-      :side &quot;top&quot;)
-...
+<h1 id="emacs">emacs配置</h1>
+<p>直接上配置文件<code>~/.emacs.d/init.el</code>：</p>
+<p>实现的主要有
+ * 启动时窗口大小和位置
+ * 启动时自动开上下分屏，一个显示TODO，一个显示当天日程
+ * 用org-mode实现项目管理，直接抄了一个带点自动化的。感觉可以有很多作
+   业可以抄，还在研究中。org-mode其实在工作上用的更多，毕竟需要多线程，
+   记录deadline。个人电脑上没有啥是必须做的，就是把项目要做的列出来比
+   较方便看进度而已。</p>
+<pre><code>;; Disable GUI
+(tool-bar-mode -1)
+(setq use-dialog-box t)
+(setq use-file-dialog nil)
+(setq-default frame-title-format '(&quot;%b  -  GNU Emacs&quot;))
+
+;; Hide the startup screen
+(setq inhibit-startup-screen t)
+
+(setq completion-ignore-case t)
+(setq case-fold-search t)
+
+(add-hook 'text-mode-hook 'turn-on-auto-fill)
+
+;; case insensitive search
+(setq read-file-name-completion-ignore-case t
+      read-buffer-completion-ignore-case t
+      completion-ignore-case t
+      completion-category-defaults nil
+      completion-category-overrides nil
+      completion-styles '(basic))
+
+;;(load-theme 'solarized t)
+
+;; dark mode
+;;(set-variable 'frame-background-mode 'dark)
+
+;;(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ ;;'(package-selected-packages '(emacs-color-theme-solarized standard-themes)))
+;;(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ ;;)
+
+(add-to-list 'load-path &quot;~/.emacs.d/auto-dark/&quot;)
+(require 'auto-dark)
+(auto-dark-mode)
+
+(require 'package)
+(add-to-list 'package-archives
+             '(&quot;melpa-stable&quot; . &quot;https://stable.melpa.org/packages/&quot;))
+(package-initialize)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(emacs-color-theme-solarized markdown-mode org-modern standard-themes)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
+(set-frame-parameter nil 'alpha-background 90)
+(add-to-list 'default-frame-alist '(alpha-background . 90))
+
+;;from https://christiantietze.de/posts/2021/02/emacs-org-todo-doing-done-checkbox-cycling/
+(setq org-agenda-files '(&quot;~/org&quot;))
+(setq org-todo-keywords
+      (quote ((sequence &quot;TODO(t)&quot; &quot;PROG(p)&quot; &quot;|&quot; &quot;DONE(d)&quot;))))
+
+(defun org-todo-if-needed (state)
+  &quot;Change header state to STATE unless the current item is in STATE already.&quot;
+  (unless (string-equal (org-get-todo-state) state)
+    (org-todo state)))
+
+(defun ct/org-summary-todo-cookie (n-done n-not-done)
+  &quot;Switch header state to DONE when all subentries are DONE, to TODO when none are DONE, and to DOING otherwise&quot;
+  (let (org-log-done org-log-states)   ; turn off logging
+    (org-todo-if-needed (cond ((= n-done 0)
+                               &quot;TODO&quot;)
+                              ((= n-not-done 0)
+                               &quot;DONE&quot;)
+                              (t
+                               &quot;PROG&quot;)))))
+(add-hook 'org-after-todo-statistics-hook #'ct/org-summary-todo-cookie)
+
+(defun ct/org-summary-checkbox-cookie ()
+  &quot;Switch header state to DONE when all checkboxes are ticked, to TODO when none are ticked, and to DOING otherwise&quot;
+  (let (beg end)
+    (unless (not (org-get-todo-state))
+      (save-excursion
+        (org-back-to-heading t)
+        (setq beg (point))
+        (end-of-line)
+        (setq end (point))
+        (goto-char beg)
+        ;; Regex group 1: %-based cookie
+        ;; Regex group 2 and 3: x/y cookie
+        (if (re-search-forward &quot;\\[\\([0-9]*%\\)\\]\\|\\[\\([0-9]*\\)/\\([0-9]*\\)\\]&quot;
+                               end t)
+            (if (match-end 1)
+                ;; [xx%] cookie support
+                (cond ((equal (match-string 1) &quot;100%&quot;)
+                       (org-todo-if-needed &quot;DONE&quot;))
+                      ((equal (match-string 1) &quot;0%&quot;)
+                       (org-todo-if-needed &quot;TODO&quot;))
+                      (t
+                       (org-todo-if-needed &quot;PROG&quot;)))
+              ;; [x/y] cookie support
+              (if (&gt; (match-end 2) (match-beginning 2)) ; = if not empty
+                  (cond ((equal (match-string 2) (match-string 3))
+                         (org-todo-if-needed &quot;DONE&quot;))
+                        ((or (equal (string-trim (match-string 2)) &quot;&quot;)
+                             (equal (match-string 2) &quot;0&quot;))
+                         (org-todo-if-needed &quot;TODO&quot;))
+                        (t
+                         (org-todo-if-needed &quot;PROG&quot;)))
+                (org-todo-if-needed &quot;PROG&quot;))))))))
+(add-hook 'org-checkbox-statistics-hook #'ct/org-summary-checkbox-cookie)
+
+;;show agenda at startup
+(add-hook 'serve-after-make-frame-hook 'org-agenda-list)
+
+(defun emacs-startup-screen ()
+  &quot;display agenda and all todos&quot;
+  (org-agenda nil &quot;n&quot;))
+(add-hook 'emacs-startup-hook #'emacs-startup-screen)
+
+;;open todo file at startup
+(find-file &quot;~/org/todo.org&quot;)
+
+;; change initial height
+;; update for different monitor set up
+(setq initial-frame-alist
+      (append initial-frame-alist
+          '(
+        (height . 90)
+        (width . 120)
+        (left . 900)
+        )))
 </code></pre>
-<p>最终效果，香蕉是鼠标指针</p>
-<p><img alt="img" src="../screenshot.png" /></p>
-<p>系统资源占用</p>
-<p><img alt="img" src="../personal_web_imgs/sys_usage.png" /></p>
-<p>可以看出，plasma本身没有太夸张，X，eww，kwin就贡献了不少。brave浏览器
-也占了可观的一部分，但还是比chrome好多。如果不做任何特殊任务，基本内存
-消耗大约3-4G。如果要使用IDE或者大部头应用，就另说了。</p>
-<h2 id="zsh">zsh</h2>
-<p>火起来的bash替代品，智能很多，插件也很多。我忘记从哪里装的了，但是官网
-是<a href="https://ohmyz.sh/">这里</a></p>
-<p>比较流行的主题是agnoster，我的小修改是删掉用户登录信息。在.zshrc里末尾
-加上</p>
-<pre><code>prompt_context() {}
-</code></pre>
-<h2 id="kitty">kitty</h2>
-<p>加了透明背景，并且把shell改成了zsh。在.config/kitty/kitty.conf写</p>
-<pre><code>background_opacity 0.85
-shell zsh
-</code></pre>
-<h2 id="_2">终端下的文件夹背景色</h2>
-<p>默认配置下，ls如果遇到权限过宽的文件夹（比如777），背景会被高亮。这对
-于强制开放windows分区共享的双系统就很不方便。可以按照<a href="https://unix.stackexchange.com/questions/241726/fix-ls-colors-for-directories-with-777-permission">这个答
-案
-</a>
-解决。</p>
-<p>同时也需要改变zsh自动补全用采用的配色：</p>
-<pre><code>zstyle ':completion:*' list-colors &quot;${(s.:.)LS_COLORS}&quot;
-</code></pre>
-<p>就清净了，没有烦人的高亮色了</p>
-<h2 id="emacs">emacs</h2>
-<p>透明背景如下实现：</p>
-<pre><code>(set-frame-parameter nil 'alpha-background 85)
-(add-to-list 'default-frame-alist '(alpha-background . 85))
-</code></pre>
-<h2 id="_3">其它</h2>
-<p>有些程序在图形界面可以设置透明背景，比如vscode通过插件，konsole,tilix，
-就不赘述了。</p>
-<p>一系列操作完毕后，透明背景达成，可以随时看到一点点好看的桌面背景。</p>
-<p>最终效果</p>
-<p><img alt="img" src="../personal_web_imgs/screenshot2.png" /></p>
+<p><img alt="img" src="../personal_web_imgs/emacs_agenda.png" /></p>
 
 
 

@@ -42,8 +42,10 @@
    会配置一个
  - less: 预览文件。arch linux连这个都不预装是我没想到的。。
  - emacs: 这几年emacs热度骤降，市场份额比vim低一个数量级，但org mode还是香。不想折腾的可以用下
-   面给的基本配置。
+   面给的基本配置
  - tilix: 可以平铺窗口的终端
+ - kitty：当红轻量级、可定制终端
+ - konsole：kde默认终端，我用它作为默认终端来跑终端模式的程序
  - code: VS code的linux版
  - auto-cpufreq: 据说是省电小助手
 ```
@@ -60,7 +62,39 @@ systemctl start auto-cpufreq
  - yazi：鸭子。终端模式的文件管理器。
  - kwin：kde自带，适合只想用平铺式窗口管理的一部分功能，不想全盘切换的
    人。bspwm是另一个选项，也很多人用，就是需要多折腾一些。
- - conky：轻量级、可以显示在桌面上的系统监视器，有海量的配置可以直接抄。
+ - rsync ：同步文件夹
+ - findimagedupes：寻找相似的图片。`findimagedupes -R -- . > dups.log`。
+   相似，不一定相同。
+ - neovim/lazyvim。真香，相见恨晚，可以取代IDE。
+
+## 共享硬盘
+
+共享硬盘，包括加装的第二块硬盘，都没有出场即用的读写支持。原理是
+windows分区ntfs无法理解linux下的权限，所以干脆就以只读模式挂载。解法是
+安装ntfs-3g并且修改/etc/fstab。
+
+老规矩，先找UUID
+
+```
+sudo fdisk -l # 方便查看哪个是共享分区/盘
+sudo blkid  # 寻找对应的UUID
+```
+
+再找用户的UID, GID
+
+```
+id
+```
+
+修改/etc/fstab。选一个喜欢的挂载点。我一般就用`/home/$USER/<windows下的
+分区名字>`。其中fmask可替换为想要的默认文件权限。111表示全局读写但不可
+以执行，微量兼顾方便和安全。
+
+```
+UUID=<uuid>   <mount path>     ntfs-3g defaults,user,uid=1000,gid=1000,fmask=111,dmask=000,nofail,rw,big_write 0       0
+```
+
+最麻烦的部分来了：每次windows关机要完全关机，按着shift从系统选项里关机。
 
 ## 配置git
 

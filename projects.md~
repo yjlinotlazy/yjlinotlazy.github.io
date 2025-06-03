@@ -1,3 +1,8 @@
 # 项目
 
-有小程序的想法都扔在这，不保证都写出来了，也不保证写了能用
+有小程序的想法都扔在这，但不一定能写出来，写出来也不一定能用
+
+ - 每日当季鸡汤：每日随机生成无厘头短句子。[github链
+   接](https://github.com/yjlinotlazy/daily-fortune){:target="_blank"}
+ - [备份文件侠](projects/dotfile_syncer.md)：方便的全局备份大量配置文件。(待写)
+   

@@ -360,18 +360,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#git" class="md-nav__link">
+  <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
-      配置git
+      共享硬盘
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+  <a href="#git" class="md-nav__link">
     <span class="md-ellipsis">
-      配置文件
+      配置git
     </span>
   </a>
   
@@ -436,8 +436,10 @@
    会配置一个</li>
 <li>less: 预览文件。arch linux连这个都不预装是我没想到的。。</li>
 <li>emacs: 这几年emacs热度骤降，市场份额比vim低一个数量级，但org mode还是香。不想折腾的可以用下
-   面给的基本配置。</li>
+   面给的基本配置</li>
 <li>tilix: 可以平铺窗口的终端</li>
+<li>kitty：当红轻量级、可定制终端</li>
+<li>konsole：kde默认终端，我用它作为默认终端来跑终端模式的程序</li>
 <li>code: VS code的linux版</li>
 <li>auto-cpufreq: 据说是省电小助手</li>
 </ul>
@@ -456,39 +458,33 @@ systemctl start auto-cpufreq
 <li>kwin：kde自带，适合只想用平铺式窗口管理的一部分功能，不想全盘切换的
    人。bspwm是另一个选项，也很多人用，就是需要多折腾一些。</li>
 <li>rsync ：同步文件夹</li>
+<li>findimagedupes：寻找相似的图片。<code>findimagedupes -R -- . &gt; dups.log</code>。
+   相似，不一定相同。</li>
+<li>neovim/lazyvim。真香，相见恨晚，可以取代IDE。</li>
 </ul>
+<h2 id="_2">共享硬盘</h2>
+<p>共享硬盘，包括加装的第二块硬盘，都没有出场即用的读写支持。原理是
+windows分区ntfs无法理解linux下的权限，所以干脆就以只读模式挂载。解法是
+安装ntfs-3g并且修改/etc/fstab。</p>
+<p>老规矩，先找UUID</p>
+<pre><code>sudo fdisk -l # 方便查看哪个是共享分区/盘
+sudo blkid  # 寻找对应的UUID
+</code></pre>
+<p>再找用户的UID, GID</p>
+<pre><code>id
+</code></pre>
+<p>修改/etc/fstab。选一个喜欢的挂载点。我一般就用<code>/home/$USER/&lt;windows下的
+分区名字&gt;</code>。其中fmask可替换为想要的默认文件权限。111表示全局读写但不可
+以执行，微量兼顾方便和安全。</p>
+<pre><code>UUID=&lt;uuid&gt;   &lt;mount path&gt;     ntfs-3g defaults,user,uid=1000,gid=1000,fmask=111,dmask=000,nofail,rw,big_write 0       0
+</code></pre>
+<p>最麻烦的部分来了：每次windows关机要完全关机，按着shift从系统选项里关机。</p>
 <h2 id="git">配置git</h2>
 <ul>
 <li>首先需要拿到access token。进入Settings -&gt; Developer Settings -&gt;
    Personal access tokens。我选择的是Personal access tokens (classic)</li>
-<li><code>git config --global credential.helper store</code>。再进行一次push/pull，
-   需要密码的时候输入token，就存下来了。</li>
+<li><code>git config --global credential.helper store</code>。</li>
 </ul>
-<h2 id="_2">配置文件</h2>
-<p>.emacs.d/init.el</p>
-<pre><code class="language-lisp">(tool-bar-mode -1)
-(setq use-dialog-box t)
-(setq use-file-dialog nil)
-(setq-default frame-title-format '(&quot;%b  -  GNU Emacs&quot;))
-
-;; Hide the startup screen
-(setq inhibit-startup-screen t)
-
-(setq completion-ignore-case t)
-(setq case-fold-search t)
-
-;; case insensitive search
-(setq read-file-name-completion-ignore-case t
-      read-buffer-completion-ignore-case t
-      completion-ignore-case t
-      completion-category-defaults nil
-      completion-category-overrides nil
-      completion-styles '(basic))
-
-(add-to-list 'load-path &quot;~/.emacs.d/auto-dark/&quot;)
-(require 'auto-dark)
-(auto-dark-mode)
-</code></pre>
 
 
 
