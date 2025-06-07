@@ -1,0 +1,11 @@
+# Neovim配置
+
+首先，用的是lazyvim，做有限的折腾
+
+装python相关的支持。其中需要手动的是
+
+```
+pip install pandas-stubs pynvim
+```
+
+其它的一概看不懂，连vimscript和lua我都分不清，就这么开始用了

@@ -16,7 +16,7 @@
     
     
       
-        <title>Dual boot arch linux + win 11 - 存盘强迫症</title>
+        <title>Pythagorea 毕达哥拉斯手游 - 存盘强迫症</title>
       
     
     
@@ -58,7 +58,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#dual-boot-arch-linux-win-11" class="md-skip">
+        <a href="#pythagorea" class="md-skip">
           Skip to content
         </a>
       
@@ -94,7 +94,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Dual boot arch linux + win 11
+              Pythagorea 毕达哥拉斯手游
             
           </span>
         </div>
@@ -342,18 +342,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#windowsarch-linux" class="md-nav__link">
-    <span class="md-ellipsis">
-      基本系统安装：双启动windows和arch linux
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
-      基本工具
+      常用解题思路
     </span>
   </a>
   
@@ -362,18 +353,111 @@
         <li class="md-nav__item">
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
-      共享硬盘
+      常用辅助线
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#git" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
-      配置git
+      题目
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="题目">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.平行线
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.平行线">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#216" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.16
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#219" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.19
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4medians-and-mid-segments" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.medians and mid-segments
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#411" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.11
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#412" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.12
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.垂直线
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.平行四边形
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.梯形
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -393,103 +477,60 @@
 
 
 
-<h1 id="dual-boot-arch-linux-win-11">Dual boot arch linux + win 11</h1>
-<h2 id="windowsarch-linux">基本系统安装：双启动windows和arch linux</h2>
-<p>笔记本出厂自带windows，保留windows的情况下加塞arch linux。官网下载安装
-用的iso，一步步跟着提示走，有问题查arch wiki就差不多了。几个注意点：</p>
+<h1 id="pythagorea">Pythagorea 毕达哥拉斯手游</h1>
+<p><img alt="img" src="cover.png" width="200" /></p>
+<p>爬格子的几何手游，循序渐进分为几个大类，从最基础的线段到复杂一些的重心、
+多边形，切线等等。难度对于学龄人来说一般，对我就正好。本质上是尺子作图，
+没有圆规，格子摆在那就是为了让你去找正好是整数的边，或者被等分的边。值
+得诟病的是，强行用纸张不够大来制造难度，逼着你找小数点坐标。</p>
+<h2 id="_1">常用解题思路</h2>
 <ul>
-<li>给linux留多一点分区。以后嫌多了缩小容易，嫌小了扩展难。我建议至少留
-   个200G。如果犯了跟我一样的规划错误，可以参考<a href="../update_root_partition/">这篇</a>来修正。</li>
-<li>给/boot也多留点。/boot是fat32，我至今没找到安全resize的办法。网上有
-   些地方推荐的512只能说勉强够用，建议留干脆留几个G。</li>
-<li>装linux之前先在windows里登陆账户把机器关联上，确认一下账号上能找到
-   recovery key，翻车大蓝屏的时候需要用。</li>
-<li>硬盘分区名称每台电脑不一样，注意修改</li>
-<li>fdisk操作的时候看清楚，不要手滑把windows分区格式化了</li>
-<li>纸上记下每个分区号，若干重要地方需要用</li>
-<li>启动列表用edk2-shell来配置，往linux装的启动配置里加windows。跟着<a href="https://www.youtube.com/watch?v=QTVQpvSoSIA" target="_blank">这个视
-   频</a>可以无脑抄答案。</li>
-<li>bitlocker很容易被触发，需要用recovery key来解锁进入windows。在win下面把encryption整个
-   disable，可以解决一部分问题，但有时候还是莫名其妙windows的启动分区变为首选，直接跳过linux，
-   需要重启进BIOS改。</li>
-<li>睁眼睡觉的问题：默认行为的休眠是假休眠，电池掉的飞快，醒来机器也是
-   热的。需要如下修改：<ul>
-<li><code>cat /sys/power/mem_sleep</code>。出来的结果应该是<code>[s2idle] deep</code>，说明
- 目前是浅层睡眠s2ide模式，但是支持休眠deep模式。</li>
-<li><code>echo deep | sudo tee /sys/power/mem_sleep</code>。再次查看mem_sleep，
- 出来的结果就应该是<code>s2idle [deep]</code>了。</li>
-<li>我注意到以上文件会自己切回去，不知道为啥。如果出现这种事，就手动
-  修改<code>/etc/systmd/sleep.conf</code>，加上<code>MemorySleepMode=deep</code></li>
+<li>观察哪些点正好在整数纵轴或者横轴上。有整的点就相当于有尺子，可以计
+   算并利用长度。所有靠斜率解的题都可以以此为基础。</li>
+<li>如果需要找C点，就找两条都穿过C点的直线，交点为C。</li>
+<li>平行线 = 斜率相等，即dy/dx相等。可以通过y轴的规律来找x轴的规律，反
+   之亦然。</li>
+<li>勾股定理345。（其实用得很少）</li>
 </ul>
-</li>
-<li>我的本子是asus rog strix，蛋疼的标配是sleep/hibernate模式依然会亮灯。
-   按理说进windows armory crate能关掉夜灯，但是我只找到了电池模式的下
-   的关闭。于是回到arch，安装asusctrl。安装末尾会报错，但其实还是装上
-   了，利用<code>asusctl aura-power lightbar</code>，按照-h的指示就可以关掉了。可
-   以选择睡觉时关灯，醒来开灯。</li>
-</ul>
-<p>劝退点</p>
+<h2 id="_2">常用辅助线</h2>
 <ul>
-<li>双系统下面无法让dropbox管理共享分区，因为dropbox在win上不支持ext4，在linux上只支持ext4。
-   这个本质问题是dropbox只能用native filesystem跟踪文件有没有更新，没法hack。</li>
-<li>系统启动依然没有很稳定地每次都进入linux boot menu，有时直接跳win，有时候蓝屏（bitlocker）。</li>
+<li>线段平分。</li>
 </ul>
-<h2 id="_1">基本工具</h2>
-<ul>
-<li>tree: 在终端进行树状文件浏览，辅助ls</li>
-<li>nano: 对于不喜欢vim的人来说，这个在终端用很合适，我只要有terminal就
-   会配置一个</li>
-<li>less: 预览文件。arch linux连这个都不预装是我没想到的。。</li>
-<li>emacs: 这几年emacs热度骤降，市场份额比vim低一个数量级，但org mode还是香。不想折腾的可以用下
-   面给的基本配置</li>
-<li>tilix: 可以平铺窗口的终端</li>
-<li>kitty：当红轻量级、可定制终端</li>
-<li>konsole：kde默认终端，我用它作为默认终端来跑终端模式的程序</li>
-<li>code: VS code的linux版</li>
-<li>auto-cpufreq: 据说是省电小助手</li>
-</ul>
-<pre><code>sudo pacman -S auto-cpufreq
-systemctl enable auto-cpufreq
-systemctl start auto-cpufreq
-</code></pre>
-<ul>
-<li>darktable：照片编辑和管理。据说用过之后就不想用lightroom了</li>
-<li>RawTherapee：也是照片编辑和管理，各有优点。</li>
-<li>krita：替代photoshop</li>
-<li>imagemagick；一系列处理图片的命令行。虽然听着反直觉，但是有些小东西
-   还挺方便，比如terminal直接看图<code>display a.jpg</code>。批量给图片加边框也很
-   方便。</li>
-<li>yazi：鸭子。终端模式的文件管理器。</li>
-<li>kwin：kde自带，适合只想用平铺式窗口管理的一部分功能，不想全盘切换的
-   人。bspwm是另一个选项，也很多人用，就是需要多折腾一些。</li>
-<li>rsync ：同步文件夹</li>
-<li>findimagedupes：寻找相似的图片。<code>findimagedupes -R -- . &gt; dups.log</code>。
-   相似，不一定相同。</li>
-<li>neovim/lazyvim。真香，相见恨晚，可以取代IDE。</li>
-</ul>
-<h2 id="_2">共享硬盘</h2>
-<p>共享硬盘，包括加装的第二块硬盘，都没有出场即用的读写支持。原理是
-windows分区ntfs无法理解linux下的权限，所以干脆就以只读模式挂载。解法是
-安装ntfs-3g并且修改/etc/fstab。</p>
-<p>老规矩，先找UUID</p>
-<pre><code>sudo fdisk -l # 方便查看哪个是共享分区/盘
-sudo blkid  # 寻找对应的UUID
-</code></pre>
-<p>再找用户的UID, GID</p>
-<pre><code>id
-</code></pre>
-<p>修改/etc/fstab。选一个喜欢的挂载点。我一般就用<code>/home/$USER/&lt;windows下的
-分区名字&gt;</code>。其中fmask可替换为想要的默认文件权限。111表示全局读写但不可
-以执行，微量兼顾方便和安全。</p>
-<pre><code>UUID=&lt;uuid&gt;   &lt;mount path&gt;     ntfs-3g defaults,user,uid=1000,gid=1000,fmask=111,dmask=000,nofail,rw,big_write 0       0
-</code></pre>
-<p>最麻烦的部分来了：每次windows关机要完全关机，按着shift从系统选项里关机。</p>
-<h2 id="git">配置git</h2>
-<ul>
-<li>首先需要拿到access token。进入Settings -&gt; Developer Settings -&gt;
-   Personal access tokens。我选择的是Personal access tokens (classic)</li>
-<li><code>git config --global credential.helper store</code>。</li>
-</ul>
+<p><img alt="img" src="half.png" /></p>
+<p>用以上米字脚手架，可以得到一条把所有路过的水平线都对半分的垂直线
+了。这样的辅助线可以用来在格子上分出x.5, x.25,甚至x.125的刻度。</p>
+<p><img alt="img" src="equal_split.png" /></p>
+<p>由k发散出去的几个三角形，共享垂直边。水平边之间的比例是跟角相关的，所
+以平移之后还是同样的比例。从O到L的四等分，可以用平移来保持。比如垂直方
+向上再平移一个单位，就可以达成把长度为3的水平线段4等分。当然，用脚手架
+找0.75也可以达到类似效果。</p>
+<h2 id="_3">题目</h2>
+<p>第1、3、5章都没有什么难点，基本就是数数或者找整数点。逼急了甚至可以枚
+举。</p>
+<h3 id="2">2.平行线</h3>
+<h4 id="216">2.16</h4>
+<p><img alt="img" src="0216.png" width="300" /></p>
+<p>脚手架热身：给定的斜线（深黑）斜率是3：5。B点那个中心位置，刚好离A是1.5/2.5。</p>
+<h4 id="219">2.19</h4>
+<p><img alt="img" src="0219.png" width="300" /></p>
+<p>平行线的斜率要5：6。纸只有这么大，得找：1.25：1.5。下方的脚手架找横向
+左移1.5，右上的脚手架找完0.5再切一次找0.25，凑出个1.25。B点就出来了。</p>
+<h4 id="4medians-and-mid-segments">4.medians and mid-segments</h4>
+<p>一是按照中线的定理，二是利用重心把中线分成1:2的特点</p>
+<h4 id="411">4.11</h4>
+<p><img alt="img" src="0411.png" width="300" /></p>
+<p>连接给定的顶点和重心M，找到一个中线和边的交点A。用脚手架平分给定的边，
+找到中点B。连接相关的点就把边凑出来了。</p>
+<h4 id="412">4.12</h4>
+<p><img alt="img" src="0412.png" width="300" /></p>
+<p>通过点的特殊位置（数轴上的整数），把通过M的中线分别延长一半的长度，得
+到中点A,B。另外两条边就出来了。</p>
+<h4 id="6">6.垂直线</h4>
+<p>全部可以用整数顶点达成需要的斜率，连脚手架都不需要。</p>
+<h4 id="7">7.平行四边形</h4>
+<p>第二章的延伸，画平行线就完事了。有些地方需要脚手架找0.5。</p>
+<h4 id="8">8.梯形</h4>
+<p>无难度，找整数点</p>
 
 
 

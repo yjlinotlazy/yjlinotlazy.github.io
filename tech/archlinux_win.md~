@@ -100,33 +100,4 @@ UUID=<uuid>   <mount path>     ntfs-3g defaults,user,uid=1000,gid=1000,fmask=111
 
  - 首先需要拿到access token。进入Settings -> Developer Settings ->
    Personal access tokens。我选择的是Personal access tokens (classic)
- - `git config --global credential.helper store`。再进行一次push/pull，
-   需要密码的时候输入token，就存下来了。
-
-## 配置文件
-
-.emacs.d/init.el
-```lisp
-(tool-bar-mode -1)
-(setq use-dialog-box t)
-(setq use-file-dialog nil)
-(setq-default frame-title-format '("%b  -  GNU Emacs"))
-
-;; Hide the startup screen
-(setq inhibit-startup-screen t)
-
-(setq completion-ignore-case t)
-(setq case-fold-search t)
-
-;; case insensitive search
-(setq read-file-name-completion-ignore-case t
-      read-buffer-completion-ignore-case t
-      completion-ignore-case t
-      completion-category-defaults nil
-      completion-category-overrides nil
-      completion-styles '(basic))
-
-(add-to-list 'load-path "~/.emacs.d/auto-dark/")
-(require 'auto-dark)
-(auto-dark-mode)
-```
+ - `git config --global credential.helper store`。
