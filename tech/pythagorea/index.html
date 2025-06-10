@@ -344,7 +344,7 @@
         <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
-      常用解题思路
+      解题思路
     </span>
   </a>
   
@@ -397,6 +397,11 @@
   
 </li>
         
+      </ul>
+    </nav>
+  
+</li>
+        
           <li class="md-nav__item">
   <a href="#4medians-and-mid-segments" class="md-nav__link">
     <span class="md-ellipsis">
@@ -404,7 +409,8 @@
     </span>
   </a>
   
-</li>
+    <nav class="md-nav" aria-label="4.medians and mid-segments">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#411" class="md-nav__link">
@@ -424,28 +430,34 @@
   
 </li>
         
+      </ul>
+    </nav>
+  
+</li>
+        
           <li class="md-nav__item">
-  <a href="#6" class="md-nav__link">
+  <a href="#6-13" class="md-nav__link">
     <span class="md-ellipsis">
-      6.垂直线
+      6-13
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#7" class="md-nav__link">
+  <a href="#14" class="md-nav__link">
     <span class="md-ellipsis">
-      7.平行四边形
+      14.长度比例
     </span>
   </a>
   
-</li>
+    <nav class="md-nav" aria-label="14.长度比例">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#8" class="md-nav__link">
+  <a href="#1407" class="md-nav__link">
     <span class="md-ellipsis">
-      8.梯形
+      例题14.07
     </span>
   </a>
   
@@ -480,10 +492,10 @@
 <h1 id="pythagorea">Pythagorea 毕达哥拉斯手游</h1>
 <p><img alt="img" src="cover.png" width="200" /></p>
 <p>爬格子的几何手游，循序渐进分为几个大类，从最基础的线段到复杂一些的重心、
-多边形，切线等等。难度对于学龄人来说一般，对我就正好。本质上是尺子作图，
-没有圆规，格子摆在那就是为了让你去找正好是整数的边，或者被等分的边。值
-得诟病的是，强行用纸张不够大来制造难度，逼着你找小数点坐标。</p>
-<h2 id="_1">常用解题思路</h2>
+多边形，切线等等。难度对于学龄人来说一般，对我就正好。本质上是有刻度的
+尺子作图，没有圆规，格子摆在那就是为了让你去找正好是整数的边，或者被等
+分的边。值得诟病的是，强行用纸张不够大来制造难度，逼着你找小数点坐标。</p>
+<h2 id="_1">解题思路</h2>
 <ul>
 <li>观察哪些点正好在整数纵轴或者横轴上。有整的点就相当于有尺子，可以计
    算并利用长度。所有靠斜率解的题都可以以此为基础。</li>
@@ -504,6 +516,9 @@
 以平移之后还是同样的比例。从O到L的四等分，可以用平移来保持。比如垂直方
 向上再平移一个单位，就可以达成把长度为3的水平线段4等分。当然，用脚手架
 找0.75也可以达到类似效果。</p>
+<p><img alt="img" src="n_split.png" /></p>
+<p>另一种平分方式，利用相似三角形。比如找x=1/3的A点。y轴上的比例是1/3，所
+以x轴上也是1/3。</p>
 <h2 id="_3">题目</h2>
 <p>第1、3、5章都没有什么难点，基本就是数数或者找整数点。逼急了甚至可以枚
 举。</p>
@@ -515,7 +530,7 @@
 <p><img alt="img" src="0219.png" width="300" /></p>
 <p>平行线的斜率要5：6。纸只有这么大，得找：1.25：1.5。下方的脚手架找横向
 左移1.5，右上的脚手架找完0.5再切一次找0.25，凑出个1.25。B点就出来了。</p>
-<h4 id="4medians-and-mid-segments">4.medians and mid-segments</h4>
+<h3 id="4medians-and-mid-segments">4.medians and mid-segments</h3>
 <p>一是按照中线的定理，二是利用重心把中线分成1:2的特点</p>
 <h4 id="411">4.11</h4>
 <p><img alt="img" src="0411.png" width="300" /></p>
@@ -525,12 +540,13 @@
 <p><img alt="img" src="0412.png" width="300" /></p>
 <p>通过点的特殊位置（数轴上的整数），把通过M的中线分别延长一半的长度，得
 到中点A,B。另外两条边就出来了。</p>
-<h4 id="6">6.垂直线</h4>
-<p>全部可以用整数顶点达成需要的斜率，连脚手架都不需要。</p>
-<h4 id="7">7.平行四边形</h4>
-<p>第二章的延伸，画平行线就完事了。有些地方需要脚手架找0.5。</p>
-<h4 id="8">8.梯形</h4>
-<p>无难度，找整数点</p>
+<h3 id="6-13">6-13</h3>
+<p>全部能用顶端说的解题思路完成</p>
+<h3 id="14">14.长度比例</h3>
+<h4 id="1407">例题14.07</h4>
+<p><img alt="img" src="1407.jpg" width="300" /></p>
+<p>勾股定理得知AB的斜率正好是345三角形,找1就是五等分。利用构造相似三角形
+来找到x轴上距离为3/5的点C和D,得到CD的延长线跟AB的交点，斜边长就是(3/5)/3*5=1</p>
 
 
 

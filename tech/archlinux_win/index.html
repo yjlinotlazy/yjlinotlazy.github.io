@@ -377,6 +377,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      其它问题解决方案
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -490,6 +499,15 @@ sudo blkid  # 寻找对应的UUID
    Personal access tokens。我选择的是Personal access tokens (classic)</li>
 <li><code>git config --global credential.helper store</code>。</li>
 </ul>
+<h2 id="_3">其它问题解决方案</h2>
+<p>/boot无法扩容导致的更新失败：512mb的分区不够用怎么办？空间占用最大的是
+fallback image，这个不推荐删但是可以删。不推荐是因为如果系统坏掉可以有
+个备用的用来修，但是如果坏掉我不如干脆重装顺便把/boot格了重新搞个大的。
+删掉之前需要改个配置：</p>
+<p><code>etc/mkinitcpio.d/linux.preset</code></p>
+<p>默认设定是<code>PRESETS=('default' 'fallback')</code>，改成<code>PRESETS=('default')</code>，
+把fallback相关的设定都注释掉，就可以删掉initramfs-linux-fallback.img
+了</p>
 
 
 
