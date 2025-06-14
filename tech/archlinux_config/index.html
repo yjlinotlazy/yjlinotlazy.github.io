@@ -396,9 +396,27 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#nano" class="md-nav__link">
+    <span class="md-ellipsis">
+      nano
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       其它
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      不折腾不出问题，一折腾就出的新问题
     </span>
   </a>
   
@@ -488,12 +506,26 @@ shell zsh
 <pre><code>(set-frame-parameter nil 'alpha-background 85)
 (add-to-list 'default-frame-alist '(alpha-background . 85))
 </code></pre>
+<h2 id="nano">nano</h2>
+<p>是的，nano也可以配置，比如语法高亮，自动换行等等。配置文件是
+<code>/etc/nanorc</code>，高亮参考<a href="https://wiki.archlinux.org/title/Nano#Syntax_highlighting">这
+里</a>。我还安
+装了nano-syntax-highlighting包，也许不是必须的。</p>
 <h2 id="_3">其它</h2>
 <p>有些程序在图形界面可以设置透明背景，比如vscode通过插件，konsole,tilix，
 就不赘述了。</p>
 <p>一系列操作完毕后，透明背景达成，可以随时看到一点点好看的桌面背景。</p>
 <p>最终效果</p>
 <p><img alt="img" src="../personal_web_imgs/screenshot2.png" /></p>
+<h2 id="_4">不折腾不出问题，一折腾就出的新问题</h2>
+<p>待解决：任何tilinig wm都无法使用，而且装来装去还把SDDM搞坏了</p>
+<p>现状是，SDDM下无法选择window manager/desktop environment，只剩个plasma
+x11光杆司令。出现过的另一个问题是，登陆进去啥也不能干，包括使用网上搜
+到的热键也没有响应。研究一番发现，这个是两个问题的组合，1.tiling WM无
+法使用，2. .xinitrc被修改并默认进去那个不能使用的wm。既然如此，就修改~/.xinitrc</p>
+<pre><code>#!/bin/sh
+exec startplasma-x11
+</code></pre>
 
 
 

@@ -27,6 +27,11 @@
      出来的结果就应该是`s2idle [deep]`了。
     - 我注意到以上文件会自己切回去，不知道为啥。如果出现这种事，就手动
       修改`/etc/systmd/sleep.conf`，加上`MemorySleepMode=deep`
+ - 我的本子是asus rog strix，蛋疼的标配是sleep/hibernate模式依然会亮灯。
+   按理说进windows armory crate能关掉夜灯，但是我只找到了电池模式的下
+   的关闭。于是回到arch，安装asusctrl。安装末尾会报错，但其实还是装上
+   了，利用`asusctl aura-power lightbar`，按照-h的指示就可以关掉了。可
+   以选择睡觉时关灯，醒来开灯。
 
 劝退点
 
@@ -101,3 +106,16 @@ UUID=<uuid>   <mount path>     ntfs-3g defaults,user,uid=1000,gid=1000,fmask=111
  - 首先需要拿到access token。进入Settings -> Developer Settings ->
    Personal access tokens。我选择的是Personal access tokens (classic)
  - `git config --global credential.helper store`。
+
+## 其它问题解决方案
+
+/boot无法扩容导致的更新失败：512mb的分区不够用怎么办？空间占用最大的是
+fallback image，这个不推荐删但是可以删。不推荐是因为如果系统坏掉可以有
+个备用的用来修，但是如果坏掉我不如干脆重装顺便把/boot格了重新搞个大的。
+删掉之前需要改个配置：
+
+`etc/mkinitcpio.d/linux.preset`
+
+默认设定是`PRESETS=('default' 'fallback')`，改成`PRESETS=('default')`，
+把fallback相关的设定都注释掉，就可以删掉initramfs-linux-fallback.img
+了

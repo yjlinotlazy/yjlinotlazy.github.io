@@ -4,5 +4,7 @@
 
  - 每日当季鸡汤：每日随机生成无厘头短句子。[github链
    接](https://github.com/yjlinotlazy/daily-fortune){:target="_blank"}
- - [备份文件侠](projects/dotfile_syncer.md)：方便的全局备份大量配置文件。(待写)
-   
+ - [备份文件侠](projects/dotfile_syncer.md)：方便的全局备份大量配置文
+   件。[github施工中](https://github.com/yjlinotlazy/bulk_sync)
+ - [从零开始做个人网站，一个失败的项目回顾](tech/website_from_scratch.md)   
+ - [终端随机机械图](projects/mech_colorscript.md)(未开始)

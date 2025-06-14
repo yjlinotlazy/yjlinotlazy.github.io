@@ -1,1 +1,44 @@
 # 备份文件侠
+
+## 用户需求
+
+待解决的问题：每次linux装机都要手动修改不少文件，散落在各个角落，有些
+是/home下面的，有些是/etc这样全局的。回头很难找回来修改了啥，下次装
+系统又要重头开始。
+
+## 设计思路
+
+思路：备份本身使用rsync
+
+```
+rsync -avrP <src> <dest>
+```
+
+需要记录所有相关文件的路径，并让rsync知道。
+
+ - 设定一个默认目标文件夹。 
+ - 添加备份文件列表
+   - 采用一个csv，如果分别知道src, dest，就写入一行`src,dest`
+   - 如果对dest没有特定的要求，就写入`src,`，留空第二列
+
+备份
+
+ - 遍历备份列表，对于每一行，提取src, dest。如果dest为空，则采用跟src
+   一样的结构，`<default_dest>/<src>`，这样的。比如我想随时备份
+   `/etc/share/sddm/theme.conf`，我就把这个文件路径加到备份列表里。
+   dest会自动生成为`~/dropbox/etc/share/sddm/theme.conf`。
+ - 执行`rsync -avrP <src> <dest>`
+ - 以上在python里用subprocess实现
+ 
+## 使用
+
+遇到需要备份的文件，就跑一个`echo "<src_path>," >> ~/syncall_db.csv`
+
+在`.zshrc`或者`.bashrc`里加入
+
+```
+alias syncall='syncall_py ~/syncall_db.csv'
+```
+
+就可以在任意地方跑syncall了
+

@@ -97,3 +97,30 @@ zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 (set-frame-parameter nil 'alpha-background 85)
 (add-to-list 'default-frame-alist '(alpha-background . 85))
 ```
+
+## 其它
+
+有些程序在图形界面可以设置透明背景，比如vscode通过插件，konsole,tilix，
+就不赘述了。
+
+一系列操作完毕后，透明背景达成，可以随时看到一点点好看的桌面背景。
+
+最终效果
+
+![img](personal_web_imgs/screenshot2.png)
+
+## 不折腾不出问题，一折腾就出的新问题
+
+待解决：任何tilinig wm都无法使用，而且装来装去还把SDDM搞坏了
+
+现状是，SDDM下无法选择window manager/desktop environment，只剩个plasma
+x11光杆司令。出现过的另一个问题是，登陆进去啥也不能干，包括使用网上搜
+到的热键也没有响应。研究一番发现，这个是两个问题的组合，1.tiling WM无
+法使用，2. .xinitrc被修改并默认进去那个不能使用的wm。既然如此，就修改~/.xinitrc
+
+```
+#!/bin/sh
+exec startplasma-x11
+```
+
+

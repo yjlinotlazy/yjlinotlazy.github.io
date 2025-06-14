@@ -1,0 +1,16 @@
+# 终端机械随机图
+
+创意抄袭自：
+[pokemon-colorscripts](https://gitlab.com/phoneybadger/pokemon-colorscripts)
+
+## 用户需求
+
+从图片到上面链接里的效果一条龙。简单来说就是我有一张喜欢的图片，我想让
+它以unicode art的形式出现，并在打开终端时随机显示。初衷是
+机器人图片，但实际并没有限制。
+
+## 设计思路
+
+## 使用
+
+我用的是zsh，通过oh my zsh配的。但我不记得来源是官网还是被额外配置过的
