@@ -2,6 +2,9 @@
 
 ## 基本系统安装：双启动windows和arch linux
 
+我参考的应该是这个[教程](https://www.youtube.com/watch?v=QTVQpvSoSIA)
+和[这个](https://www.youtube.com/watch?v=LiG2wMkcrFE)
+
 笔记本出厂自带windows，保留windows的情况下加塞arch linux。官网下载安装
 用的iso，一步步跟着提示走，有问题查arch wiki就差不多了。几个注意点：
 

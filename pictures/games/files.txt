@@ -1,0 +1,10 @@
+files.txt
+foldcomic02.jpg
+foldcomic03.jpg
+foldcomic04.jpg
+foldcomic05.jpg
+foldcomic06.jpg
+foldcomic07.jpg
+foldcomic11.jpg
+foldcomic12.jpg
+foldcomic13.jpg
