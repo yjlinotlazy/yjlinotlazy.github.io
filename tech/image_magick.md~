@@ -1,0 +1,65 @@
+# 用ImageMagick批处理图像
+
+写一个Makefile，专门准备一个文件夹放需要处理的图片，在这个文件夹终端跑
+
+```
+make small # 全部图片生成640x480大小的版本，并加上small前缀
+make medium # 同理
+make all # 生成480x360的特小版本作为thumb nail使用，并挂上th前缀
+make frame # 图片加上黑色细边框，并加上前缀f
+```
+
+```
+#conver image size
+all:
+	@for k in *.jpg; \
+		do \
+		echo $$k ; \
+		name=`echo $$k | cut -f1 -d.`; \
+		convert -geometry 480x360 $$k th$${name}.jpg; \
+		done
+small:
+	@for k in *.jpg; \
+		do \
+		echo $$k ; \
+		name=`echo $$k | cut -f1 -d.`; \
+		convert -geometry 640x480 $$k small$${name}.jpg; \
+		done
+medium:
+	@for k in *.jpg; \
+		do \
+		echo $$k ; \
+		name=`echo $$k | cut -f1 -d.`; \
+		convert -geometry 800x600 $$k medium$${name}.jpg; \
+		done
+frame:
+	@for k in *.jpg; \
+		do \
+		echo $$k ; \
+		name=`echo $$k | cut -f1 -d.`; \
+		magick $$k -bordercolor black -border 1 -depth 8 -colors 256 -quality 90 f$${name}.jpg; \
+		done
+
+fancy:
+	@for k in *.jpg; \
+		do \
+		echo $$k ; \
+		name=`echo $$k | cut -f1 -d.`; \
+		convert -bordercolor black -border 1 $$k -background none \( +clone -shadow 80x2+2+2 \) +swap -background white -flatten -depth 8 -colors 256 -quality 90 f$${name}.jpg; \
+		done
+fancy5:
+	@for k in *.jpg; \
+		do \
+		echo $$k ; \
+		name=`echo $$k | cut -f1 -d.`; \
+		convert -geometry 50%x50% -bordercolor black -border 1 $$k -background none \( +clone -shadow 80x2+2+2 \) +swap -background white -flatten -depth 8 -colors 256 -quality 90 f$${name}.jpg; \
+		done
+fancy4:
+	@for k in *.jpg; \
+		do \
+		echo $$k ; \
+		name=`echo $$k | cut -f1 -d.`; \
+		convert -geometry 40%x40% -bordercolor black -border 1 $$k -background none \( +clone -shadow 80x2+2+2 \) +swap -background white -flatten -depth 8 -colors 256 -quality 90 f$${name}.jpg; \
+		done
+
+```
