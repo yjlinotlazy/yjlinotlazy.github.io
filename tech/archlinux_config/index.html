@@ -1,4 +1,4 @@
-
+    
 <!doctype html>
 <html lang="en" class="no-js">
   <head>
@@ -12,7 +12,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.13">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.19">
     
     
       
@@ -20,7 +20,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.342714a4.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.7e37652d.min.css">
       
       
 
@@ -45,6 +45,10 @@
 
     
     
+    
+      
+      <!-- Add your custom content here, e.g., meta tags, link tags for stylesheets, or script tags -->
+      <meta name="google-site-verification" content="SnJOKoYcsK_pq7MoT_3c_w-JczJ9abEcMytlFg3iq68" />
     
   </head>
   
@@ -380,6 +384,15 @@
         <li class="md-nav__item">
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
+      中文
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
       终端下的文件夹背景色
     </span>
   </a>
@@ -405,7 +418,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       其它
     </span>
@@ -414,7 +427,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#_5" class="md-nav__link">
     <span class="md-ellipsis">
       不折腾不出问题，一折腾就出的新问题
     </span>
@@ -474,6 +487,7 @@ autostart里不相关的部分删掉，并让kde的autostart跑这个脚本。�
 </code></pre>
 <p>最终效果，香蕉是鼠标指针</p>
 <p><img alt="img" src="../screenshot.png" /></p>
+<p>最新配置在<a href="https://github.com/yjlinotlazy/bspwm-dots-2.0" target="_blank">github</a></p>
 <p>系统资源占用</p>
 <p><img alt="img" src="../personal_web_imgs/sys_usage.png" /></p>
 <p>可以看出，plasma本身没有太夸张，X，eww，kwin就贡献了不少。brave浏览器
@@ -491,7 +505,28 @@ autostart里不相关的部分删掉，并让kde的autostart跑这个脚本。�
 <pre><code>background_opacity 0.85
 shell zsh
 </code></pre>
-<h2 id="_2">终端下的文件夹背景色</h2>
+<h2 id="_2">中文</h2>
+<p>用fcitx。自从kde plasma换成wayland后，突然只有浏览器里能切换了，解决办
+法是</p>
+<pre><code># /etc/environment
+GTK_IM_MODULE=fcitx
+QT_IM_MODULE=fcitx
+XMODIFIERS=@im=fcitx
+SDL_IM_MODULE=fcitx
+GLFW_IM_MODULE=fcitx
+</code></pre>
+<p>或者</p>
+<pre><code># ~/.xprofile
+export XIM=fcitx
+export XIM_PROGRAM=fcitx
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS=&quot;@im=fcitx&quot;
+eval `dbus-launch --sh-syntax --exit-with-session`
+exec fcitx &amp;
+</code></pre>
+<p>我两个都改了，重启电脑就好了。可能只需要改一个。</p>
+<h2 id="_3">终端下的文件夹背景色</h2>
 <p>默认配置下，ls如果遇到权限过宽的文件夹（比如777），背景会被高亮。这对
 于强制开放windows分区共享的双系统就很不方便。可以按照<a href="https://unix.stackexchange.com/questions/241726/fix-ls-colors-for-directories-with-777-permission">这个答
 案
@@ -511,13 +546,13 @@ shell zsh
 <code>/etc/nanorc</code>，高亮参考<a href="https://wiki.archlinux.org/title/Nano#Syntax_highlighting">这
 里</a>。我还安
 装了nano-syntax-highlighting包，也许不是必须的。</p>
-<h2 id="_3">其它</h2>
+<h2 id="_4">其它</h2>
 <p>有些程序在图形界面可以设置透明背景，比如vscode通过插件，konsole,tilix，
 就不赘述了。</p>
 <p>一系列操作完毕后，透明背景达成，可以随时看到一点点好看的桌面背景。</p>
 <p>最终效果</p>
 <p><img alt="img" src="../personal_web_imgs/screenshot2.png" /></p>
-<h2 id="_4">不折腾不出问题，一折腾就出的新问题</h2>
+<h2 id="_5">不折腾不出问题，一折腾就出的新问题</h2>
 <p>待解决：任何tilinig wm都无法使用，而且装来装去还把SDDM搞坏了</p>
 <p>现状是，SDDM下无法选择window manager/desktop environment，只剩个plasma
 x11光杆司令。出现过的另一个问题是，登陆进去啥也不能干，包括使用网上搜
@@ -574,10 +609,10 @@ exec startplasma-x11
     
     
       
-      <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      <script src="../../assets/javascripts/bundle.92b07e13.min.js"></script>
       
     
   </body>

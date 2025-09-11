@@ -1,4 +1,4 @@
-
+    
 <!doctype html>
 <html lang="en" class="no-js">
   <head>
@@ -12,7 +12,7 @@
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.13">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.19">
     
     
       
@@ -20,7 +20,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.342714a4.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.7e37652d.min.css">
       
       
 
@@ -45,6 +45,10 @@
 
     
     
+    
+      
+      <!-- Add your custom content here, e.g., meta tags, link tags for stylesheets, or script tags -->
+      <meta name="google-site-verification" content="SnJOKoYcsK_pq7MoT_3c_w-JczJ9abEcMytlFg3iq68" />
     
   </head>
   
@@ -351,11 +355,35 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#data-vs-prediction" class="md-nav__link">
+  <a href="#feed-forward-from-input-to-prediction" class="md-nav__link">
     <span class="md-ellipsis">
-      Data vs prediction
+      Feed forward, from input to prediction
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Feed forward, from input to prediction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#first-layer" class="md-nav__link">
+    <span class="md-ellipsis">
+      First layer
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#output-layer" class="md-nav__link">
+    <span class="md-ellipsis">
+      Output layer
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -838,23 +866,26 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>This is a badly drawn but still valid fully connected neural net with 3 features, 1 hidden layer, and 1-dimensional output.</p>
+<p>A lot of the basics of this note is built upon the perceptron algorithm. Read that note first.</p>
+<p>This is a terribly drawn but still valid fully connected neural net with 3 input features (x1, x2, x3), 1 hidden layer (node1, node2), and 1-dimensional output (y). Not shown in this picture is a bias term, to prevent trivial prediction at <code>x=[0, 0, 0]</code> regardless of weights. We could introduced the bias term by a constant node with value=1, but I decided to separate it out for easier reading later.</p>
+<p>We say it's fully connected because each node is connected with all nodes in the next layer. This can be seen as a generic representation. A sparse network is simply one with most weights=0.</p>
+<p>We notate the weights as: <code>w[i,j]</code> is the weight between node_i and input x_j</p>
 <pre><code>x1
-  |\
+  \\
   | \
-  |  \
-  |   \
-  | |--node1
-  | |   / \
-  | |  /   \
-x2--+-/     y
-  | | \    /
-  | |  \  /
-  |-+- node2
-    | /
-    |/ 
-    /
-   /
+  |  w11
+  w21 \
+  \  --node1
+   \w12 /\
+   /\  /  \
+x2/  \/    y
+ w22 /\   /
+   \/  \ /
+   /\-node2
+w13  /
+ /  / 
+| w23
+| /
 x3
 </code></pre>
 </div>
@@ -867,7 +898,204 @@ x3
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="formulation">Formulation<a class="anchor-link" href="#formulation">¶</a></h3><p>Here's the formula for above network, given the feature values of a single data point,</p>
+<p>Before getting into details, we claim that neural network can help us with cognitive tasks by telling us about whether an object is</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="CodeMirror cm-s-jupyter">
+<div class="zeroclipboard-container">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-1">
+<div>
+<span class="notice" hidden="">Copied!</span>
+<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
+<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+</clipboard-copy>
+</div>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">keras.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">mnist</span>
+
+<span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">),(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span> <span class="o">=</span> <span class="n">mnist</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span>
+<span class="n">x_train</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">y_train</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">x_test</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">y_test</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+<div class="clipboard-copy-txt" id="cell-1">from keras.datasets import mnist
+
+(x_train, y_train),(x_test, y_test) = mnist.load_data()
+x_train.shape, y_train.shape, x_test.shape, y_test.shape</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">ModuleNotFoundError</span>                       Traceback (most recent call last)
+<span class="ansi-cyan-fg">Cell</span><span class="ansi-cyan-fg"> </span><span class="ansi-green-fg">In[2]</span><span class="ansi-green-fg">, line 1</span>
+<span class="ansi-green-fg">----&gt; </span><span class="ansi-green-fg">1</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">keras</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">datasets</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> mnist
+<span class="ansi-green-fg">      3</span> (x_train, y_train),(x_test, y_test) = mnist.load_data()
+<span class="ansi-green-fg">      4</span> x_train.shape, y_train.shape, x_test.shape, y_test.shape
+
+<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">~/miniconda3/lib/python3.13/site-packages/keras/__init__.py:7</span>
+<span class="ansi-green-fg">      1</span> <span class="ansi-yellow-fg">"""DO NOT EDIT.</span>
+<span class="ansi-green-fg">      2</span> 
+<span class="ansi-green-fg">      3</span> <span class="ansi-yellow-fg">This file was autogenerated. Do not edit it by hand,</span>
+<span class="ansi-green-fg">      4</span> <span class="ansi-yellow-fg">since your modifications would be overwritten.</span>
+<span class="ansi-green-fg">      5</span> <span class="ansi-yellow-fg">"""</span>
+<span class="ansi-green-fg">----&gt; </span><span class="ansi-green-fg">7</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">keras</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> _tf_keras <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> _tf_keras
+<span class="ansi-green-fg">      8</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">keras</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> activations <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> activations
+<span class="ansi-green-fg">      9</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">keras</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> applications <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> applications
+
+<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">~/miniconda3/lib/python3.13/site-packages/keras/_tf_keras/__init__.py:1</span>
+<span class="ansi-green-fg">----&gt; </span><span class="ansi-green-fg">1</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">keras</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">_tf_keras</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> keras
+
+<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">~/miniconda3/lib/python3.13/site-packages/keras/_tf_keras/keras/__init__.py:7</span>
+<span class="ansi-green-fg">      1</span> <span class="ansi-yellow-fg">"""DO NOT EDIT.</span>
+<span class="ansi-green-fg">      2</span> 
+<span class="ansi-green-fg">      3</span> <span class="ansi-yellow-fg">This file was autogenerated. Do not edit it by hand,</span>
+<span class="ansi-green-fg">      4</span> <span class="ansi-yellow-fg">since your modifications would be overwritten.</span>
+<span class="ansi-green-fg">      5</span> <span class="ansi-yellow-fg">"""</span>
+<span class="ansi-green-fg">----&gt; </span><span class="ansi-green-fg">7</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">keras</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> activations <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> activations
+<span class="ansi-green-fg">      8</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">keras</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> applications <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> applications
+<span class="ansi-green-fg">      9</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">keras</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> callbacks <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> callbacks
+
+<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">~/miniconda3/lib/python3.13/site-packages/keras/activations/__init__.py:7</span>
+<span class="ansi-green-fg">      1</span> <span class="ansi-yellow-fg">"""DO NOT EDIT.</span>
+<span class="ansi-green-fg">      2</span> 
+<span class="ansi-green-fg">      3</span> <span class="ansi-yellow-fg">This file was autogenerated. Do not edit it by hand,</span>
+<span class="ansi-green-fg">      4</span> <span class="ansi-yellow-fg">since your modifications would be overwritten.</span>
+<span class="ansi-green-fg">      5</span> <span class="ansi-yellow-fg">"""</span>
+<span class="ansi-green-fg">----&gt; </span><span class="ansi-green-fg">7</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">keras</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">src</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">activations</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> deserialize <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> deserialize
+<span class="ansi-green-fg">      8</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">keras</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">src</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">activations</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> get <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> get
+<span class="ansi-green-fg">      9</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">keras</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">src</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">activations</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> serialize <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> serialize
+
+<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">~/miniconda3/lib/python3.13/site-packages/keras/src/__init__.py:1</span>
+<span class="ansi-green-fg">----&gt; </span><span class="ansi-green-fg">1</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">keras</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">src</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> activations
+<span class="ansi-green-fg">      2</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">keras</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">src</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> applications
+<span class="ansi-green-fg">      3</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">keras</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">src</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> backend
+
+<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">~/miniconda3/lib/python3.13/site-packages/keras/src/activations/__init__.py:3</span>
+<span class="ansi-green-fg">      1</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">types</span>
+<span class="ansi-green-fg">----&gt; </span><span class="ansi-green-fg">3</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">keras</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">src</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">activations</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">activations</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> celu
+<span class="ansi-green-fg">      4</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">keras</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">src</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">activations</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">activations</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> elu
+<span class="ansi-green-fg">      5</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">keras</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">src</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">activations</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">activations</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> exponential
+
+<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">~/miniconda3/lib/python3.13/site-packages/keras/src/activations/activations.py:1</span>
+<span class="ansi-green-fg">----&gt; </span><span class="ansi-green-fg">1</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">keras</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">src</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> backend
+<span class="ansi-green-fg">      2</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">keras</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">src</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> ops
+<span class="ansi-green-fg">      3</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">keras</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">src</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">api_export</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> keras_export
+
+<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">~/miniconda3/lib/python3.13/site-packages/keras/src/backend/__init__.py:1</span>
+<span class="ansi-green-fg">----&gt; </span><span class="ansi-green-fg">1</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">keras</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">src</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">backend</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">config</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> backend
+<span class="ansi-green-fg">      3</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> backend() == <span class="ansi-yellow-fg">"</span><span class="ansi-yellow-fg">torch</span><span class="ansi-yellow-fg">"</span>:
+<span class="ansi-green-fg">      4</span>     <span style="color: rgb(95,135,135)"># When using the torch backend,</span>
+<span class="ansi-green-fg">      5</span>     <span style="color: rgb(95,135,135)"># torch needs to be imported first, otherwise it will segfault</span>
+<span class="ansi-green-fg">      6</span>     <span style="color: rgb(95,135,135)"># upon import.</span>
+<span class="ansi-green-fg">      7</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">import</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">torch</span>
+
+<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">~/miniconda3/lib/python3.13/site-packages/keras/src/backend/config.py:448</span>
+<span class="ansi-green-fg">    445</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">else</span>:
+<span class="ansi-green-fg">    446</span>         _NNX_ENABLED = <span class="ansi-bold" style="color: rgb(0,135,0)">False</span>
+<span class="ansi-green-fg">--&gt; </span><span class="ansi-green-fg">448</span> <span class="ansi-yellow-bg">set_nnx_enabled</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">_NNX_ENABLED</span><span class="ansi-yellow-bg">)</span>
+
+<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">~/miniconda3/lib/python3.13/site-packages/keras/src/backend/config.py:249</span>, in <span class="ansi-cyan-fg">set_nnx_enabled</span><span class="ansi-blue-fg">(value)</span>
+<span class="ansi-green-fg">    247</span> <span class="ansi-bold" style="color: rgb(0,135,0)">def</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-fg">set_nnx_enabled</span>(value):
+<span class="ansi-green-fg">    248</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">global</span> _NNX_ENABLED
+<span class="ansi-green-fg">--&gt; </span><span class="ansi-green-fg">249</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">keras</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">src</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">backend</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">common</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> global_state
+<span class="ansi-green-fg">    251</span>     _NNX_ENABLED = <span style="color: rgb(0,135,0)">bool</span>(value)
+<span class="ansi-green-fg">    252</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> _NNX_ENABLED:
+
+<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">~/miniconda3/lib/python3.13/site-packages/keras/src/backend/common/__init__.py:2</span>
+<span class="ansi-green-fg">      1</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">keras</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">src</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">backend</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">common</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> backend_utils
+<span class="ansi-green-fg">----&gt; </span><span class="ansi-green-fg">2</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">keras</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">src</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">backend</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">common</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">dtypes</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> result_type
+<span class="ansi-green-fg">      3</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">keras</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">src</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">backend</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">common</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">variables</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> AutocastScope
+<span class="ansi-green-fg">      4</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">keras</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">src</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">backend</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">common</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">variables</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> Variable <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> KerasVariable
+
+<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">~/miniconda3/lib/python3.13/site-packages/keras/src/backend/common/dtypes.py:5</span>
+<span class="ansi-green-fg">      3</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">keras</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">src</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">api_export</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> keras_export
+<span class="ansi-green-fg">      4</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">keras</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">src</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">backend</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> config
+<span class="ansi-green-fg">----&gt; </span><span class="ansi-green-fg">5</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">keras</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">src</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">backend</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">common</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">variables</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> standardize_dtype
+<span class="ansi-green-fg">      7</span> BOOL_TYPES = (<span class="ansi-yellow-fg">"</span><span class="ansi-yellow-fg">bool</span><span class="ansi-yellow-fg">"</span>,)
+<span class="ansi-green-fg">      8</span> INT_TYPES = (
+<span class="ansi-green-fg">      9</span>     <span class="ansi-yellow-fg">"</span><span class="ansi-yellow-fg">uint8</span><span class="ansi-yellow-fg">"</span>,
+<span class="ansi-green-fg">     10</span>     <span class="ansi-yellow-fg">"</span><span class="ansi-yellow-fg">uint16</span><span class="ansi-yellow-fg">"</span>,
+<span class="ansi-green-fg">   (...)</span><span class="ansi-green-fg">     16</span>     <span class="ansi-yellow-fg">"</span><span class="ansi-yellow-fg">int64</span><span class="ansi-yellow-fg">"</span>,
+<span class="ansi-green-fg">     17</span> )
+
+<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">~/miniconda3/lib/python3.13/site-packages/keras/src/backend/common/variables.py:11</span>
+<span class="ansi-green-fg">      9</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">keras</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">src</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">backend</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">common</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">stateless_scope</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> get_stateless_scope
+<span class="ansi-green-fg">     10</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">keras</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">src</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">backend</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">common</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">stateless_scope</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> in_stateless_scope
+<span class="ansi-green-fg">---&gt; </span><span class="ansi-green-fg">11</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">keras</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">src</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">utils</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">module_utils</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> tensorflow <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> tf
+<span class="ansi-green-fg">     12</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">keras</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">src</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">utils</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">naming</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> auto_name
+<span class="ansi-green-fg">     15</span> <span class="ansi-bold" style="color: rgb(0,135,0)">class</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">Variable</span>:
+
+<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">~/miniconda3/lib/python3.13/site-packages/keras/src/utils/__init__.py:1</span>
+<span class="ansi-green-fg">----&gt; </span><span class="ansi-green-fg">1</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">keras</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">src</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">utils</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">audio_dataset_utils</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> audio_dataset_from_directory
+<span class="ansi-green-fg">      2</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">keras</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">src</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">utils</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">dataset_utils</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> split_dataset
+<span class="ansi-green-fg">      3</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">keras</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">src</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">utils</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">file_utils</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> get_file
+
+<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">~/miniconda3/lib/python3.13/site-packages/keras/src/utils/audio_dataset_utils.py:4</span>
+<span class="ansi-green-fg">      1</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">numpy</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">as</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">np</span>
+<span class="ansi-green-fg">      3</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">keras</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">src</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">api_export</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> keras_export
+<span class="ansi-green-fg">----&gt; </span><span class="ansi-green-fg">4</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">keras</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">src</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">utils</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> dataset_utils
+<span class="ansi-green-fg">      5</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">keras</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">src</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">utils</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">module_utils</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> tensorflow <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> tf
+<span class="ansi-green-fg">      6</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">keras</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">src</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">utils</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">module_utils</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> tensorflow_io <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> tfio
+
+<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">~/miniconda3/lib/python3.13/site-packages/keras/src/utils/dataset_utils.py:9</span>
+<span class="ansi-green-fg">      5</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">multiprocessing</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">pool</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> ThreadPool
+<span class="ansi-green-fg">      7</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">numpy</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">as</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">np</span>
+<span class="ansi-green-fg">----&gt; </span><span class="ansi-green-fg">9</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">keras</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">src</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> tree
+<span class="ansi-green-fg">     10</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">keras</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">src</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">api_export</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> keras_export
+<span class="ansi-green-fg">     11</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">keras</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">src</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">utils</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> io_utils
+
+<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">~/miniconda3/lib/python3.13/site-packages/keras/src/tree/__init__.py:1</span>
+<span class="ansi-green-fg">----&gt; </span><span class="ansi-green-fg">1</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">keras</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">src</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">tree</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">tree_api</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> assert_same_paths
+<span class="ansi-green-fg">      2</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">keras</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">src</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">tree</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">tree_api</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> assert_same_structure
+<span class="ansi-green-fg">      3</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">keras</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">src</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">tree</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">tree_api</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> flatten
+
+<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">~/miniconda3/lib/python3.13/site-packages/keras/src/tree/tree_api.py:8</span>
+<span class="ansi-green-fg">      5</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">keras</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">src</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">utils</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">module_utils</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> optree
+<span class="ansi-green-fg">      7</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> optree.available:
+<span class="ansi-green-fg">----&gt; </span><span class="ansi-green-fg">8</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">keras</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">src</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">tree</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> optree_impl <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> tree_impl
+<span class="ansi-green-fg">      9</span> <span class="ansi-bold" style="color: rgb(0,135,0)">elif</span> dmtree.available:
+<span class="ansi-green-fg">     10</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">keras</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">src</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">tree</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> dmtree_impl <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> tree_impl
+
+<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">~/miniconda3/lib/python3.13/site-packages/keras/src/tree/optree_impl.py:13</span>
+<span class="ansi-green-fg">     11</span> <span style="color: rgb(95,135,135)"># Register backend-specific node classes</span>
+<span class="ansi-green-fg">     12</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> backend() == <span class="ansi-yellow-fg">"</span><span class="ansi-yellow-fg">tensorflow</span><span class="ansi-yellow-fg">"</span>:
+<span class="ansi-green-fg">---&gt; </span><span class="ansi-green-fg">13</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">tensorflow</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">python</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">trackable</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">data_structures</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> ListWrapper
+<span class="ansi-green-fg">     14</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-blue-intense-fg ansi-bold">tensorflow</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">python</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">trackable</span><span class="ansi-blue-intense-fg ansi-bold">.</span><span class="ansi-blue-intense-fg ansi-bold">data_structures</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> _DictWrapper
+<span class="ansi-green-fg">     16</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">try</span>:
+
+<span class="ansi-red-fg">ModuleNotFoundError</span>: No module named 'tensorflow'</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="formulation">Formulation<a class="anchor-link" href="#formulation">¶</a></h3><p>Here's the formula for above network, given the feature values of a single data point (x1, x2). The actual representation might vary in different tutorials but the idea is the same. You multiply each feature value with its weight towards nodes. The value at each node is the sume of val*weight of all features connected to it. Finally, a bias term <code>b</code> is added before the activation function.</p>
+<p>For activation, we use the simoid function, $\sigma$, for both layers</p>
+<p>$$\sigma(x) = \frac{1}{1 + e^{-x}}$$</p>
 <p>First layer:</p>
 <p>$$
 \begin{bmatrix}
@@ -888,7 +1116,8 @@ x_3
 +
 \begin{bmatrix}
 b_1 \\
-b_2
+b_2 \\
+b_3
 \end{bmatrix}
 )
 $$</p>
@@ -907,8 +1136,7 @@ node2 \\
 d
 )
 $$</p>
-<p>$w$ and $\beta$ are the weights and $b, d$ are the bias terms. The simoid function, $\sigma$, is used as activation function for both layers</p>
-<p>$$\sigma(x) = \frac{1}{1 + e^{-x}}$$</p>
+<p>$w$ and $\beta$ are the weights and $b, d$ are the bias terms.</p>
 </div>
 </div>
 </div>
@@ -919,8 +1147,39 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="data-vs-prediction">Data vs prediction<a class="anchor-link" href="#data-vs-prediction">¶</a></h3><p>Suppose there are n samples, to go from those $x$ values to expected $y$ values, include all samples and slightly rearrange above formula to</p>
-<p>First layer</p>
+<h3 id="feed-forward-from-input-to-prediction">Feed forward, from input to prediction<a class="anchor-link" href="#feed-forward-from-input-to-prediction">¶</a></h3><h4 id="first-layer">First layer<a class="anchor-link" href="#first-layer">¶</a></h4><p>Suppose there are n samples, to go from those $x$ values to the first layer, we include all samples and layout the entire thing in a matrix form. Here</p>
+<ul>
+<li>$N^i$ means the vector $[node_1, node_2]$ calculated from the ith sample.</li>
+<li>$X^i$ means $[x_1, x_2, x_3]$ of the ith sample</li>
+<li>$W$ means the entire weight vector, transposed to whichever shape it needs to be for matrbix match, either 2x3 or 3x2</li>
+<li>Similarly, $B$ is the bias term vector.</li>
+</ul>
+<p>$$
+\begin{bmatrix} 
+N^1 \\
+N^2 \\
+... \\
+N^n
+\end{bmatrix}
+=
+\sigma(
+\begin{bmatrix} 
+X^1 \\
+X^2 \\
+... \\
+X^n
+\end{bmatrix}
+W
++
+\begin{bmatrix}
+B \\
+B \\
+... \\
+B \\
+\end{bmatrix}
+)
+$$</p>
+<p>which is really:</p>
 <p>$$
 \begin{bmatrix} 
 node_{11} &amp; node_{12} \\
@@ -931,7 +1190,7 @@ node_{n1} &amp; node_{n2}
 =
 \sigma(
 \begin{bmatrix} 
-x_{11} &amp; x_{12} &amp; x_{13} \\
+x_{11} &amp; x_{12} &amp; x_{12} \\
 x_{21} &amp; x_{22} &amp; x_{23} \\
 ... \\
 x_{n1} &amp; x_{n2} &amp; x_{n3}
@@ -945,13 +1204,12 @@ w_{13} &amp; w_{23}
 \begin{bmatrix}
 b_1 &amp; b_2 \\
 b_1 &amp; b_2 \\
-...\\
-b_1 &amp; b_2
+... \\
+b_1 &amp; b_2 \\
 \end{bmatrix}
 )
-= \sigma(XW^T + B)
 $$</p>
-<p>Output layer</p>
+<h4 id="output-layer">Output layer<a class="anchor-link" href="#output-layer">¶</a></h4><p>Similarly, to get to the output, we have</p>
 <p>$$
 \hat{Y} =
 \begin{bmatrix}
@@ -980,8 +1238,30 @@ d \\
 d
 \end{bmatrix}
 )
-= \sigma(Nodes\times V^T + D)
+= \sigma(Nodes\times V + D)
 $$</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p><strong>Let's put this into action and do some predictions!</strong></p>
+<p>Since we don't know what the weights and biases are, we will just use some random values and parameterized the functions</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>However, in this imperfect world, there's usually a gap between actual and expected value.
 Instead of using sum-of-sqaures error, let's introduce another cost function suitable for
 using the sigmoid function for probability estimations.</p>
@@ -1021,7 +1301,7 @@ w.r.t all weights and biases.</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
-<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-1">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-2">
 <div>
 <span class="notice" hidden="">Copied!</span>
 <svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
@@ -1033,7 +1313,34 @@ w.r.t all weights and biases.</p>
 </div>
 <div class="highlight-ipynb hl-python"><pre><span></span><span class="c1">#### An</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-1">#### An</div>
+<div class="clipboard-copy-txt" id="cell-2">#### An</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="CodeMirror cm-s-jupyter">
+<div class="zeroclipboard-container">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-3">
+<div>
+<span class="notice" hidden="">Copied!</span>
+<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
+<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+</clipboard-copy>
+</div>
+<div class="highlight-ipynb hl-python"><pre><span></span>
+</pre></div>
+<div class="clipboard-copy-txt" id="cell-3"></div>
 </div>
 </div>
 </div>
@@ -1095,10 +1402,10 @@ w.r.t all weights and biases.</p>
     
     
       
-      <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.92b07e13.min.js"></script>
       
     
   </body>

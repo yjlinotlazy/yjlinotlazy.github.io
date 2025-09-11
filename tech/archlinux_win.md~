@@ -74,6 +74,8 @@ systemctl start auto-cpufreq
  - findimagedupes：寻找相似的图片。`findimagedupes -R -- . > dups.log`。
    相似，不一定相同。
  - neovim/lazyvim。真香，相见恨晚，可以取代IDE。
+ - yt-dlp：下载youtube视频到本地的命令行工具
+ - 
 
 ## 共享硬盘
 

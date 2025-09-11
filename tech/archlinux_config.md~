@@ -98,6 +98,13 @@ zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 (add-to-list 'default-frame-alist '(alpha-background . 85))
 ```
 
+## nano
+
+是的，nano也可以配置，比如语法高亮，自动换行等等。配置文件是
+`/etc/nanorc`，高亮参考[这
+里](https://wiki.archlinux.org/title/Nano#Syntax_highlighting)。我还安
+装了nano-syntax-highlighting包，也许不是必须的。
+
 ## 其它
 
 有些程序在图形界面可以设置透明背景，比如vscode通过插件，konsole,tilix，

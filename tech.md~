@@ -15,6 +15,7 @@ Most notebooks are available in [this github repo](https://github.com/yjlinotlaz
  * [Basic Neural Network](tech/ml/basic_neural_net.ipynb)
  
 ## 捣腾配置，软件
+ * [用ImageMagick批处理图片](tech/image_magick.md)
  * [Update root partition](tech/update_root_partition.md)
  * [Arch Linux + windows 11 双启动](tech/archlinux_win.md)
  * [用mkdocs做个人网站](tech/mkdocs.md)
@@ -22,7 +23,7 @@ Most notebooks are available in [this github repo](https://github.com/yjlinotlaz
  * [小霸王机器学习机配置](tech/archlinux_config.md)
  * [emacs配置](tech/emacs.md)
  * [neovim配置](tech/neovim.md)
- * [吐槽linux](tech/whining.md)
+ * [吐槽linux+小问题解决方案](tech/whining.md)
 
 ## 小镇做题虾
 
