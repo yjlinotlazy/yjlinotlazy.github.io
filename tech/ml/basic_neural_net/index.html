@@ -524,6 +524,33 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#neural-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      Neural network
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#train-and-test-modes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Train and test modes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-on-the-test-set" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performance on the test set
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -977,38 +1004,6 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </style>
 <!-- End of mermaid configuration --><div class="jupyter-wrapper">
 <div class="jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [19]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="CodeMirror cm-s-jupyter">
-<div class="zeroclipboard-container">
-<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-1">
-<div>
-<span class="notice" hidden="">Copied!</span>
-<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
-<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
-<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
-</svg>
-</div>
-</clipboard-copy>
-</div>
-<div class="highlight-ipynb hl-python"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-</pre></div>
-<div class="clipboard-copy-txt" id="cell-1">import math
-import matplotlib.pyplot as plt
-import numpy as np</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
@@ -1044,6 +1039,39 @@ import numpy as np</div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>Before getting into details, we claim that neural network can help us with cognitive tasks by telling us about whether an object is. I wanted to build my own with some funny objects, but decided that's too much work. So we'll use the number dataset that's readily available.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [167]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="CodeMirror cm-s-jupyter">
+<div class="zeroclipboard-container">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-1">
+<div>
+<span class="notice" hidden="">Copied!</span>
+<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
+<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+</clipboard-copy>
+</div>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+</pre></div>
+<div class="clipboard-copy-txt" id="cell-1">import math
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd</div>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -1122,7 +1150,7 @@ To enable the following instructions: SSE4.1 SSE4.2 AVX AVX2 AVX_VNNI FMA, in ot
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [21]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [523]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-3">
@@ -1144,6 +1172,7 @@ To enable the following instructions: SSE4.1 SSE4.2 AVX AVX2 AVX_VNNI FMA, in ot
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">com</span><span class="p">)</span>
 
 <span class="n">x_train</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">compress</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">x_train_raw</span><span class="p">])</span>
+<span class="n">x_test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">compress</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">x_test_raw</span><span class="p">])</span>
 </pre></div>
 <div class="clipboard-copy-txt" id="cell-3">def compress(img, fold=2):
     n = img.shape[0]
@@ -1153,7 +1182,8 @@ To enable the following instructions: SSE4.1 SSE4.2 AVX AVX2 AVX_VNNI FMA, in ot
     com = [c[1:-2] for c in com]
     return np.array(com)
 
-x_train = np.array([compress(x, 2) for x in x_train_raw])</div>
+x_train = np.array([compress(x, 2) for x in x_train_raw])
+x_test = np.array([compress(x, 2) for x in x_test_raw])</div>
 </div>
 </div>
 </div>
@@ -1464,7 +1494,7 @@ $$</p>
 <h2 id="lets-go-even-further-and-do-some-predictions">Let's go even further and do some predictions!<a class="anchor-link" href="#lets-go-even-further-and-do-some-predictions">¶</a></h2><p>To tackle the number prediction problem, we use a larger network such that</p>
 <ul>
 <li>input layer has 121 features</li>
-<li>1st layer has 10 nodes</li>
+<li>1st layer has 20 nodes</li>
 <li>output layer has 10 nodes, representing 0-9.</li>
 </ul>
 <p>Since we don't know what the weights and biases are, we will just use some random values and parameterized the functions. Summarizing all the calculations above, we have a basic naive predictor:</p>
@@ -1477,7 +1507,7 @@ $$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [134]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [399]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-6">
@@ -1492,19 +1522,21 @@ $$</p>
 </div>
 <div class="highlight-ipynb hl-python"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">NaiveNeuralNet</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">121</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">121</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">softmax</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">softmax</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float128</span><span class="p">)</span>
         <span class="c1"># to avoid overflow due to super large x, we subtract the max</span>
         <span class="n">xx</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
         <span class="n">exp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">exp</span> <span class="o">/</span> <span class="n">exp</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">exp</span> <span class="o">/</span> <span class="n">exp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">sigmoid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float128</span><span class="p">)</span>
         <span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="p">))</span>
 
@@ -1531,19 +1563,21 @@ $$</p>
 </pre></div>
 <div class="clipboard-copy-txt" id="cell-6">class NaiveNeuralNet:
     def __init__(self):
-        self.w = np.random.randn(10,121)
-        self.v = np.random.randn(10,10)
-        self.b = np.random.randn(10)
+        self.w = np.random.randn(20,121)
+        self.v = np.random.randn(10,20)
+        self.b = np.random.randn(20)
         self.d = np.random.randn(10)
 
-    def softmax(self, x):
+    @staticmethod
+    def softmax(x):
         x = np.array(x, dtype=np.float128)
         # to avoid overflow due to super large x, we subtract the max
         xx = x - np.max(x)
         exp = np.exp(xx)
-        return exp / exp.sum()
+        return exp / exp.sum(axis=1, keepdims=True)
 
-    def sigmoid(self, x):
+    @staticmethod
+    def sigmoid(x):
         x = np.array(x, dtype=np.float128)
         return 1 / (1 + np.exp(-x))
 
@@ -1578,7 +1612,7 @@ $$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [135]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [400]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-7">
@@ -1605,17 +1639,17 @@ net.predict_scores(imgs[:3])</div>
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[135]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[400]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>array([[3.64810619e-02, 1.03299448e-03, 2.43131119e-02, 3.76546327e-02,
-        3.43512916e-04, 4.96565025e-04, 1.16809335e-04, 1.56529937e-03,
-        1.32573302e-01, 2.14142314e-03],
-       [2.03675622e-02, 2.97026111e-03, 2.43675207e-02, 2.68785053e-02,
-        4.68369983e-03, 2.97247051e-03, 3.89367839e-05, 4.38600797e-02,
-        1.37742411e-01, 4.61482359e-03],
-       [2.02833387e-03, 1.08877805e-03, 1.20588367e-02, 5.68609340e-03,
-        2.11478341e-03, 2.32176713e-02, 1.41543424e-05, 4.83614539e-02,
-        3.99496244e-01, 7.18667972e-04]], dtype=float128)</pre>
+<pre>array([[9.35205551e-01, 1.67069978e-03, 3.01476927e-03, 1.65483827e-02,
+        5.51737888e-04, 2.71009969e-05, 3.91528375e-02, 7.73713606e-05,
+        2.21130439e-04, 3.53041919e-03],
+       [2.31454335e-01, 2.78708098e-04, 1.07199313e-03, 6.77965641e-01,
+        2.51910835e-02, 3.69573108e-05, 4.92609756e-02, 4.87169969e-03,
+        2.35934251e-03, 7.50926412e-03],
+       [3.77629835e-01, 2.57955233e-04, 2.71079986e-03, 5.18559401e-01,
+        1.70052707e-02, 3.04029674e-05, 5.29631525e-03, 5.85975271e-02,
+        1.87688003e-02, 1.14369200e-03]], dtype=float128)</pre>
 </div>
 </div>
 </div>
@@ -1627,7 +1661,7 @@ net.predict_scores(imgs[:3])</div>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [136]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [401]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-8">
@@ -1654,9 +1688,9 @@ net.predict(imgs)</div>
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[136]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[401]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>array([0, 0, 0, 0, 7, 7, 0, 0, 7, 6, 0, 0, 1, 0, 0, 0])</pre>
+<pre>array([8, 8, 8, 5, 8, 5, 8, 8, 8, 8, 8, 8, 1, 8, 8, 8])</pre>
 </div>
 </div>
 </div>
@@ -1927,10 +1961,10 @@ From now on, I'll use $\frac{dy}{dx}$ style notation and $f'$ style interchangea
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>Based on the chain rule, we can breakdown the partial derivatives for w and v into LARGE chains like so:</p>
-<p>$$ \Large
+<p>$$ \large
 \frac{\partial L}{\partial v_{jk}} = \frac{\partial L}{\partial z^o_k}\frac{\partial z^o_k}{\partial v_{jk}}
 $$</p>
-<p>$$ \Large
+<p>$$ \large
 \frac{\partial L}{\partial w_{ij}} = \frac{\partial L}{\partial z^o_k} \frac{\partial z^o_k}{\partial x^h_j} \frac{\partial x^h_j}{\partial z^h_j} \frac{\partial z^h_j}{\partial w_{ij}}
 $$</p>
 <p>Going layer by layer back, we start with derivative of cost function</p>
@@ -1952,7 +1986,7 @@ $$</p>
 $$</p>
 <p>There are two cases, $i==j$ or $i\neq j$</p>
 <p>if $i==j$, then $\Large \frac{\partial}{\partial z_i}(\sum e^{z_k})$ reduces to $\Large \frac{\partial}{\partial z_i} e^{z_i}$, because $z_i$ and $z_k$s are independent</p>
-<p>$$ \Large
+<p>$$ \large
 \begin{align}
 \dfrac{\partial \frac{e^{z_i}}{\sum_{1}^{m}(e^{z_k})}}{\partial(z_i)}
 &amp;= \frac{(e^{z_i})'\sum(e^{z_k})-(\sum e^{z_k})'e^{z_i}}{(\sum e^{z_k})^2} \\
@@ -1963,7 +1997,7 @@ $$</p>
 $$</p>
 <p>This is nice, we can express the derivative of softmax in terms of the softmax itself</p>
 <p>if $i\neq j$, we have $\Large \frac{\partial}{\partial e_j} e^{z_i}=0$, and $\Large \frac{\partial}{\partial z_j}(\sum e^{z_k}) = \frac{\partial}{\partial z_j} e^{z_j}$, therefore</p>
-<p>$$ \Large
+<p>$$ \large
 \begin{align}
 \dfrac{\partial(\frac{e^{z_i}}{\sum_{1}^{m}(e^{z_k})})}{\partial(z_j)}
 &amp;= \frac{(\frac{\partial}{\partial z_j}e^{z_i})\sum(e^{z_k})-(\frac{\partial}{\partial z_j}\sum e^{z_k})e^{z_i}}{(\sum e^{z_k})^2} \\
@@ -1984,15 +2018,16 @@ $$</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h4 id="derivative-of-the-last-layer">Derivative of the last layer<a class="anchor-link" href="#derivative-of-the-last-layer">¶</a></h4><p>Pulling all together, we have</p>
 <p>$$
-\Large
+\large
 \begin{align}
-\frac{\partial L}{\partial z_i} &amp;= -y_i\frac{1}{\sigma(z_i)}(\sigma(z_i)(1-\sigma(z_i)) - \sum_{k\neq i}y_k\frac{1}{\sigma(z_k)}(-\sigma(z_i)\sigma(z_k)) \\
+\frac{\partial L}{\partial z_i} &amp;= -y_i\frac{1}{\sigma(z_i)}(\sigma(z_i)(1-\sigma(z_i)) \\
+&amp;- \sum_{k\neq i}y_k\frac{1}{\sigma(z_k)}(-\sigma(z_i)\sigma(z_k)) \\
 &amp;= -y_i(1-\sigma(z_i)) - \sum_{k\neq i} -y_k\sigma(z_i) \\
 &amp;= -y_i + \sigma(z_i)(y_i + \sum_{k\neq i} y_k)
 \end{align}
 $$</p>
 <p>Obviously, $y_i + \sum_{k\neq i} y_k$ equals 1 as there's only one object in the image. For only one class can the truth label be 1. So the whole thing simplifies to</p>
-<p>$$ \Large
+<p>$$ \large
 -y_i + \sigma(z_i)
 $$</p>
 </div>
@@ -2006,10 +2041,10 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h4 id="derivativer-over-weights-between-first-and-outupt-layers">Derivativer over weights between first and outupt layers<a class="anchor-link" href="#derivativer-over-weights-between-first-and-outupt-layers">¶</a></h4><p>The last piece is the derivative of softmax over the weights, since weights are what need to be adjusted.</p>
-<p>$$ \Large
+<p>$$ \large
 \frac{\partial z_i}{\partial v_{ik}} = \frac{\partial (v_{i1}x_1 + v_{i2}x_2 ... + v_{ik}x_k + ...)}{\partial v_{ik}} = x_k
 $$</p>
-<p>Where $\Large v_{ik}$s are the weights of edges connecting the first layer nodes with the output layer node i, and x here is the node from the first layer, Not the input layer! I know I should have better notations</p>
+<p>Where $\large v_{ik}$s are the weights of edges connecting the first layer nodes with the output layer node i, and x here is the node from the first layer, Not the input layer! I know I should have better notations</p>
 </div>
 </div>
 </div>
@@ -2021,7 +2056,7 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>Therefore, going from the lost function to the first-&gt;output layer weights, we have</p>
-<p>$$\Large
+<p>$$\large
 \frac{\partial L}{\partial v_{ik}} = \frac{\partial L}{\partial z_i} \frac{\partial z_i}{\partial v_{ik}}= (-y_i + \sigma(z_i)) x_k
 $$</p>
 <p>For the bias term, we replace $x_k$ with 1.</p>
@@ -2037,7 +2072,7 @@ $$</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h4 id="derivative-over-weights-between-input-and-first-layers">Derivative over weights between input and first layers<a class="anchor-link" href="#derivative-over-weights-between-input-and-first-layers">¶</a></h4><p>Updates to weights $w$ is similar. Recall that earlier we have</p>
 <p><img alt="deriv" src="imgs/nn_derivatives.png"/></p>
-<p>$$ \Large
+<p>$$ \large
 \frac{\partial L}{\partial w_{ij}} = \frac{\partial L}{\partial z^o_k} \frac{\partial z^o_k}{\partial x^h_j} \frac{\partial x^h_j}{\partial z^h_j} \frac{\partial z^h_j}{\partial w_{ij}}
 $$</p>
 <p>For the weight between input i and first layer j, from the loss function attributed to output node k</p>
@@ -2051,7 +2086,50 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>We already have $\Large \frac{\partial L}{\partial z^o_k} = -y_k + \sigma(z^o_k)$</p>
+<p>We already have $\large \frac{\partial L}{\partial z^o_k} = -y_k + \sigma(z^o_k)$</p>
+<p>Also, $\large \frac{\partial z^o_k}{\partial x^h_j} = \frac{\partial (x^h V_k + d)}{\partial x^h_j} = v_{jk}$ because only $v_{jk}$ will be multiplied with $x^h_j$ in all these terms.</p>
+<p>Next we solve $\large \frac{\partial x^h_j}{\partial z^h_j}$. We take the derivative of sigmoid.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Let $u = z^h_j$, with the chain rule we have
+$$\large
+\begin{align}
+\frac{\partial \sigma(u)}{\partial u}
+&amp;= (-\frac{1}{1+e^{-u}})' \\
+&amp;= -\frac{1}{(1+e^{-u})^2}(e^{-u})' \\
+&amp;= -\frac{1}{(1+e^{-u})^2}(-e^{-u}) \\
+&amp;= \frac{e^{-u}}{(1+e_{-u})^2} \\
+&amp;= \frac{1}{1+e^{-u}}\frac{e^{-u}}{1+e^{-u}} \\
+&amp;= \frac{1}{1+e^{-u}}(1-\frac{1}{1+e^{-u}}) \\
+&amp;= \sigma(u)(1-\sigma(u))
+\end{align} 
+$$</p>
+<p>The last item in the chain, $\large \frac{\partial z^h_j}{\partial w_{ij}}=\frac{\partial (XW_j+b)}{\partial w_{ij}} = x_{i}$ since only $x_i$ will be multiplied with $w_{ij}$</p>
+<p>Combining all together, we get</p>
+<p>$$\large
+\frac{\partial L}{\partial w_{ij}} = (-y_k+\sigma_{softmax}(z^o_k)) * v_{jk} * (\sigma_{sigmoid}(z^h_j)(1-\sigma_{sigmoid}(z^h_j)) x_i
+$$</p>
+<p>Again, for the bias term, replace $x_i$ with 1.</p>
+<p>With all the tools above, let's expand upon the native neural net to make one that can backpropagate</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="neural-network">Neural network<a class="anchor-link" href="#neural-network">¶</a></h2><p>It took me some trial and errors to get the dimensions right for vectorization. I'll also add the option to modify the size of the hidden layer</p>
 </div>
 </div>
 </div>
@@ -2061,7 +2139,7 @@ $$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [539]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-11">
@@ -2074,9 +2152,488 @@ $$</p>
 </div>
 </clipboard-copy>
 </div>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">SmartNeuralNet</span><span class="p">(</span><span class="n">NaiveNeuralNet</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">n_nodes</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span> <span class="o">=</span> <span class="n">learning_rate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">n_nodes</span><span class="p">,</span><span class="mi">121</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="n">n_nodes</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">n_nodes</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">cost</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">y_true</span><span class="p">):</span>
+        <span class="n">e</span> <span class="o">=</span> <span class="mf">1e-10</span>  <span class="c1"># to avoid actually having ln(0)</span>
+        <span class="n">y_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">y_true</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">y_pred</span><span class="p">))</span>  <span class="c1"># dot product then sum</span>
+        <span class="k">return</span> <span class="n">loss</span> <span class="o">/</span> <span class="n">y_pred</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">backpropagate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="n">num_samples</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">bias_hidden</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_samples</span><span class="p">)])</span>
+        <span class="n">bias_out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">d</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_samples</span><span class="p">)])</span>
+        
+        <span class="c1"># output to first layer</span>
+        <span class="n">z_hidden</span> <span class="o">=</span> <span class="n">x</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">w</span><span class="o">.</span><span class="n">T</span> <span class="o">+</span> <span class="n">bias_hidden</span>
+        <span class="c1"># print(z_hidden.shape, x.shape, self.w.T.shape, bias_hidden.shape)</span>
+        <span class="n">a_hidden</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">z_hidden</span><span class="p">)</span>
+        <span class="c1"># print(a_hidden.shape)</span>
+
+        <span class="n">z_out</span> <span class="o">=</span> <span class="n">a_hidden</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="o">.</span><span class="n">T</span> <span class="o">+</span> <span class="n">bias_out</span>
+        <span class="n">a_out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">z_out</span><span class="p">)</span>
+        <span class="c1"># print(y.shape, a_out.shape, a_hidden.shape)</span>
+        <span class="n">delta_v</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">y</span> <span class="o">+</span> <span class="n">a_out</span><span class="p">)</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">a_hidden</span>
+        <span class="n">delta_bias_out</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">y</span> <span class="o">+</span> <span class="n">a_out</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">delta_v</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="o">.</span><span class="n">shape</span>
+
+        <span class="c1"># first to input layer</span>
+        <span class="c1"># (-y - sigmoid(z_out)) * v</span>
+        <span class="n">delta_w_step_1</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">y</span> <span class="o">+</span> <span class="n">a_out</span><span class="p">)</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">v</span>
+        <span class="c1"># print(delta_w_step_1.shape, self.v.shape)</span>
+        <span class="c1"># * a_hidden * (1-a_hidden) @ x</span>
+        <span class="n">delta_w_step_2</span> <span class="o">=</span> <span class="n">delta_w_step_1</span> <span class="o">*</span> <span class="n">a_hidden</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">a_hidden</span><span class="p">)</span>
+        <span class="n">delta_w</span> <span class="o">=</span> <span class="n">delta_w_step_2</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">x</span>
+        <span class="n">delta_bias_hidden</span> <span class="o">=</span> <span class="n">delta_w_step_2</span>
+
+        <span class="c1"># update weights w, v, biases. Do this at the end since all calculations</span>
+        <span class="c1"># above involve w and v and need to be done first. Subtract delta because</span>
+        <span class="c1"># we want to move aganist the direction where delta is going. We want to</span>
+        <span class="c1"># reduce the gap</span>
+        <span class="c1">#print(delta_v.sum())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span> <span class="o">*</span> <span class="n">delta_w</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">v</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span> <span class="o">*</span> <span class="n">delta_v</span>
+        <span class="c1"># for bias we need to do a sum over all the samples </span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span> <span class="o">*</span> <span class="n">delta_bias_hidden</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">d</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span> <span class="o">*</span> <span class="n">delta_bias_out</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">label_to_classes</span><span class="p">(</span><span class="n">y</span><span class="p">):</span>
+        <span class="c1"># turn a single digit label to multiclass labels</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="mi">10</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">yy</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">y</span><span class="p">):</span>
+            <span class="n">labels</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">yy</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">labels</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">x_flat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">a</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">x</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">epochs</span><span class="p">):</span>
+            <span class="c1"># print out current cost</span>
+            <span class="k">if</span> <span class="n">verbose</span> <span class="ow">and</span> <span class="p">((</span><span class="n">i</span> <span class="o">%</span> <span class="mi">200</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="mi">20</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">5</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="mi">100</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">20</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)):</span>
+                <span class="n">y_curr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">predict_scores</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+                <span class="n">cost</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cost</span><span class="p">(</span><span class="n">y_curr</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+                <span class="n">y_pred</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">tx</span><span class="p">)</span>
+                <span class="n">indices</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">y</span><span class="p">]</span>
+                <span class="n">correct</span> <span class="o">=</span> <span class="p">(</span><span class="n">y_pred</span> <span class="o">==</span> <span class="n">indices</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"cost at epoch </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">cost</span><span class="si">}</span><span class="s2">. Predicted </span><span class="si">{</span><span class="n">correct</span><span class="si">}</span><span class="s2"> samples correctly, or </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="mf">100.0</span><span class="o">*</span><span class="n">correct</span><span class="o">/</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2"> percent"</span><span class="p">)</span>
+            <span class="c1"># backprop to update weights</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">backpropagate</span><span class="p">(</span><span class="n">x_flat</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+<div class="clipboard-copy-txt" id="cell-11">class SmartNeuralNet(NaiveNeuralNet):
+    def __init__(self, learning_rate=0.1, n_nodes=20):
+        super().__init__()
+        self.learning_rate = learning_rate
+        self.w = np.random.randn(n_nodes,121)
+        self.v = np.random.randn(10,n_nodes)
+        self.b = np.random.randn(n_nodes)
+
+    @staticmethod
+    def cost(y_pred, y_true):
+        e = 1e-10  # to avoid actually having ln(0)
+        y_pred = np.clip(y_pred, e, 1.0)
+        loss = -np.sum(y_true * np.log(y_pred))  # dot product then sum
+        return loss / y_pred.shape[0]
+
+    def backpropagate(self, x, y):
+        num_samples = x.shape[0]
+        bias_hidden = np.array([self.b for i in range(num_samples)])
+        bias_out = np.array([self.d for i in range(num_samples)])
+        
+        # output to first layer
+        z_hidden = x @ self.w.T + bias_hidden
+        # print(z_hidden.shape, x.shape, self.w.T.shape, bias_hidden.shape)
+        a_hidden = self.sigmoid(z_hidden)
+        # print(a_hidden.shape)
+
+        z_out = a_hidden @ self.v.T + bias_out
+        a_out = self.softmax(z_out)
+        # print(y.shape, a_out.shape, a_hidden.shape)
+        delta_v = (-y + a_out).T @ a_hidden
+        delta_bias_out = (-y + a_out)
+        assert delta_v.shape == self.v.shape
+
+        # first to input layer
+        # (-y - sigmoid(z_out)) * v
+        delta_w_step_1 = (-y + a_out) @ self.v
+        # print(delta_w_step_1.shape, self.v.shape)
+        # * a_hidden * (1-a_hidden) @ x
+        delta_w_step_2 = delta_w_step_1 * a_hidden * (1 - a_hidden)
+        delta_w = delta_w_step_2.T @ x
+        delta_bias_hidden = delta_w_step_2
+
+        # update weights w, v, biases. Do this at the end since all calculations
+        # above involve w and v and need to be done first. Subtract delta because
+        # we want to move aganist the direction where delta is going. We want to
+        # reduce the gap
+        #print(delta_v.sum())
+        self.w -= self.learning_rate * delta_w
+        self.v -= self.learning_rate * delta_v
+        # for bias we need to do a sum over all the samples 
+        self.b -= self.learning_rate * delta_bias_hidden.sum(axis=0)
+        self.d -= self.learning_rate * delta_bias_out.sum(axis=0)
+
+    @staticmethod
+    def label_to_classes(y):
+        # turn a single digit label to multiclass labels
+        labels = np.zeros((len(y), 10), dtype=int)
+        for i, yy in enumerate(y):
+            labels[i, yy] = 1
+        return labels
+
+    def fit(self, x, y, epochs=200, verbose=True):
+        x_flat = np.array([a.flatten() for a in x])
+        for i in range(epochs):
+            # print out current cost
+            if verbose and ((i % 200 == 0) or (i &lt; 20 and i % 5 == 0) or (i &lt; 100 and i % 20 == 0)):
+                y_curr = self.predict_scores(x)
+                cost = self.cost(y_curr, y)
+                y_pred = self.predict(tx)
+                indices = [np.argmax(p) for p in y]
+                correct = (y_pred == indices).sum()
+                print(f"cost at epoch {i}: {cost}. Predicted {correct} samples correctly, or {round(100.0*correct/x.shape[0],2)} percent")
+            # backprop to update weights
+            self.backpropagate(x_flat, y)</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="train-and-test-modes">Train and test modes<a class="anchor-link" href="#train-and-test-modes">¶</a></h2><p>Make a new model. Take a subset of training samples to train (fit) it and monitor the cost over epochs. To assess the effectiveness of this algorithm, we also look at how many samples we predict correctly.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [529]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="CodeMirror cm-s-jupyter">
+<div class="zeroclipboard-container">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-12">
+<div>
+<span class="notice" hidden="">Copied!</span>
+<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
+<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+</clipboard-copy>
+</div>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">tx</span> <span class="o">=</span> <span class="n">x_train</span><span class="p">[:</span><span class="mi">1000</span><span class="p">]</span>
+<span class="n">ty_raw</span> <span class="o">=</span> <span class="n">y_train</span><span class="p">[:</span><span class="mi">1000</span><span class="p">]</span>
+<span class="n">tx</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">tx</span><span class="p">]</span>
+<span class="n">tx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">tx</span><span class="p">)</span>
+<span class="n">ty</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">label_to_classes</span><span class="p">(</span><span class="n">ty_raw</span><span class="p">)</span>
+</pre></div>
+<div class="clipboard-copy-txt" id="cell-12">tx = x_train[:1000]
+ty_raw = y_train[:1000]
+tx = [a.flatten() for a in tx]
+tx = np.array(tx)
+ty = nn.label_to_classes(ty_raw)</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [520]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="CodeMirror cm-s-jupyter">
+<div class="zeroclipboard-container">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-13">
+<div>
+<span class="notice" hidden="">Copied!</span>
+<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
+<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+</clipboard-copy>
+</div>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">nn</span> <span class="o">=</span> <span class="n">SmartNeuralNet</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.00001</span><span class="p">,</span> <span class="n">n_nodes</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">nn</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">tx</span><span class="p">,</span> <span class="n">ty</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+<div class="clipboard-copy-txt" id="cell-13">nn = SmartNeuralNet(learning_rate=0.00001, n_nodes=100)
+nn.fit(tx, ty, epochs=500, verbose=True)</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>cost at epoch 0: 13.198930496483507. Predicted 92 samples correctly
+cost at epoch 5: 12.167644632532499. Predicted 101 samples correctly
+cost at epoch 10: 11.417701696942665. Predicted 101 samples correctly
+cost at epoch 15: 10.83024405785545. Predicted 103 samples correctly
+cost at epoch 20: 10.320146829744136. Predicted 107 samples correctly
+cost at epoch 40: 8.940267426342567. Predicted 130 samples correctly
+cost at epoch 60: 8.07253134511341. Predicted 134 samples correctly
+cost at epoch 80: 7.489950654295265. Predicted 141 samples correctly
+cost at epoch 200: 5.982117800522912. Predicted 157 samples correctly
+cost at epoch 400: 5.081140574251207. Predicted 179 samples correctly
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="performance-on-the-test-set">Performance on the test set<a class="anchor-link" href="#performance-on-the-test-set">¶</a></h2><p>Recall that we saved a subset as the test set. Let's see how it performs on the test set. We hope it's not too much worse than the train set. It's almost guaranteed that it would be worse than the train set, because the model iterrates over and over on the train set whereas it hasn't "seen" the test set yet.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [532]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="CodeMirror cm-s-jupyter">
+<div class="zeroclipboard-container">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-14">
+<div>
+<span class="notice" hidden="">Copied!</span>
+<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
+<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+</clipboard-copy>
+</div>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">txx</span> <span class="o">=</span> <span class="n">x_test</span><span class="p">[:</span><span class="mi">1000</span><span class="p">]</span>
+<span class="n">tyy_raw</span> <span class="o">=</span> <span class="n">y_test</span><span class="p">[:</span><span class="mi">1000</span><span class="p">]</span>
+<span class="n">txx</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">txx</span><span class="p">]</span>
+<span class="n">txx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">txx</span><span class="p">)</span>
+<span class="n">tyy</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">label_to_classes</span><span class="p">(</span><span class="n">tyy_raw</span><span class="p">)</span>
+
+<span class="n">y_predd</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">txx</span><span class="p">)</span>
+<span class="n">cor</span> <span class="o">=</span> <span class="p">(</span><span class="n">y_predd</span> <span class="o">==</span> <span class="n">tyy_raw</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Predicted </span><span class="si">{</span><span class="n">cor</span><span class="si">}</span><span class="s2"> samples from the test set, or </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="mf">100.0</span><span class="o">*</span><span class="n">cor</span><span class="o">/</span><span class="n">txx</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2"> percent"</span><span class="p">)</span>
+</pre></div>
+<div class="clipboard-copy-txt" id="cell-14">txx = x_test[:1000]
+tyy_raw = y_test[:1000]
+txx = [a.flatten() for a in txx]
+txx = np.array(txx)
+tyy = nn.label_to_classes(tyy_raw)
+
+y_predd = nn.predict(txx)
+cor = (y_predd == tyy_raw).sum()
+print(f"Predicted {cor} samples from the test set, or {round(100.0*cor/txx.shape[0],2)} percent")</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Predicted 152 samples from the test set, or 15.2 percent
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Try the above for a few more times. Maybe for different parameters.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [540]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="CodeMirror cm-s-jupyter">
+<div class="zeroclipboard-container">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-15">
+<div>
+<span class="notice" hidden="">Copied!</span>
+<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
+<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+</clipboard-copy>
+</div>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">nn</span> <span class="o">=</span> <span class="n">SmartNeuralNet</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.0001</span><span class="p">,</span> <span class="n">n_nodes</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">nn</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">tx</span><span class="p">,</span> <span class="n">ty</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">y_predd</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">txx</span><span class="p">)</span>
+<span class="n">cor</span> <span class="o">=</span> <span class="p">(</span><span class="n">y_predd</span> <span class="o">==</span> <span class="n">tyy_raw</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Predicted </span><span class="si">{</span><span class="n">cor</span><span class="si">}</span><span class="s2"> samples from the test set, or </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="mf">100.0</span><span class="o">*</span><span class="n">cor</span><span class="o">/</span><span class="n">txx</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2"> percent"</span><span class="p">)</span>
+</pre></div>
+<div class="clipboard-copy-txt" id="cell-15">nn = SmartNeuralNet(learning_rate=0.0001, n_nodes=100)
+nn.fit(tx, ty, epochs=500, verbose=True)
+
+y_predd = nn.predict(txx)
+cor = (y_predd == tyy_raw).sum()
+print(f"Predicted {cor} samples from the test set, or {round(100.0*cor/txx.shape[0],2)} percent")</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>cost at epoch 0: 10.0488708348618. Predicted 99 samples correctly, or 9.9 percent
+cost at epoch 5: 6.886981741943602. Predicted 108 samples correctly, or 10.8 percent
+cost at epoch 10: 5.830659017113628. Predicted 119 samples correctly, or 11.9 percent
+cost at epoch 15: 5.314125473940891. Predicted 134 samples correctly, or 13.4 percent
+cost at epoch 20: 4.991783899894754. Predicted 155 samples correctly, or 15.5 percent
+cost at epoch 40: 4.215592478986276. Predicted 202 samples correctly, or 20.2 percent
+cost at epoch 60: 3.745509546814985. Predicted 243 samples correctly, or 24.3 percent
+cost at epoch 80: 3.3774466478225027. Predicted 289 samples correctly, or 28.9 percent
+cost at epoch 200: 2.1660509565047277. Predicted 480 samples correctly, or 48.0 percent
+cost at epoch 400: 1.4274599810089086. Predicted 617 samples correctly, or 61.7 percent
+Predicted 496 samples from the test set, or 49.6 percent
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [543]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="CodeMirror cm-s-jupyter">
+<div class="zeroclipboard-container">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-16">
+<div>
+<span class="notice" hidden="">Copied!</span>
+<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
+<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+</clipboard-copy>
+</div>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># some spot checking to make sure it's not an error</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">y_predd</span><span class="p">[:</span><span class="mi">20</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tyy_raw</span><span class="p">[:</span><span class="mi">20</span><span class="p">])</span>
+</pre></div>
+<div class="clipboard-copy-txt" id="cell-16"># some spot checking to make sure it's not an error
+print(y_predd[:20])
+print(tyy_raw[:20])</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>[7 3 1 7 9 1 4 4 4 9 0 2 9 0 1 4 9 7 5 4]
+[7 2 1 0 4 1 4 9 5 9 0 6 9 0 1 5 9 7 3 4]
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h1 id="open-questions">Open questions<a class="anchor-link" href="#open-questions">¶</a></h1><p>Try above a few times and pay attention to a few things:</p>
+<ul>
+<li>What's the initial quality of prediction, before any back propagation? How about when training is done?</li>
+<li>How does the quality of prediction correlate with the cost?</li>
+<li>How does cost go down as we do more epochs? How many epochs did it take to become flat?</li>
+<li>Does cost always reduce or sometimes increarse as well?</li>
+<li>How varied are the results each time you start fresh with a new network</li>
+<li>What happens if you adjust the number of nodes, number of epochs, and/or learning rate?</li>
+<li>What happens if you use more/fewer training samples?</li>
+</ul>
+<p>Further topics for research</p>
+<ul>
+<li>Regularization</li>
+<li>Overfitting</li>
+<li>Factors impacting the performance of neural networks</li>
+</ul>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="CodeMirror cm-s-jupyter">
+<div class="zeroclipboard-container">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-17">
+<div>
+<span class="notice" hidden="">Copied!</span>
+<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
+<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+</clipboard-copy>
+</div>
 <div class="highlight-ipynb hl-python"><pre><span></span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-11"></div>
+<div class="clipboard-copy-txt" id="cell-17"></div>
 </div>
 </div>
 </div>
