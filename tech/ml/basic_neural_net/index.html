@@ -1971,7 +1971,7 @@ $$</p>
 <p>For simplicity, let $\sigma(z_i)$ be the softmax at class i (a.k.a output node i). Recall that $z_i$ is the weighted sum plus bias, over all edges from the first layer to the output layer node i.</p>
 <h4 id="deriavtive-of-cross-entropy-loss">Deriavtive of cross entropy loss<a class="anchor-link" href="#deriavtive-of-cross-entropy-loss">¶</a></h4><p>With some chain rule trick, we get
 $$
-\Large
+\large
 \begin{align}
 \frac{\partial L}{\partial z_i} &amp;= \frac{\partial}{\partial z_i} (-\sum y_k \ln \sigma (z_k)) \\
 &amp;= -\sum y_k \frac{\partial}{\partial z_i} \ln \sigma(z_k) \\
@@ -1981,7 +1981,7 @@ $$
 $$</p>
 <p>We already have $\sigma(z_k)$ calculated during feed forward. We next derive $\Large \frac{\partial (\sigma(z_k))}{\partial z_i}$</p>
 <h4 id="derivative-of-softmax">Derivative of softmax<a class="anchor-link" href="#derivative-of-softmax">¶</a></h4><p>The partial derivative of softmax at class i w.r.t. $z_j$ is:</p>
-<p>$$  \Large 
+<p>$$  \large 
 \frac{\partial(\sigma(z_i))}{\partial(z_j)} = \dfrac{\partial \frac{e^{z_i}}{\sum_{1}^{m}(e^{z_k})}}{\partial(z_j)}
 $$</p>
 <p>There are two cases, $i==j$ or $i\neq j$</p>
