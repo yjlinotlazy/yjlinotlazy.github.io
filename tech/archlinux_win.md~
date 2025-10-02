@@ -75,7 +75,8 @@ systemctl start auto-cpufreq
    相似，不一定相同。
  - neovim/lazyvim。真香，相见恨晚，可以取代IDE。
  - yt-dlp：下载youtube视频到本地的命令行工具
- - 
+ - cmus：终端音乐播放器。由于MOC装不上，就换成了cmus，体验良好
+ - evince：看pdf
 
 ## 共享硬盘
 
