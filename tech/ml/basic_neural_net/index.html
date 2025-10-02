@@ -367,9 +367,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#first-layer" class="md-nav__link">
+  <a href="#hidden-layer" class="md-nav__link">
     <span class="md-ellipsis">
-      First layer
+      Hidden layer
     </span>
   </a>
   
@@ -497,18 +497,18 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#derivativer-over-weights-between-first-and-outupt-layers" class="md-nav__link">
+  <a href="#derivativer-over-weights-between-hidden-and-outupt-layers" class="md-nav__link">
     <span class="md-ellipsis">
-      Derivativer over weights between first and outupt layers
+      Derivativer over weights between hidden and outupt layers
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#derivative-over-weights-between-input-and-first-layers" class="md-nav__link">
+  <a href="#derivative-over-weights-between-input-and-hidden-layers" class="md-nav__link">
     <span class="md-ellipsis">
-      Derivative over weights between input and first layers
+      Derivative over weights between input and hidden layers
     </span>
   </a>
   
@@ -1023,7 +1023,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>A lot of the basics of this note is built upon the perceptron algorithm. Read that note first.</p>
+<p>A lot of the basics of this note is built upon the perceptron algorithm. Read that note first. Apology upfront for all the cumbersum notations below. Those will be useful in the next notebook on RNN, so I'll keep it consistent here.</p>
 <p>This is a terribly drawn but still valid fully connected neural net with 3 input features (x1, x2, x3), 1 hidden layer (node1, node2), and 1-dimensional output (y). Not shown in this picture is a bias term, to prevent trivial prediction at <code>x=[0, 0, 0]</code> regardless of weights. We could introduced the bias term by a constant node with value=1, but I decided to separate it out for easier reading later.</p>
 <p>We say it's fully connected because each node is connected with all nodes in the next layer. This can be seen as a generic representation. A sparse network is simply one with most weights=0.</p>
 <p>We notate the weights as: <code>w[i,j]</code> is the weight between node_i and input x_j</p>
@@ -1320,12 +1320,12 @@ print(imgs.shape)</div>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="formulation">Formulation<a class="anchor-link" href="#formulation">¶</a></h2><p>Here's the formula for the simplified network at the very top, given the feature values of a single data point (x1, x2). The actual representation might vary in different tutorials but the idea is the same. You multiply each feature value with its weight towards nodes. The value at each node is the sum of value*weight of all features connected to it. Finally, a bias term <code>b</code> is added before the activation function.</p>
 <p>For activation, we use the good old sigmoid function to go from input layer to the hidden layer, aka first layer. As a reminder, the sigmoid function is defined as</p>
-<p>$$\sigma(z_i) = \frac{1}{1 + e^{-z_i}}$$</p>
-<p>where $z_i$ is the weighted sum at hidden layer node i. However, we'll do it differently at the output layer. As we want to predict the probabilities of the output being 0-9 respectively, it makes sense to have them add up to 1. The softmax function forces the sum of all probabilites to be 1, so we'll use it for the output layer</p>
-<p>$$\sigma(z_i) = \frac{e^{z_i}}{\sum_{j=1}^{j=m}(e^{-z_j})}$$</p>
-<p>where m is the number of nodes in the output layer and $z_i$ is the weighted sum at output node i. Note that softmax at node_i depends on the weighted sum at other nodes.</p>
+<p>$$\sigma(s_i) = \frac{1}{1 + e^{-s_i}}$$</p>
+<p>where $s_i$ is the weighted sum at hidden layer node i. However, we'll do it differently at the output layer. As we want to predict the probabilities of the output being 0-9 respectively, it makes sense to have them add up to 1. The softmax function forces the sum of all probabilites to be 1, so we'll use it for the output layer</p>
+<p>$$\sigma(s_i) = \frac{e^{s_i}}{\sum_{j=1}^{j=m}(e^{-s_j})}$$</p>
+<p>where m is the number of nodes in the output layer and $s_i$ is the weighted sum at output node i. Note that softmax at node_i depends on the weighted sum at other nodes.</p>
 <p>Writing all items out, we have</p>
-<p>First layer:</p>
+<p>Hidden layer:</p>
 <p>$$
 \begin{bmatrix}
 node1 \\
@@ -1376,7 +1376,7 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="feed-forward-from-input-to-prediction">Feed forward, from input to prediction<a class="anchor-link" href="#feed-forward-from-input-to-prediction">¶</a></h2><h3 id="first-layer">First layer<a class="anchor-link" href="#first-layer">¶</a></h3><p>Suppose there are n samples, to go from those $x$ values to the first layer, we include all samples and layout the entire thing in a matrix form. Here</p>
+<h2 id="feed-forward-from-input-to-prediction">Feed forward, from input to prediction<a class="anchor-link" href="#feed-forward-from-input-to-prediction">¶</a></h2><h3 id="hidden-layer">Hidden layer<a class="anchor-link" href="#hidden-layer">¶</a></h3><p>Suppose there are n samples, to go from those $x$ values to the hidden layer, we include all samples and layout the entire thing in a matrix form. Here</p>
 <ul>
 <li>$N^i$ means the vector $[node_1, node_2]$ calculated from the ith sample.</li>
 <li>$X^i$ means $[x_1, x_2, x_3]$ of the ith sample</li>
@@ -1545,7 +1545,7 @@ $$</p>
         <span class="n">num_samples</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="c1"># flatten the samples into 121 features.</span>
         <span class="n">x_flat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">a</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">x</span><span class="p">])</span>
-        <span class="c1"># First layer</span>
+        <span class="c1"># Hidden layer</span>
         <span class="c1"># add a bias term for each sample.</span>
         <span class="n">bias_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_samples</span><span class="p">)])</span>
         <span class="n">sum_1</span> <span class="o">=</span> <span class="n">x_flat</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">w</span><span class="o">.</span><span class="n">T</span> <span class="o">+</span> <span class="n">bias_1</span>
@@ -1586,7 +1586,7 @@ $$</p>
         num_samples = x.shape[0]
         # flatten the samples into 121 features.
         x_flat = np.array([a.flatten() for a in x])
-        # First layer
+        # Hidden layer
         # add a bias term for each sample.
         bias_1 = np.array([self.b for i in range(num_samples)])
         sum_1 = x_flat @ self.w.T + bias_1
@@ -1721,7 +1721,7 @@ how we should modify the weights towards a better direction (lower errors).</p>
 <h3 id="loss-function-and-cost">Loss function and cost<a class="anchor-link" href="#loss-function-and-cost">¶</a></h3><p>The function that calculates such errors is called the loss function. The sum of the loss
 over all the samples is called the cost.
 The practice of using
-errors at output layer to update weights from the very first hidden layer is called
+errors at output layer to update all the weights is called
 <strong>back propagation</strong>, since we are going backwards. How do we use errors? Would be nice if
 someone can tell me something like "if you change $w_1$ by 0.2, then you can reduce the
 errors by 0.3". Keep in mind that while this tells us the <em>direction</em> of the next move, it
@@ -1734,8 +1734,8 @@ w.r.t all weights and biases.</p>
 L = -(y_{1}\ln\hat{y_1} + y_{2}\ln\hat{y_2}...+y_{n}\hat{y_n})
 $$
 where vector $y$ is the truth and vector $\hat{y}$ is the prediction. The predictioins come from softmax at the corresponding node, so we can also write the loss as</p>
-<p>$$L = -\sum y_i \ln \sigma (z_i)$$</p>
-<p>where $z_i$ is the weighted sum plus bias.</p>
+<p>$$L = -\sum y_i \ln \sigma (s_i)$$</p>
+<p>where $s_i$ is the weighted sum plus bias at the output layer.</p>
 <p>To get an intuition of this function, we look at some examples</p>
 </div>
 </div>
@@ -1962,47 +1962,48 @@ From now on, I'll use $\frac{dy}{dx}$ style notation and $f'$ style interchangea
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>Based on the chain rule, we can breakdown the partial derivatives for w and v into LARGE chains like so:</p>
 <p>$$ \large
-\frac{\partial L}{\partial v_{jk}} = \frac{\partial L}{\partial z^o_k}\frac{\partial z^o_k}{\partial v_{jk}}
+\frac{\partial L}{\partial v_{jk}} = \frac{\partial L}{\partial s_{ok}}\frac{\partial s_{ok}}{\partial v_{jk}}
 $$</p>
 <p>$$ \large
-\frac{\partial L}{\partial w_{ij}} = \frac{\partial L}{\partial z^o_k} \frac{\partial z^o_k}{\partial x^h_j} \frac{\partial x^h_j}{\partial z^h_j} \frac{\partial z^h_j}{\partial w_{ij}}
+\frac{\partial L}{\partial w_{ij}} = \frac{\partial L}{\partial s_{ok}} \frac{\partial s_{ok}}{\partial a_{hj}} \frac{\partial a_{hj}}{\partial s_{hj}} \frac{\partial s_{hj}}{\partial w_{ij}}
 $$</p>
+<p>Where $s_o, s_h$ are the weighted sum at the outer and hidden layers, respectively. $a_h$ is the activated value at the hidden layer.</p>
 <p>Going layer by layer back, we start with derivative of cost function</p>
-<p>For simplicity, let $\sigma(z_i)$ be the softmax at class i (a.k.a output node i). Recall that $z_i$ is the weighted sum plus bias, over all edges from the first layer to the output layer node i.</p>
+<p>For simplicity, let $\sigma(s_i)$ be the softmax at class i (a.k.a output node i). Recall that $s_i$ is the weighted sum plus bias, over all edges from the hidden layer to the output layer node i.</p>
 <h4 id="deriavtive-of-cross-entropy-loss">Deriavtive of cross entropy loss<a class="anchor-link" href="#deriavtive-of-cross-entropy-loss">¶</a></h4><p>With some chain rule trick, we get
 $$
 \large
 \begin{align}
-\frac{\partial L}{\partial z_i} &amp;= \frac{\partial}{\partial z_i} (-\sum y_k \ln \sigma (z_k)) \\
-&amp;= -\sum y_k \frac{\partial}{\partial z_i} \ln \sigma(z_k) \\
-&amp;= -\sum y_k \frac{\partial \ln \sigma (z_k)}{\partial \sigma (z_k)} \frac{\partial \sigma(z_k)}{\partial z_i} \\
-&amp;= -\sum y_k \frac{1}{\sigma(z_k)} \frac{\partial (\sigma(z_k))}{\partial z_i}
+\frac{\partial L}{\partial s_i} &amp;= \frac{\partial}{\partial s_i} (-\sum y_k \ln \sigma (s_k)) \\
+&amp;= -\sum y_k \frac{\partial}{\partial s_i} \ln \sigma(s_k) \\
+&amp;= -\sum y_k \frac{\partial \ln \sigma (s_k)}{\partial \sigma (s_k)} \frac{\partial \sigma(s_k)}{\partial s_i} \\
+&amp;= -\sum y_k \frac{1}{\sigma(s_k)} \frac{\partial (\sigma(s_k))}{\partial s_i}
 \end{align}
 $$</p>
-<p>We already have $\sigma(z_k)$ calculated during feed forward. We next derive $\Large \frac{\partial (\sigma(z_k))}{\partial z_i}$</p>
-<h4 id="derivative-of-softmax">Derivative of softmax<a class="anchor-link" href="#derivative-of-softmax">¶</a></h4><p>The partial derivative of softmax at class i w.r.t. $z_j$ is:</p>
+<p>We already have $\sigma(s_k)$ calculated during feed forward. We next derive $\Large \frac{\partial (\sigma(s_k))}{\partial s_i}$</p>
+<h4 id="derivative-of-softmax">Derivative of softmax<a class="anchor-link" href="#derivative-of-softmax">¶</a></h4><p>The partial derivative of softmax at class i w.r.t. $s_j$ is:</p>
 <p>$$  \large 
-\frac{\partial(\sigma(z_i))}{\partial(z_j)} = \dfrac{\partial \frac{e^{z_i}}{\sum_{1}^{m}(e^{z_k})}}{\partial(z_j)}
+\frac{\partial(\sigma(s_i))}{\partial(s_j)} = \dfrac{\partial \frac{e^{s_i}}{\sum_{1}^{m}(e^{s_k})}}{\partial(s_j)}
 $$</p>
 <p>There are two cases, $i==j$ or $i\neq j$</p>
-<p>if $i==j$, then $\Large \frac{\partial}{\partial z_i}(\sum e^{z_k})$ reduces to $\Large \frac{\partial}{\partial z_i} e^{z_i}$, because $z_i$ and $z_k$s are independent</p>
+<p>if $i==j$, then $\Large \frac{\partial}{\partial s_i}(\sum e^{s_k})$ reduces to $\Large \frac{\partial}{\partial s_i} e^{s_i}$, because $s_i$ and $s_k$s are independent</p>
 <p>$$ \large
 \begin{align}
-\dfrac{\partial \frac{e^{z_i}}{\sum_{1}^{m}(e^{z_k})}}{\partial(z_i)}
-&amp;= \frac{(e^{z_i})'\sum(e^{z_k})-(\sum e^{z_k})'e^{z_i}}{(\sum e^{z_k})^2} \\
-&amp;= \frac{e^{z_i}\sum e^{z_k} - e^{z_i}e^{z_i}}{(\sum e^{z_k})^2} \\
-&amp;= \frac{e^{z_i} (\sum e^{z_k} - e^{z_i})}{\sum e^{z_k} \sum e^{z_k}} \\
-&amp;= \frac{e^{z_i}}{\sum e^{z_k}} (1 - \frac{e^{z_i}}{\sum e^{z_k}}) = \sigma(z_i)(1-\sigma(z_i))
+\dfrac{\partial \frac{e^{s_i}}{\sum_{1}^{m}(e^{s_k})}}{\partial(s_i)}
+&amp;= \frac{(e^{s_i})'\sum(e^{s_k})-(\sum e^{s_k})'e^{s_i}}{(\sum e^{s_k})^2} \\
+&amp;= \frac{e^{s_i}\sum e^{s_k} - e^{s_i}e^{s_i}}{(\sum e^{s_k})^2} \\
+&amp;= \frac{e^{s_i} (\sum e^{s_k} - e^{s_i})}{\sum e^{s_k} \sum e^{s_k}} \\
+&amp;= \frac{e^{s_i}}{\sum e^{s_k}} (1 - \frac{e^{s_i}}{\sum e^{s_k}}) = \sigma(s_i)(1-\sigma(s_i))
 \end{align}
 $$</p>
 <p>This is nice, we can express the derivative of softmax in terms of the softmax itself</p>
-<p>if $i\neq j$, we have $\Large \frac{\partial}{\partial e_j} e^{z_i}=0$, and $\Large \frac{\partial}{\partial z_j}(\sum e^{z_k}) = \frac{\partial}{\partial z_j} e^{z_j}$, therefore</p>
+<p>if $i\neq j$, we have $\Large \frac{\partial}{\partial e_j} e^{s_i}=0$, and $\Large \frac{\partial}{\partial s_j}(\sum e^{s_k}) = \frac{\partial}{\partial s_j} e^{s_j}$, therefore</p>
 <p>$$ \large
 \begin{align}
-\dfrac{\partial(\frac{e^{z_i}}{\sum_{1}^{m}(e^{z_k})})}{\partial(z_j)}
-&amp;= \frac{(\frac{\partial}{\partial z_j}e^{z_i})\sum(e^{z_k})-(\frac{\partial}{\partial z_j}\sum e^{z_k})e^{z_i}}{(\sum e^{z_k})^2} \\
-&amp;= \frac{0-e^{z_j}e^{z_i}}{\sum e^{z_k}\sum e^{z_k}} \\
-&amp;= -\sigma(z_i)\sigma(z_j)
+\dfrac{\partial(\frac{e^{s_i}}{\sum_{1}^{m}(e^{s_k})})}{\partial(s_j)}
+&amp;= \frac{(\frac{\partial}{\partial s_j}e^{s_i})\sum(e^{s_k})-(\frac{\partial}{\partial s_j}\sum e^{s_k})e^{s_i}}{(\sum e^{s_k})^2} \\
+&amp;= \frac{0-e^{s_j}e^{s_i}}{\sum e^{s_k}\sum e^{s_k}} \\
+&amp;= -\sigma(s_i)\sigma(s_j)
 \end{align}
 $$</p>
 <p>This is nice too. Now we have both cases covered for the derivative of softmax.</p>
@@ -2020,16 +2021,17 @@ $$</p>
 <p>$$
 \large
 \begin{align}
-\frac{\partial L}{\partial z_i} &amp;= -y_i\frac{1}{\sigma(z_i)}(\sigma(z_i)(1-\sigma(z_i)) \\
-&amp;- \sum_{k\neq i}y_k\frac{1}{\sigma(z_k)}(-\sigma(z_i)\sigma(z_k)) \\
-&amp;= -y_i(1-\sigma(z_i)) - \sum_{k\neq i} -y_k\sigma(z_i) \\
-&amp;= -y_i + \sigma(z_i)(y_i + \sum_{k\neq i} y_k)
+\frac{\partial L}{\partial s_i} &amp;= -y_i\frac{1}{\sigma(s_i)}(\sigma(s_i)(1-\sigma(s_i)) \\
+&amp;- \sum_{k\neq i}y_k\frac{1}{\sigma(s_k)}(-\sigma(s_i)\sigma(s_k)) \\
+&amp;= -y_i(1-\sigma(s_i)) - \sum_{k\neq i} -y_k\sigma(s_i) \\
+&amp;= -y_i + \sigma(s_i)(y_i + \sum_{k\neq i} y_k)
 \end{align}
 $$</p>
 <p>Obviously, $y_i + \sum_{k\neq i} y_k$ equals 1 as there's only one object in the image. For only one class can the truth label be 1. So the whole thing simplifies to</p>
 <p>$$ \large
--y_i + \sigma(z_i)
+-y_i + \sigma(s_i)
 $$</p>
+<p>which is exactly $\hat{y_i} - y_i$. Magic!</p>
 </div>
 </div>
 </div>
@@ -2040,11 +2042,11 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h4 id="derivativer-over-weights-between-first-and-outupt-layers">Derivativer over weights between first and outupt layers<a class="anchor-link" href="#derivativer-over-weights-between-first-and-outupt-layers">¶</a></h4><p>The last piece is the derivative of softmax over the weights, since weights are what need to be adjusted.</p>
+<h4 id="derivativer-over-weights-between-hidden-and-outupt-layers">Derivativer over weights between hidden and outupt layers<a class="anchor-link" href="#derivativer-over-weights-between-hidden-and-outupt-layers">¶</a></h4><p>The last piece is the derivative of softmax over the weights, since weights are what need to be adjusted.</p>
 <p>$$ \large
-\frac{\partial z_i}{\partial v_{ik}} = \frac{\partial (v_{i1}x_1 + v_{i2}x_2 ... + v_{ik}x_k + ...)}{\partial v_{ik}} = x_k
+\frac{\partial s_i}{\partial v_{ik}} = \frac{\partial (v_{i1}x_1 + v_{i2}x_2 ... + v_{ik}x_k + ...)}{\partial v_{ik}} = x_k
 $$</p>
-<p>Where $\large v_{ik}$s are the weights of edges connecting the first layer nodes with the output layer node i, and x here is the node from the first layer, Not the input layer! I know I should have better notations</p>
+<p>Where $\large v_{ik}$s are the weights of edges connecting the hidden layer nodes with the output layer node i, and x here is the node from the hidden layer, Not the input layer! I know I should have better notations</p>
 </div>
 </div>
 </div>
@@ -2055,9 +2057,9 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Therefore, going from the lost function to the first-&gt;output layer weights, we have</p>
+<p>Therefore, going from the lost function to the hidden-&gt;output layer weights, we have</p>
 <p>$$\large
-\frac{\partial L}{\partial v_{ik}} = \frac{\partial L}{\partial z_i} \frac{\partial z_i}{\partial v_{ik}}= (-y_i + \sigma(z_i)) x_k
+\frac{\partial L}{\partial v_{ik}} = \frac{\partial L}{\partial s_i} \frac{\partial s_i}{\partial v_{ik}}= (\hat{y_i}-y_i) x_k
 $$</p>
 <p>For the bias term, we replace $x_k$ with 1.</p>
 </div>
@@ -2070,12 +2072,12 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h4 id="derivative-over-weights-between-input-and-first-layers">Derivative over weights between input and first layers<a class="anchor-link" href="#derivative-over-weights-between-input-and-first-layers">¶</a></h4><p>Updates to weights $w$ is similar. Recall that earlier we have</p>
+<h4 id="derivative-over-weights-between-input-and-hidden-layers">Derivative over weights between input and hidden layers<a class="anchor-link" href="#derivative-over-weights-between-input-and-hidden-layers">¶</a></h4><p>Updates to weights $w$ is similar. Recall that earlier we have</p>
 <p><img alt="deriv" src="imgs/nn_derivatives.png"/></p>
 <p>$$ \large
-\frac{\partial L}{\partial w_{ij}} = \frac{\partial L}{\partial z^o_k} \frac{\partial z^o_k}{\partial x^h_j} \frac{\partial x^h_j}{\partial z^h_j} \frac{\partial z^h_j}{\partial w_{ij}}
+\frac{\partial L}{\partial w_{ij}} = \frac{\partial L}{\partial s_{ok}} \frac{\partial s_{ok}}{\partial a_{hj}} \frac{\partial a_{hj}}{\partial s_{hj}} \frac{\partial s_{hj}}{\partial w_{ij}}
 $$</p>
-<p>For the weight between input i and first layer j, from the loss function attributed to output node k</p>
+<p>For the weight between input i and hidden layer j, from the loss function attributed to output node k</p>
 </div>
 </div>
 </div>
@@ -2086,9 +2088,9 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>We already have $\large \frac{\partial L}{\partial z^o_k} = -y_k + \sigma(z^o_k)$</p>
-<p>Also, $\large \frac{\partial z^o_k}{\partial x^h_j} = \frac{\partial (x^h V_k + d)}{\partial x^h_j} = v_{jk}$ because only $v_{jk}$ will be multiplied with $x^h_j$ in all these terms.</p>
-<p>Next we solve $\large \frac{\partial x^h_j}{\partial z^h_j}$. We take the derivative of sigmoid.</p>
+<p>We already have $\large \frac{\partial L}{\partial s_{ok}} = \hat{y_k}-y_k$</p>
+<p>Also, $\large \frac{\partial s_{ok}}{\partial a_{hj}} = \frac{\partial (a_h V_k + d)}{\partial a_{hj}} = v_{jk}$ because only $v_{jk}$ will be multiplied with $a_{hj}$ out of all these terms.</p>
+<p>Next we solve $\large \frac{\partial a_{hj}}{\partial s_{hj}}$, which is the derivative of sigmoid, as $a_{hj} = \sigma(s_{hj})$</p>
 </div>
 </div>
 </div>
@@ -2099,7 +2101,7 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Let $u = z^h_j$, we have
+<p>Let $u = s_{hj}$, we have
 $$\large
 \begin{align}
 \frac{\partial \sigma(u)}{\partial u}
@@ -2112,10 +2114,13 @@ $$\large
 &amp;= \sigma(u)(1-\sigma(u))
 \end{align} 
 $$</p>
-<p>The last item in the chain, $\large \frac{\partial z^h_j}{\partial w_{ij}}=\frac{\partial (XW_j+b)}{\partial w_{ij}} = x_{i}$ since only $x_i$ will be multiplied with $w_{ij}$</p>
+<p>The last item in the chain, $\large \frac{\partial s_{hj}}{\partial w_{ij}}=\frac{\partial (XW_j+b)}{\partial w_{ij}} = x_{i}$ since only $x_i$ will be multiplied with $w_{ij}$</p>
 <p>Combining all together, we get</p>
 <p>$$\large
-\frac{\partial L}{\partial w_{ij}} = (-y_k+\sigma_{softmax}(z^o_k)) * v_{jk} * (\sigma_{sigmoid}(z^h_j)(1-\sigma_{sigmoid}(z^h_j)) x_i
+\begin{align}
+\frac{\partial L}{\partial w_{ij}} &amp;= (\hat{y_k} -y_k) \cdot v_{jk} \cdot (\sigma_{sigmoid}(s_{hj})(1-\sigma_{sigmoid}(s_{hj})) x_i \\
+&amp;= (\hat{y_k} -y_k) \cdot v_{jk} \cdot a_{hj} \cdot (1-a_{hj}) \cdot x_i
+\end{align}
 $$</p>
 <p>Again, for the bias term, replace $x_i$ with 1.</p>
 <p>With all the tools above, let's expand upon the native neural net to make one that can backpropagate</p>
@@ -2139,7 +2144,7 @@ $$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [539]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [545]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-11">
@@ -2172,20 +2177,20 @@ $$</p>
         <span class="n">bias_hidden</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_samples</span><span class="p">)])</span>
         <span class="n">bias_out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">d</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_samples</span><span class="p">)])</span>
         
-        <span class="c1"># output to first layer</span>
-        <span class="n">z_hidden</span> <span class="o">=</span> <span class="n">x</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">w</span><span class="o">.</span><span class="n">T</span> <span class="o">+</span> <span class="n">bias_hidden</span>
+        <span class="c1"># output to hidden layer</span>
+        <span class="n">s_hidden</span> <span class="o">=</span> <span class="n">x</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">w</span><span class="o">.</span><span class="n">T</span> <span class="o">+</span> <span class="n">bias_hidden</span>
         <span class="c1"># print(z_hidden.shape, x.shape, self.w.T.shape, bias_hidden.shape)</span>
-        <span class="n">a_hidden</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">z_hidden</span><span class="p">)</span>
+        <span class="n">a_hidden</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">s_hidden</span><span class="p">)</span>
         <span class="c1"># print(a_hidden.shape)</span>
 
-        <span class="n">z_out</span> <span class="o">=</span> <span class="n">a_hidden</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="o">.</span><span class="n">T</span> <span class="o">+</span> <span class="n">bias_out</span>
-        <span class="n">a_out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">z_out</span><span class="p">)</span>
+        <span class="n">s_out</span> <span class="o">=</span> <span class="n">a_hidden</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="o">.</span><span class="n">T</span> <span class="o">+</span> <span class="n">bias_out</span>
+        <span class="n">a_out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">s_out</span><span class="p">)</span>
         <span class="c1"># print(y.shape, a_out.shape, a_hidden.shape)</span>
         <span class="n">delta_v</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">y</span> <span class="o">+</span> <span class="n">a_out</span><span class="p">)</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">a_hidden</span>
         <span class="n">delta_bias_out</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">y</span> <span class="o">+</span> <span class="n">a_out</span><span class="p">)</span>
         <span class="k">assert</span> <span class="n">delta_v</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="o">.</span><span class="n">shape</span>
 
-        <span class="c1"># first to input layer</span>
+        <span class="c1"># hidden to input layer</span>
         <span class="c1"># (-y - sigmoid(z_out)) * v</span>
         <span class="n">delta_w_step_1</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">y</span> <span class="o">+</span> <span class="n">a_out</span><span class="p">)</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">v</span>
         <span class="c1"># print(delta_w_step_1.shape, self.v.shape)</span>
@@ -2247,20 +2252,20 @@ $$</p>
         bias_hidden = np.array([self.b for i in range(num_samples)])
         bias_out = np.array([self.d for i in range(num_samples)])
         
-        # output to first layer
-        z_hidden = x @ self.w.T + bias_hidden
+        # output to hidden layer
+        s_hidden = x @ self.w.T + bias_hidden
         # print(z_hidden.shape, x.shape, self.w.T.shape, bias_hidden.shape)
-        a_hidden = self.sigmoid(z_hidden)
+        a_hidden = self.sigmoid(s_hidden)
         # print(a_hidden.shape)
 
-        z_out = a_hidden @ self.v.T + bias_out
-        a_out = self.softmax(z_out)
+        s_out = a_hidden @ self.v.T + bias_out
+        a_out = self.softmax(s_out)
         # print(y.shape, a_out.shape, a_hidden.shape)
         delta_v = (-y + a_out).T @ a_hidden
         delta_bias_out = (-y + a_out)
         assert delta_v.shape == self.v.shape
 
-        # first to input layer
+        # hidden to input layer
         # (-y - sigmoid(z_out)) * v
         delta_w_step_1 = (-y + a_out) @ self.v
         # print(delta_w_step_1.shape, self.v.shape)
