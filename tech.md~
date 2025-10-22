@@ -13,6 +13,8 @@ Most notebooks are available in [this github repo](https://github.com/yjlinotlaz
  * [Random Forest](tech/ml/random_forest.ipynb)
  * [Perceptron Algorithm](tech/ml/perceptron_algorithm.ipynb)
  * [Basic Neural Network](tech/ml/basic_neural_net.ipynb)
+ * Clustering
+ * XGBoost
  
 ## 捣腾配置，软件
  * [用ImageMagick批处理图片](tech/image_magick.md)

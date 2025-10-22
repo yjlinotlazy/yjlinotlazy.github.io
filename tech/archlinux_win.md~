@@ -45,38 +45,7 @@
 
 ## 基本工具
 
- - tree: 在终端进行树状文件浏览，辅助ls
- - nano: 对于不喜欢vim的人来说，这个在终端用很合适，我只要有terminal就
-   会配置一个
- - less: 预览文件。arch linux连这个都不预装是我没想到的。。
- - emacs: 这几年emacs热度骤降，市场份额比vim低一个数量级，但org mode还是香。不想折腾的可以用下
-   面给的基本配置
- - tilix: 可以平铺窗口的终端
- - kitty：当红轻量级、可定制终端
- - konsole：kde默认终端，我用它作为默认终端来跑终端模式的程序
- - code: VS code的linux版
- - auto-cpufreq: 据说是省电小助手
-```
-sudo pacman -S auto-cpufreq
-systemctl enable auto-cpufreq
-systemctl start auto-cpufreq
-```
- - darktable：照片编辑和管理。据说用过之后就不想用lightroom了
- - RawTherapee：也是照片编辑和管理，各有优点。
- - krita：替代photoshop
- - imagemagick；一系列处理图片的命令行。虽然听着反直觉，但是有些小东西
-   还挺方便，比如terminal直接看图`display a.jpg`。批量给图片加边框也很
-   方便。
- - yazi：鸭子。终端模式的文件管理器。
- - kwin：kde自带，适合只想用平铺式窗口管理的一部分功能，不想全盘切换的
-   人。bspwm是另一个选项，也很多人用，就是需要多折腾一些。
- - rsync ：同步文件夹
- - findimagedupes：寻找相似的图片。`findimagedupes -R -- . > dups.log`。
-   相似，不一定相同。
- - neovim/lazyvim。真香，相见恨晚，可以取代IDE。
- - yt-dlp：下载youtube视频到本地的命令行工具
- - cmus：终端音乐播放器。由于MOC装不上，就换成了cmus，体验良好
- - evince：看pdf
+在[这篇里可以找到](../tech/apps.md)
 
 ## 共享硬盘
 
@@ -106,12 +75,36 @@ UUID=<uuid>   <mount path>     ntfs-3g defaults,user,uid=1000,gid=1000,fmask=111
 ```
 
 最麻烦的部分来了：每次windows关机要完全关机，按着shift从系统选项里关机。
+arch btw你赢了，我再也不开windows行了口巴。
+
+重要：如此打补丁的分区steam和dropbox都不认。我后来重新格成etx4了，格了
+之后UUID会变，要修改fstab重新挂载。
 
 ## 配置git
 
  - 首先需要拿到access token。进入Settings -> Developer Settings ->
    Personal access tokens。我选择的是Personal access tokens (classic)
  - `git config --global credential.helper store`。
+
+## steam
+
+默认的安装没有问题，但是显卡要处理一下，nvidia的。一进去卡成狗，结果是
+独显没认出来。查看：
+
+```
+nvidia-smi
+```
+
+正常情况应该会吐出一堆数据，但我的报错，说driver library version
+mismatch，于是重装：
+
+```
+sudo pacman -S nvidia-dkms nvidia-utils
+sudo reboot
+```
+
+重启之后就好了，博德之门3跑起来了。花了半个多小时捏了个女装大佬德鲁伊
+开局，五分钟初见杀，走两步就挂了。
 
 ## 其它问题解决方案
 

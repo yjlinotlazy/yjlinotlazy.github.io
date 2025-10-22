@@ -3,16 +3,22 @@
 直接上配置文件`~/.emacs.d/init.el`：
 
 实现的主要有
+
  * 启动时窗口大小和位置
  * 启动时自动开上下分屏，一个显示TODO，一个显示当天日程
  * 用org-mode实现项目管理，直接抄了一个带点自动化的。感觉可以有很多作
    业可以抄，还在研究中。org-mode其实在工作上用的更多，毕竟需要多线程，
    记录deadline。个人电脑上没有啥是必须做的，就是把项目要做的列出来比
-   较方便看进度而已。
+   较方便看进度而已。功能包括：
+	   - 利用快捷键和自动更新来方便的管理TODO->DONE的切换。子项目有进度改变
+	     的时候，总项目的进度会自动更新
+	   - 做完的项目可以用快捷键扔到一个archive文件里。日后浏览这个文件可以追
+	     溯之前都干了啥。
 
 ```
 ;; Disable GUI
 (tool-bar-mode -1)
+(menu-bar-mode -1)
 (setq use-dialog-box t)
 (setq use-file-dialog nil)
 (setq-default frame-title-format '("%b  -  GNU Emacs"))
@@ -22,6 +28,8 @@
 
 (setq completion-ignore-case t)
 (setq case-fold-search t)
+
+(set-frame-font "Hack 14")
 
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
 
@@ -33,10 +41,10 @@
       completion-category-overrides nil
       completion-styles '(basic))
 
-;;(load-theme 'solarized t)
+(load-theme 'solarized-dark t)
 
-;; dark mode
-;;(set-variable 'frame-background-mode 'dark)
+;;dark mode
+(set-variable 'frame-background-mode 'dark)
 
 ;;(custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -65,7 +73,8 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(emacs-color-theme-solarized markdown-mode org-modern standard-themes)))
+   '(dracula-theme emacs-color-theme-solarized markdown-mode org-modern
+		   standard-themes tangotango-theme)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -146,11 +155,11 @@
 ;; update for different monitor set up
 (setq initial-frame-alist
       (append initial-frame-alist
-	      '(
-		(height . 90)
-		(width . 120)
-		(left . 900)
-		)))
+          '(
+        (height . 90)
+        (width . 120)
+        (left . 900)
+        )))
 
 ;;https://brunoarine.com/blog/refresh-agenda-on-file-change/
 (defun my/redo-all-agenda-buffers ()
@@ -163,5 +172,7 @@
           (lambda ()
             (add-hook 'after-save-hook 'my/redo-all-agenda-buffers nil 'make-it-local)))
 ```
+
+略微滞后的最终效果，没有更新截图
 
 ![img](personal_web_imgs/emacs_agenda.png)

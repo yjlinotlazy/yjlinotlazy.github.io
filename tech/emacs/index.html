@@ -371,9 +371,14 @@
      溯之前都干了啥。</li>
 </ul>
 </li>
+<li>字体是Hack，主题是dracula</li>
 </ul>
+<p>需要额外手动操作的部分：缺失的包裹用M-x package-install装，输入包裹名
+字可以自动补全。如果无法读取init.el，看看根文件目录有没有冲突的旧
+版.eamcs配置文件。</p>
 <pre><code>;; Disable GUI
 (tool-bar-mode -1)
+(menu-bar-mode -1)
 (setq use-dialog-box t)
 (setq use-file-dialog nil)
 (setq-default frame-title-format '(&quot;%b  -  GNU Emacs&quot;))
@@ -383,6 +388,8 @@
 
 (setq completion-ignore-case t)
 (setq case-fold-search t)
+
+(set-frame-font &quot;Hack 14&quot;)
 
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
 
@@ -394,10 +401,10 @@
       completion-category-overrides nil
       completion-styles '(basic))
 
-;;(load-theme 'solarized t)
+(load-theme 'solarized-dark t)
 
-;; dark mode
-;;(set-variable 'frame-background-mode 'dark)
+;;dark mode
+(set-variable 'frame-background-mode 'dark)
 
 ;;(custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -426,7 +433,8 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(emacs-color-theme-solarized markdown-mode org-modern standard-themes)))
+   '(dracula-theme emacs-color-theme-solarized markdown-mode org-modern
+           standard-themes tangotango-theme)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -524,6 +532,7 @@
           (lambda ()
             (add-hook 'after-save-hook 'my/redo-all-agenda-buffers nil 'make-it-local)))
 </code></pre>
+<p>略微滞后的最终效果，没有更新截图</p>
 <p><img alt="img" src="../personal_web_imgs/emacs_agenda.png" /></p>
 
 

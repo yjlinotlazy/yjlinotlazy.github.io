@@ -2029,7 +2029,7 @@ $$</p>
 $$</p>
 <p>Obviously, $y_i + \sum_{k\neq i} y_k$ equals 1 as there's only one object in the image. For only one class can the truth label be 1. So the whole thing simplifies to</p>
 <p>$$ \large
--y_i + \sigma(s_i)
+\frac{\partial L}{\partial s_i} = -y_i + \sigma(s_i)
 $$</p>
 <p>which is exactly $\hat{y_i} - y_i$. Magic!</p>
 </div>

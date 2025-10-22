@@ -1266,6 +1266,7 @@ plt.show()</div>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>In the fit_single method, we move w by <code>self.w += self.learning_rate * err * x_with_bias</code>. Inuitively, the direction in which we adjust the weight is determined by whether we over- or under-estimate y. The magnitude of adjustment depends on the learning rate and the value of x. Why do we need to scale it by x? Think of it this way: if we are below the activation threshold even when x is large, then we need to increase w a lot to move the needle.</p>
 <p>Check the error at each epoch. We expect it to roughly reduce at each epoch.</p>
 </div>
 </div>

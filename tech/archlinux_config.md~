@@ -44,6 +44,8 @@ autostart里不相关的部分删掉，并让kde的autostart跑这个脚本。�
 
 ![img](screenshot.png)
 
+最新配置在[github](https://github.com/yjlinotlazy/bspwm-dots-2.0){:target="_blank"}
+
 系统资源占用
 
 ![img](personal_web_imgs/sys_usage.png)
@@ -72,6 +74,35 @@ prompt_context() {}
 background_opacity 0.85
 shell zsh
 ```
+
+## 中文
+
+用fcitx。自从kde plasma换成wayland后，突然只有浏览器里能切换了，解决办
+法是
+
+```
+# /etc/environment
+GTK_IM_MODULE=fcitx
+QT_IM_MODULE=fcitx
+XMODIFIERS=@im=fcitx
+SDL_IM_MODULE=fcitx
+GLFW_IM_MODULE=fcitx
+```
+
+或者
+
+```
+# ~/.xprofile
+export XIM=fcitx
+export XIM_PROGRAM=fcitx
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS="@im=fcitx"
+eval `dbus-launch --sh-syntax --exit-with-session`
+exec fcitx &
+```
+
+我两个都改了，重启电脑就好了。可能只需要改一个。
 
 ## 终端下的文件夹背景色
 
