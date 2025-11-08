@@ -1,0 +1,117 @@
+# 配置平铺式窗口管理器Mangowc
+
+对平铺式窗口管理器我一直跃跃欲试，但是没有很合适的切入点，不想完全从零
+配起。但是mangowc吸引了我的注意，简洁，容易配置，开盒版本就挺好看了。
+最难的是，中文支持顺滑，全局跑一个fcitx5，在所有应用里都可以输入中文，
+包括终端。让我认真从kde plasma6切换到mangowc的是，在plasma6下我把brave
+的中文输入滚挂了，网上找不到解决方案，毕竟本来brave就是小众。
+
+mangowc的缺点：文档非常少，有问题一搜，出来的结果都是讲水果的。只能往
+上游找攻略，搜dwl, wayland相关的解决方案。
+
+## 硬件
+
+### 键盘绑定
+ * SUPER+r，重新加载mangowc的配置文件，修改完后保存，刷新，无需登出。
+
+键盘绑定的语法是，
+
+`bind=<modifyer key>,<regular key>,<arg1>,<arg2>`
+
+其中modifyer key如果没有，要写none，不能空着。如果不知道某键位叫啥，用
+wev来找。终端跑wev，按键就会显示名字。
+
+#### 多媒体控制
+
+默认配置下我的播放控制按键不能正确响应，所以先打开wev，把几个按键名字
+找出来，绑定播放控制。
+
+wev给我的输出长这样：
+
+```
+    sym: XF86AudioLowerVolume (269025041), utf8: ''
+[14:     wl_keyboard] key: serial: 13150; time: 5262817; key: 123; state: 1 (pressed)
+    sym: XF86AudioRaiseVolume (269025043), utf8: ''
+[14:     wl_keyboard] key: serial: 13151; time: 5262897; key: 123; state: 0 (released)
+    sym: XF86AudioRaiseVolume (269025043), utf8: ''
+```
+
+sym后面是按键的名字。控制音量用wpctl，控制播放用playerctl
+
+```
+bind=none,XF86AudioLowerVolume,spawn,wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%-
+bind=none,XF86AudioRaiseVolume,spawn,wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%+
+bind=none,XF86AudioNext,spawn,playerctl next
+bind=none,XF86AudioPrevious,spawn,playerctl previous
+bind=none,XF86AudioStop,spawn,playerctl stop
+bind=none,XF86AudioPlay,spawn,playerctl play
+```
+
+#### 屏幕亮度
+
+安装swayosd，在自启动程序里加上`swayosd-server >/dev/null 2>&1 &`
+
+```
+bind=none,XF86KbdBrightnessUp,spawn,swayosd-client --brightness +2
+bind=none,XF86KbdBrightnessDown,spawn,swayosd-client --brightness -2
+```
+
+### 鼠标，触摸板
+
+调成自然滚动模式，并把加速度拉满
+
+```
+trackpad_natural_scrolling=1
+accel_speed=1
+```
+
+### 外接显示器
+
+接上外界显示器，直接是镜像，需要手动开关一次才能独立使用。于是搞了两个
+快捷键干这个蛋疼的事。
+
+```
+bind=alt+shift,m,spawn,wlr-randr --output DP-2 --on
+bind=alt+shift,n,spawn,wlr-randr --output DP-2 --off
+```
+
+显示器名字用wlr-randr来找
+
+## 应用
+
+* rofi
+
+### 修改默认终端
+
+不知道为啥，默认终端是xterm，导致终端运行的程序都从xterm走。需要改配置，
+我刚装rofi还没有配置文件，所以
+需要生成一个
+
+`rofi -dump-config > ~/.config/rofi/config.rasi`
+
+搜索关键词terminal，去掉注释，改成kitty
+
+`terminal: "kitty";`
+
+## 状态栏
+
+eww,polybar虽然可以用，我还是换成了waybar
+
+## 桌面壁纸
+
+参考[这篇](dynamic_wallpaper.md)实现动态桌面，自启动里加上一条：
+
+`swaybg -i ~/.config/wallpaper/wall.jpg >/dev/null 2>&1 &`
+
+更新：不如用wpaperd
+
+## 中文输入
+
+有个神奇的bug，启动fcitx5后所有新窗口的输入完全失效。解决办法：用快捷
+键打开qmenu或者rofi，随便输个字母再跳出，就修好了？？
+
+## 应用窗口管理
+
+## autostart
+
+在.config/mango/autostart.sh

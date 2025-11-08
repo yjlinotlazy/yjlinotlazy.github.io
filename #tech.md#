@@ -20,8 +20,6 @@ Most notebooks are available in [this github repo](https://github.com/yjlinotlaz
  * [用ImageMagick批处理图片](tech/image_magick.md)
  * [Update root partition](tech/update_root_partition.md)
  * [Arch Linux + windows 11 双启动](tech/archlinux_win.md)
- * [systemd设置定时作业](tech/systemd.md)
- * [配置平铺式窗口管理器mangowc](tech/mangowc.md)
  * [用mkdocs做个人网站](tech/mkdocs.md)
  * [动态登陆背景，锁屏背景图](tech/dynamic_wallpaper.md)
  * [小霸王机器学习机配置](tech/archlinux_config.md)

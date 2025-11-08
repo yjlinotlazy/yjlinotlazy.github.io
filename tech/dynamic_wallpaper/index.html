@@ -385,8 +385,9 @@ sddm=$(ls $path | shuf -n 1)
 cp &quot;$path/$sddm&quot; /usr/share/sddm/themes/sequoia_2/sddm.jpg
 cp &quot;$path/$lock&quot; /home/yli/.config/wallpaper/lock.jpg
 </code></pre>
-<p>后来又加了一个crontab，每小时跑一次，这样不需要登出也会自动更新图片。
-桌面背景则用KDE自带的设置工具。</p>
+<p>后来又加了一个systemd job，每小时跑一次，这样不需要登出也会自动更新图片。
+KDE可以用自带的设置工具随机切换桌面，其它的可能需要手动，用crontab或者
+systemd定时更新。</p>
 <p>插播：快速改图片格式可以用imageMagick，例子：</p>
 <pre><code>magick sample.jpg sample.png
 display sample.png # 确认成功

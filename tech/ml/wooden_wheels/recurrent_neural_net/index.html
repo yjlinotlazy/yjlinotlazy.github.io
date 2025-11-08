@@ -348,6 +348,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#feed-forward" class="md-nav__link">
+    <span class="md-ellipsis">
+      Feed forward
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#backpropagation-through-time" class="md-nav__link">
     <span class="md-ellipsis">
       Backpropagation Through Time
@@ -377,6 +386,15 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#problem-to-solve" class="md-nav__link">
+    <span class="md-ellipsis">
+      Problem to solve
+    </span>
+  </a>
   
 </li>
       
@@ -875,7 +893,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Rephrasing the diagram, we have the feed forward process as, for each time step $t$,</p>
+<h2 id="feed-forward">Feed forward<a class="anchor-link" href="#feed-forward">¶</a></h2><p>Rephrasing the diagram, we have the feed forward process as, for each time step $t$,</p>
 <ul>
 <li>$s_{h,t} = x_t W + a_{h,t-1}U + b_h$</li>
 <li>$a_{h,t} = \sigma_h(s_{h,t})$</li>
@@ -885,6 +903,10 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <p>h means hidden layer, o means output layer, s means weighted sum, a means activated value. $\sigma$ means the activation function. For the activation functions, we use softmax at the output layer and tanh at the hidden layer.</p>
 <p>$$\large
 tanh(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}}
+$$</p>
+<p>It has the convenient property that</p>
+<p>$$ \large
+(tanh(x))' = 1-(tanh(x))^2 
 $$</p>
 </div>
 </div>
@@ -897,11 +919,15 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="backpropagation-through-time">Backpropagation Through Time<a class="anchor-link" href="#backpropagation-through-time">¶</a></h2><ul>
-<li>As there's dependency bewteen the previous and next steps, backpropagation in RNN is called BTT (Backpropagation Through Time) where we propagate the gradient not only through layers, but also through the entire sequence of data. This means we sum up the lost of the predictions of the sequece.</li>
+<li>As there's dependency bewteen the previous and next steps, backpropagation in RNN goes through the entire sequence, called Backpropagation Through Time (BPTT) where we propagate the gradient not only through layers, but also through the entire sequence of data. This means we sum up the lost of the predictions of the sequece.</li>
 </ul>
 <p>Overall loss is</p>
 <p>$$
 L_{total} = \sum_1^t L_t
+$$</p>
+<p>where</p>
+<p>$$
+L_t = -y_t log(\hat{y_t})
 $$</p>
 <ul>
 <li>Backpropagation from the output layer to the hidden layer is similar as vanila neural network since we don't add anything new between these two layers</li>
@@ -963,17 +989,50 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>From above setup, we can see that $s_{h,t}$ is an important term as it's a function of $W, U, a_{h,t-1}$. In backpropagation, the gradient will flow from $s_{h,t}$ to those components.</p>
+<p>From above setup, we can see that $s_{h,t}$ is an important term as it's a function of $W, U, a_{h,t-1}$. In backpropagation, the gradient will flow from $s_{h,t}$ to those components like the following, based on the formula in the feedforward section above:</p>
+<p>$$\large
+\begin{align}
+\frac{\partial L_t}{\partial W} &amp;= \frac{\partial L_t}{\partial s_{h,t}} \cdot x_t \\
+\frac{\partial L_t}{\partial U} &amp;= \frac{\partial L_t}{\partial s_{h,t}} \cdot a_{h,t-1} \\
+\frac{\partial L_t}{\partial b_h} &amp;= \frac{\partial L_t}{\partial s_{h,t}} 
+\end{align}
+$$</p>
+<p>To get $\Large \frac{\partial L_t}{\partial s_{h,t}}$, we have</p>
+<p>$$\large
+\begin{align}
+\frac{\partial L_t}{\partial s_{h,t}} &amp; = \frac{\partial L_t}{\partial a_{h,t}}\cdot \frac{\partial a_{h,t}}{\partial s_{h,t}} \\
+&amp; = \frac{\partial L_t}{\partial a_{h,t}}\cdot \frac{\partial \sigma_h(s_{h,t})}{\partial s_{h,t}} \\
+&amp; = \frac{\partial L_t}{\partial a_{h,t}}\cdot (1-(tanh(s_{h,t}))^2) 
+\end{align}
+$$</p>
+<p>All we have left to derive is $\Large \frac{\partial L_t}{\partial a_{h,t}}$. As $\large a_{h,t}$ contributes to $L_{t+1}$, the gradient from $L_{t+1}$ also goes to $\large a_{h,t}$. Therefore</p>
+<p>$$\large
+\begin{align}
+\frac{\partial L_t}{\partial a_{h,t}} &amp;= \frac{\partial L_t}{\partial s_{o,t}} \cdot \frac{\partial s_{o,t}}{\partial a_{h,t}} + \frac{\partial L_{t+1}}{\partial s_{h,t+1}} \cdot \frac{\partial s_{h,t+1}}{\partial a_{h,t}} \\
+&amp;= (\hat{y_t} - y_t)\cdot V + \frac{\partial L_{t+1}}{\partial s_{h,t+1}} \cdot U
+\end{align}
+$$</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=e8938639-afef-4b4e-ba15-ff5726df5729">
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9be416e9-0aac-4c33-a22b-1bd1d71d6d64">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="problem-to-solve">Problem to solve<a class="anchor-link" href="#problem-to-solve">¶</a></h2><p>We'll use RNN to solve a toy problem of predicting the next number in mod 3. 1 is next to 0, 2 is next to 1, 0 is next to 2.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=6d36aaf5-68f7-4b57-9bd2-f8bb1dbf8ab3">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-1">
@@ -986,9 +1045,823 @@ $$</p>
 </div>
 </clipboard-copy>
 </div>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># length of the sequence is the length of the problem. Keep it not too big for calculation, but not too small to be boring.</span>
+<span class="n">length</span> <span class="o">=</span> <span class="mi">50</span>
+
+<span class="n">x_num</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">)]</span>
+<span class="n">y_num</span> <span class="o">=</span> <span class="p">[(</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">3</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">x_num</span><span class="p">]</span>
+<span class="n">x_str</span> <span class="o">=</span> <span class="s1">''</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">x_num</span><span class="p">])</span>
+<span class="n">y_str</span> <span class="o">=</span> <span class="s1">''</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">y_num</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'input: '</span><span class="p">,</span> <span class="n">x_str</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'output:'</span><span class="p">,</span> <span class="n">y_str</span><span class="p">)</span>
+</pre></div>
+<div class="clipboard-copy-txt" id="cell-1">import numpy as np
+
+# length of the sequence is the length of the problem. Keep it not too big for calculation, but not too small to be boring.
+length = 50
+
+x_num = [np.random.randint(0, 3) for i in range(length)]
+y_num = [(x+1) % 3 for x in x_num]
+x_str = ''.join([str(i) for i in x_num])
+y_str = ''.join([str(i) for i in y_num])
+print('input: ', x_str)
+print('output:', y_str)</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>input:  10110101011110211012000212200102101112002100120200
+output: 21221212122221022120111020011210212220110211201011
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=50cc2176-a315-498f-ac97-f5b41945bd61">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Repeat to make a dataset</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=f442edb0-0d89-4848-9205-1b2ee9b6959f">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [148]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="CodeMirror cm-s-jupyter">
+<div class="zeroclipboard-container">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-2">
+<div>
+<span class="notice" hidden="">Copied!</span>
+<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
+<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+</clipboard-copy>
+</div>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">num_to_label</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">vocab</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+    <span class="c1"># turn a single digit label to multiclass labels</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="n">vocab</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">yy</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">y</span><span class="p">):</span>
+        <span class="n">labels</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">yy</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">labels</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">make_pairs</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">vocab</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+    <span class="n">x_num</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">vocab</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">)]</span>
+    <span class="n">y_num</span> <span class="o">=</span> <span class="p">[(</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">vocab</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">x_num</span><span class="p">]</span>
+    <span class="c1"># One hot encode the input and output</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">num_to_label</span><span class="p">(</span><span class="n">x_num</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">num_to_label</span><span class="p">(</span><span class="n">y_num</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span>
+</pre></div>
+<div class="clipboard-copy-txt" id="cell-2">def num_to_label(y, vocab=3):
+    # turn a single digit label to multiclass labels
+    labels = np.zeros((len(y), vocab), dtype=int)
+    for i, yy in enumerate(y):
+        labels[i, yy] = 1
+    return labels
+
+def make_pairs(length=10, vocab=3):
+    x_num = [np.random.randint(0, vocab) for i in range(length)]
+    y_num = [(x+1) % vocab for x in x_num]
+    # One hot encode the input and output
+    x = num_to_label(x_num)
+    y = num_to_label(y_num)
+    return x, y</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=8f5f7c39-b687-4f39-bfe9-e7ed328ace0b">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [149]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="CodeMirror cm-s-jupyter">
+<div class="zeroclipboard-container">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-3">
+<div>
+<span class="notice" hidden="">Copied!</span>
+<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
+<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+</clipboard-copy>
+</div>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">size</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">size</span><span class="p">):</span>
+    <span class="n">xx</span><span class="p">,</span> <span class="n">yy</span> <span class="o">=</span> <span class="n">make_pairs</span><span class="p">()</span>
+    <span class="n">x</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span>
+    <span class="n">y</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">yy</span><span class="p">)</span>
+</pre></div>
+<div class="clipboard-copy-txt" id="cell-3">size = 10
+x, y = [], []
+for i in range(size):
+    xx, yy = make_pairs()
+    x.append(xx)
+    y.append(yy)</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=1e427e29-eb40-4856-b04e-351434725fb2">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Different from basic neural net, RNN does feed forward and backpropagation for the entire sequence, not at each step independently. First let's layout the components we need. This should give a rough breakdown to help writing the code.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=bfc9576d-b0a2-45e0-aedf-394b3f1b2c4a">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [14]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="CodeMirror cm-s-jupyter">
+<div class="zeroclipboard-container">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-4">
+<div>
+<span class="notice" hidden="">Copied!</span>
+<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
+<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+</clipboard-copy>
+</div>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">RNN</span><span class="p">():</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># initialize a random set of weigths and biases</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># this is the feed forward process</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">backpropagation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># one round of backpropagation through the entire sequence</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epochs</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">total_loss</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+        <span class="k">return</span> 
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">tanh</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">softmax</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="k">pass</span>
+</pre></div>
+<div class="clipboard-copy-txt" id="cell-4">class RNN():
+    def __init__(self):
+        # initialize a random set of weigths and biases
+        pass
+
+    def predict(self):
+        # this is the feed forward process
+        pass
+
+    def backpropagation(self):
+        # one round of backpropagation through the entire sequence
+        pass
+
+    def train(self, epochs):
+        pass
+
+    def total_loss(self):
+        pass
+
+    def loss(self, t):
+        return 
+
+    def tanh(x):
+        pass
+
+    def softmax(x):
+        pass</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=f74efe16-9bca-45ef-9129-ba9a540718a6">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Then fill in the blanks. We'll first enable feed forward functions. In the init function, we not only need to initialize the parameters, but also reserve vectors to memorize all the calculations, as we'll rely on them in both feed forward and BTT. As we see above, terms like $\Large \frac{\partial L_t}{\partial s_{h,t}}$ are used multiple times and in different epochs.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=c7071948-ab7f-49f3-9329-36ea7f3b4915">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [159]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="CodeMirror cm-s-jupyter">
+<div class="zeroclipboard-container">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-5">
+<div>
+<span class="notice" hidden="">Copied!</span>
+<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
+<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+</clipboard-copy>
+</div>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">RNN1</span><span class="p">():</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_nodes</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">vocab_size</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+        <span class="c1"># initialize a random set of weigths and biases</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_nodes</span> <span class="o">=</span> <span class="n">n_nodes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">n_nodes</span><span class="p">,</span> <span class="n">vocab_size</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">n_nodes</span><span class="p">,</span> <span class="n">n_nodes</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">vocab_size</span><span class="p">,</span><span class="n">n_nodes</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">b_h</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">n_nodes</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">b_o</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">vocab_size</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">s_h</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">a_h</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">s_o</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y_hat</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">predict_single</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span> <span class="k">for</span> <span class="n">xx</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">predict_scores</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">feedforward</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span> <span class="k">for</span> <span class="n">xx</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">predict_single</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">scores</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feedforward</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">score_to_num</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">reset_mem</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">s_h</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">a_h</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">s_o</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y_hat</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">feedforward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reset_mem</span><span class="p">()</span>
+        <span class="c1"># this is the feed forward process</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)):</span>
+            <span class="c1"># this follows straight from the formula</span>
+            <span class="n">a_ht_prev</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_nodes</span><span class="p">)</span> <span class="k">if</span> <span class="n">t</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">a_h</span><span class="p">[</span><span class="n">t</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">s_ht</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">w</span><span class="o">.</span><span class="n">T</span> <span class="o">+</span> <span class="n">a_ht_prev</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">u</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">b_h</span>
+            <span class="n">a_ht</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="n">s_ht</span><span class="p">)</span>
+            <span class="n">s_ot</span> <span class="o">=</span> <span class="n">a_ht</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="o">.</span><span class="n">T</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">b_o</span>
+            <span class="n">y_t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">s_ot</span><span class="p">)</span>
+
+            <span class="c1"># memorize all above</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">s_h</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s_ht</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">a_h</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a_ht</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">s_o</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s_ot</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">y_hat</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">y_t</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_hat</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">total_loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">y_hat</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">loss</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">y_hat</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">))])</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">loss</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">y_hat</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">==</span> <span class="n">y_hat</span><span class="p">[</span><span class="n">t</span><span class="p">])</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="o">-</span><span class="n">y</span><span class="p">[</span><span class="n">t</span><span class="p">]</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">y_hat</span><span class="p">[</span><span class="n">t</span><span class="p">]))</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">tanh</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">softmax</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float128</span><span class="p">)</span>
+        <span class="c1"># to avoid overflow due to super large x, we subtract the max</span>
+        <span class="n">xx</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">exp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">exp</span> <span class="o">/</span> <span class="n">exp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">score_to_num</span><span class="p">(</span><span class="n">scores</span><span class="p">):</span>
+        <span class="n">indices</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">scores</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span>
+</pre></div>
+<div class="clipboard-copy-txt" id="cell-5">import numpy as np
+
+class RNN1():
+    def __init__(self, n_nodes=10, vocab_size=3):
+        # initialize a random set of weigths and biases
+        self.n_nodes = n_nodes
+        self.w = np.random.randn(n_nodes, vocab_size)
+        self.u = np.random.randn(n_nodes, n_nodes)
+        self.v = np.random.randn(vocab_size,n_nodes)
+        self.b_h = np.random.randn(n_nodes)
+        self.b_o = np.random.randn(vocab_size)
+        self.s_h = []
+        self.a_h = []
+        self.s_o = []
+        self.y_hat = []
+
+    def predict(self, x):
+        return [self.predict_single(xx) for xx in x]
+
+    def predict_scores(self, x):
+        return [self.feedforward(xx) for xx in x]
+    
+    def predict_single(self, x):
+        scores = self.feedforward(x)
+        return self.score_to_num(scores)
+
+    def reset_mem(self):
+        self.s_h = []
+        self.a_h = []
+        self.s_o = []
+        self.y_hat = []
+    
+    def feedforward(self, x):
+        self.reset_mem()
+        # this is the feed forward process
+        for t in range(len(x)):
+            # this follows straight from the formula
+            a_ht_prev = np.zeros(self.n_nodes) if t == 0 else self.a_h[t-1]
+            s_ht = x[t] @ self.w.T + a_ht_prev @ self.u + self.b_h
+            a_ht = self.tanh(s_ht)
+            s_ot = a_ht @ self.v.T + self.b_o
+            y_t = self.softmax(s_ot)
+
+            # memorize all above
+            self.s_h.append(s_ht)
+            self.a_h.append(a_ht)
+            self.s_o.append(s_ot)
+            self.y_hat.append(y_t)
+        return self.y_hat
+
+    def total_loss(self, y, y_hat):
+        return sum([self.loss(t, y, y_hat) for t in range(len(y))])
+
+    @staticmethod
+    def loss(t, y, y_hat):
+        if (y[t] == y_hat[t]).all():
+            return 0
+        return np.sum(-y[t]*np.log(y_hat[t]))
+
+    @staticmethod
+    def tanh(x):
+        return np.tanh(x)
+
+    @staticmethod
+    def softmax(x):
+        x = np.array(x, dtype=np.float128)
+        # to avoid overflow due to super large x, we subtract the max
+        xx = x - np.max(x)
+        exp = np.exp(xx)
+        return exp / exp.sum(keepdims=True)
+
+    @staticmethod
+    def score_to_num(scores):
+        indices = [np.argmax(p) for p in scores]
+        return np.array(indices)</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=42884555-1313-4fc7-b9c6-c62262475813">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Run some random numbers to make sure matrix dimensions are good. We have written functions to</p>
+<ul>
+<li>Make predictinos by feed forward, using randomly generated parameters</li>
+<li>Calculate loss</li>
+</ul>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=3b418420-93d8-498d-8ba2-381cf6bed9ab">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [160]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="CodeMirror cm-s-jupyter">
+<div class="zeroclipboard-container">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-6">
+<div>
+<span class="notice" hidden="">Copied!</span>
+<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
+<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+</clipboard-copy>
+</div>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">rnn1</span> <span class="o">=</span> <span class="n">RNN1</span><span class="p">()</span>
+<span class="n">pred_scores</span> <span class="o">=</span> <span class="n">rnn1</span><span class="o">.</span><span class="n">predict_scores</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">pred</span> <span class="o">=</span> <span class="n">rnn1</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">loss</span> <span class="o">=</span> <span class="n">rnn1</span><span class="o">.</span><span class="n">total_loss</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">pred_scores</span><span class="p">)</span>
+</pre></div>
+<div class="clipboard-copy-txt" id="cell-6">rnn1 = RNN1()
+pred_scores = rnn1.predict_scores(x)
+pred = rnn1.predict(x)
+loss = rnn1.total_loss(y, pred_scores)</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=29a79b88-7927-412c-8c13-f5236ac3533c">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [162]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="CodeMirror cm-s-jupyter">
+<div class="zeroclipboard-container">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-7">
+<div>
+<span class="notice" hidden="">Copied!</span>
+<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
+<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+</clipboard-copy>
+</div>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">pred</span><span class="p">,</span> <span class="n">loss</span>
+</pre></div>
+<div class="clipboard-copy-txt" id="cell-7">pred, loss</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[162]:</div>
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
+<pre>([array([2, 0, 0, 0, 1, 2, 0, 2, 0, 0]),
+  array([0, 0, 2, 0, 2, 1, 0, 0, 1, 2]),
+  array([0, 0, 2, 0, 0, 0, 1, 0, 0, 2]),
+  array([0, 0, 2, 0, 2, 0, 0, 0, 0, 0]),
+  array([0, 0, 2, 0, 2, 2, 0, 0, 1, 0]),
+  array([2, 0, 0, 0, 1, 2, 0, 2, 0, 2]),
+  array([0, 0, 2, 2, 0, 0, 2, 1, 0, 0]),
+  array([0, 0, 2, 0, 2, 2, 0, 2, 2, 0]),
+  array([0, 0, 0, 1, 2, 0, 0, 2, 1, 0]),
+  array([0, 0, 0, 0, 2, 0, 2, 0, 0, 1])],
+ np.longdouble('206.90670911142617447'))</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=cf80d188-6bd2-4216-8268-8abb053eccf6">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [165]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="CodeMirror cm-s-jupyter">
+<div class="zeroclipboard-container">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-8">
+<div>
+<span class="notice" hidden="">Copied!</span>
+<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
+<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+</clipboard-copy>
+</div>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">loss0</span> <span class="o">=</span> <span class="n">rnn1</span><span class="o">.</span><span class="n">total_loss</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">loss1</span> <span class="o">=</span> <span class="n">rnn1</span><span class="o">.</span><span class="n">total_loss</span><span class="p">(</span><span class="n">pred_scores</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">pred_scores</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="k">assert</span> <span class="n">loss0</span> <span class="o">==</span> <span class="mi">0</span>
+<span class="k">assert</span> <span class="n">loss1</span> <span class="o">==</span> <span class="mi">0</span>
+</pre></div>
+<div class="clipboard-copy-txt" id="cell-8">loss0 = rnn1.total_loss(y[0], y[0])
+loss1 = rnn1.total_loss(pred_scores[0], pred_scores[0])
+assert loss0 == 0
+assert loss1 == 0</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=4add289c-fdb2-4d5c-a985-bcc4e8445d1d">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Move ahead to BPTT!</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=b3e32fbf-2eea-4938-acf9-a083e6879451">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [242]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="CodeMirror cm-s-jupyter">
+<div class="zeroclipboard-container">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-9">
+<div>
+<span class="notice" hidden="">Copied!</span>
+<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
+<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+</clipboard-copy>
+</div>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">RNN2</span><span class="p">(</span><span class="n">RNN1</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.0001</span><span class="p">,</span> <span class="n">n_nodes</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">vocab_size</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span> <span class="o">=</span> <span class="n">learning_rate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">delta_l_over_s_h</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">backpropagation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">y_hat</span><span class="p">):</span>
+        <span class="c1"># BPTT for a single sequence of sample. This function</span>
+        <span class="c1"># returns the deltas of W, V, U, b_h, and b_o</span>
+        <span class="n">T</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+        <span class="n">du</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">u</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="n">dv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="n">dw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">w</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="n">dbh</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">b_h</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="n">dbo</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">b_o</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="c1"># btt goes backwards, from time t to time 0</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">T</span><span class="p">)):</span>
+            <span class="c1"># one round of backpropagation at time t</span>
+            <span class="c1"># output layer to hidden layer.</span>
+            <span class="c1"># dLt/dV = (y_hat_t - y_t) * a_ht</span>
+            <span class="c1"># dLt/dbo = (y_hat_t - y_t)</span>
+            <span class="n">test</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">a_h</span><span class="p">[</span><span class="n">t</span><span class="p">][:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+            <span class="n">dbo_t</span> <span class="o">=</span> <span class="p">(</span><span class="n">y_hat</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">-</span> <span class="n">y</span><span class="p">[</span><span class="n">t</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+            <span class="n">dv_t</span> <span class="o">=</span> <span class="n">dbo_t</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">@</span> <span class="n">test</span><span class="o">.</span><span class="n">T</span>
+            <span class="n">dv</span> <span class="o">+=</span> <span class="n">dv_t</span>
+            <span class="n">dbo</span> <span class="o">+=</span> <span class="n">dbo_t</span>
+
+            <span class="c1"># hidden layer to input layer</span>
+            <span class="n">da_ht</span> <span class="o">=</span> <span class="p">(</span><span class="n">y_hat</span><span class="p">[)</span>
+            <span class="n">ds_ht</span> <span class="o">=</span> <span class="n">da_ht</span> <span class="o">@</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">a_hh</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="n">dw_t</span> <span class="o">=</span> <span class="n">ds_ht</span> <span class="o">@</span> <span class="n">x</span><span class="p">[</span><span class="n">t</span><span class="p">]</span>
+            
+        <span class="k">return</span> <span class="n">dw</span><span class="p">,</span> <span class="n">dv</span><span class="p">,</span> <span class="n">du</span><span class="p">,</span> <span class="n">dbh</span><span class="p">,</span> <span class="n">dbo</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epochs</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">epochs</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)):</span>
+                <span class="c1"># feed forward</span>
+                <span class="n">y_hat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feedforward</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+                <span class="c1"># calculate deltas</span>
+                <span class="n">dW</span><span class="p">,</span> <span class="n">dV</span><span class="p">,</span> <span class="n">dU</span><span class="p">,</span> <span class="n">dbh</span><span class="p">,</span> <span class="n">dbo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">backpropagation</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">y_hat</span><span class="p">)</span>
+                <span class="c1"># update weights accordingly</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">u</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span> <span class="o">*</span> <span class="n">dU</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span> <span class="o">*</span> <span class="n">dW</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">v</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span> <span class="o">*</span> <span class="n">dV</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">b_h</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span> <span class="o">*</span> <span class="n">dbh</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">b_o</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span> <span class="o">*</span> <span class="n">dbo</span>
+</pre></div>
+<div class="clipboard-copy-txt" id="cell-9">class RNN2(RNN1):
+    def __init__(self, learning_rate=0.0001, n_nodes=10, vocab_size=3):
+        super().__init__()
+        self.learning_rate = learning_rate
+        self.delta_l_over_s_h = []
+
+    def backpropagation(self, x, y, y_hat):
+        # BPTT for a single sequence of sample. This function
+        # returns the deltas of W, V, U, b_h, and b_o
+        T = len(y)
+        du = np.zeros(self.u.shape)
+        dv = np.zeros(self.v.shape)
+        dw = np.zeros(self.w.shape)
+        dbh = np.zeros(self.b_h.shape)
+        dbo = np.zeros(self.b_o.shape)
+        # btt goes backwards, from time t to time 0
+        for t in reversed(range(T)):
+            # one round of backpropagation at time t
+            # output layer to hidden layer.
+            # dLt/dV = (y_hat_t - y_t) * a_ht
+            # dLt/dbo = (y_hat_t - y_t)
+            test = self.a_h[t][:, np.newaxis]
+            dbo_t = (y_hat[t] - y[t].T)
+            dv_t = dbo_t[:, np.newaxis] @ test.T
+            dv += dv_t
+            dbo += dbo_t
+
+            # hidden layer to input layer
+            da_ht = (y_hat[)
+            ds_ht = da_ht @ (1-self.a_hh[t] ** 2)
+            dw_t = ds_ht @ x[t]
+            
+        return dw, dv, du, dbh, dbo
+
+    def train(self, epochs, x, y, verbose=False):
+        for i in range(epochs):
+            for j in range(len(x)):
+                # feed forward
+                y_hat = self.feedforward(x[j])
+                # calculate deltas
+                dW, dV, dU, dbh, dbo = self.backpropagation(x[j], y[j], y_hat)
+                # update weights accordingly
+                self.u -= self.learning_rate * dU
+                self.w -= self.learning_rate * dW
+                self.v -= self.learning_rate * dV
+                self.b_h -= self.learning_rate * dbh
+                self.b_o -= self.learning_rate * dbo</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=eae920d9-2c75-4832-994d-9c459f11fccb">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [243]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="CodeMirror cm-s-jupyter">
+<div class="zeroclipboard-container">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-10">
+<div>
+<span class="notice" hidden="">Copied!</span>
+<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
+<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+</clipboard-copy>
+</div>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">rnn2</span> <span class="o">=</span> <span class="n">RNN2</span><span class="p">()</span>
+<span class="n">rnn2</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+<div class="clipboard-copy-txt" id="cell-10">rnn2 = RNN2()
+rnn2.train(1, x, y)</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=6bb852ae-b4bb-4326-9c0b-9932802bb3df">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [204]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="CodeMirror cm-s-jupyter">
+<div class="zeroclipboard-container">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-11">
+<div>
+<span class="notice" hidden="">Copied!</span>
+<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
+<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+</clipboard-copy>
+</div>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+<span class="n">a</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+<div class="clipboard-copy-txt" id="cell-11">a = np.array([1,2,3])[:, np.newaxis]
+a.T, a.shape, a.T.shape</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[204]:</div>
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
+<pre>(array([[1, 2, 3]]), (3, 1), (1, 3))</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=83380b2f-c662-4e2f-953d-4587a9530eaa">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [200]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="CodeMirror cm-s-jupyter">
+<div class="zeroclipboard-container">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-12">
+<div>
+<span class="notice" hidden="">Copied!</span>
+<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
+<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+</clipboard-copy>
+</div>
 <div class="highlight-ipynb hl-python"><pre><span></span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-1"></div>
+<div class="clipboard-copy-txt" id="cell-12"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">TypeError</span>                                 Traceback (most recent call last)
+<span class="ansi-cyan-fg">Cell</span><span class="ansi-cyan-fg"> </span><span class="ansi-green-fg">In[200]</span><span class="ansi-green-fg">, line 2</span>
+<span class="ansi-green-fg">      1</span> a = [<span class="ansi-green-fg">1</span>,<span class="ansi-green-fg">2</span>,<span class="ansi-green-fg">3</span>]
+<span class="ansi-green-fg">----&gt; </span><span class="ansi-green-fg">2</span> <span class="ansi-yellow-bg">a</span><span class="ansi-yellow-bg">[</span><span class="ansi-yellow-bg">:</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">np</span><span class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">newaxis</span><span class="ansi-yellow-bg">]</span>
+
+<span class="ansi-red-fg">TypeError</span>: list indices must be integers or slices, not tuple</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=1a254063-f74f-49d4-8a72-cd1bce8ff4a0">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="CodeMirror cm-s-jupyter">
+<div class="zeroclipboard-container">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-13">
+<div>
+<span class="notice" hidden="">Copied!</span>
+<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
+<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+</clipboard-copy>
+</div>
+<div class="highlight-ipynb hl-python"><pre><span></span>
+</pre></div>
+<div class="clipboard-copy-txt" id="cell-13"></div>
 </div>
 </div>
 </div>

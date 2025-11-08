@@ -38,6 +38,9 @@ cp "$path/$sddm" /usr/share/sddm/themes/sequoia_2/sddm.jpg
 cp "$path/$lock" /home/yli/.config/wallpaper/lock.jpg
 ```
 
+后来又加了一个crontab，每小时跑一次，这样不需要登出也会自动更新图片。
+桌面背景则用KDE自带的设置工具。
+
 插播：快速改图片格式可以用imageMagick，例子：
 
 ```
