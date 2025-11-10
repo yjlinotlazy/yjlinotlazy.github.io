@@ -95,7 +95,12 @@ bind=alt+shift,n,spawn,wlr-randr --output DP-2 --off
 
 ## 状态栏
 
-eww,polybar虽然可以用，我还是换成了waybar
+eww,polybar虽然可以用，我还是换成了waybar。其中比较烧脑的是找正确的温
+度监测。需要跑
+
+`cat /sys/class/hwmon/hwmon*/name`
+
+来找哪个包含coretemp，再把对应的路径设置到temperature模块里。
 
 ## 桌面壁纸
 

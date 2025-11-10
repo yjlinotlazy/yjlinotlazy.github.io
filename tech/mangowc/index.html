@@ -24,6 +24,9 @@
     
       <link rel="stylesheet" href="../../assets/stylesheets/main.7e37652d.min.css">
       
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
       
 
 
@@ -41,6 +44,8 @@
       
     
     
+      <link rel="stylesheet" href="../../style.css">
+    
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -55,7 +60,12 @@
   </head>
   
   
-    <body dir="ltr">
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="indigo">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -107,8 +117,8 @@
       </div>
     </div>
     
+      
     
-      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
     
     
     
@@ -424,9 +434,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#_8" class="md-nav__link">
+  <a href="#rofi" class="md-nav__link">
     <span class="md-ellipsis">
-      修改默认终端
+      rofi
     </span>
   </a>
   
@@ -438,7 +448,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_9" class="md-nav__link">
+  <a href="#_8" class="md-nav__link">
     <span class="md-ellipsis">
       状态栏
     </span>
@@ -447,7 +457,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_10" class="md-nav__link">
+  <a href="#_9" class="md-nav__link">
     <span class="md-ellipsis">
       桌面壁纸
     </span>
@@ -456,7 +466,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_11" class="md-nav__link">
+  <a href="#_10" class="md-nav__link">
     <span class="md-ellipsis">
       中文输入
     </span>
@@ -465,7 +475,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_12" class="md-nav__link">
+  <a href="#_11" class="md-nav__link">
     <span class="md-ellipsis">
       应用窗口管理
     </span>
@@ -551,29 +561,38 @@ bind=alt+shift,n,spawn,wlr-randr --output DP-2 --off
 </code></pre>
 <p>显示器名字用wlr-randr来找</p>
 <h2 id="_7">应用</h2>
-<ul>
-<li>rofi</li>
-</ul>
-<h3 id="_8">修改默认终端</h3>
-<p>不知道为啥，默认终端是xterm，导致终端运行的程序都从xterm走。需要改配置，
-我刚装rofi还没有配置文件，所以
-需要生成一个</p>
-<p><code>rofi -dump-config &gt; ~/.config/rofi/config.rasi</code></p>
-<p>搜索关键词terminal，去掉注释，改成kitty</p>
-<p><code>terminal: "kitty";</code></p>
-<h2 id="_9">状态栏</h2>
+<h3 id="rofi">rofi</h3>
+<p>透明背景实现，修改图标主题，修改默认终端：</p>
+<pre><code>window {
+    transparency: &quot;real&quot;;
+    background-color: rgba(36,39,58,0.9);
+    icon-theme: &quot;candy-icons&quot;;
+    terminal: &quot;kitty&quot;;
+    ...
+ }
+</code></pre>
+<p>图标只认<code>~/.local/share/icons</code>，不认<code>/usr/share/icons</code></p>
+<h2 id="_8">状态栏</h2>
 <p>eww,polybar虽然可以用，我还是换成了waybar。其中比较烧脑的是找正确的温
 度监测。需要跑</p>
 <p><code>cat /sys/class/hwmon/hwmon*/name</code></p>
 <p>来找哪个包含coretemp，再把对应的路径设置到temperature模块里。</p>
-<h2 id="_10">桌面壁纸</h2>
+<p>cava的样式注意字体一定要等宽，否则会反复横跳。</p>
+<h2 id="_9">桌面壁纸</h2>
 <p>参考<a href="../dynamic_wallpaper/">这篇</a>实现动态桌面，自启动里加上一条：</p>
 <p><code>swaybg -i ~/.config/wallpaper/wall.jpg &gt;/dev/null 2&gt;&amp;1 &amp;</code></p>
 <p>更新：不如用wpaperd</p>
-<h2 id="_11">中文输入</h2>
+<h2 id="_10">中文输入</h2>
 <p>有个神奇的bug，启动fcitx5后所有新窗口的输入完全失效。解决办法：用快捷
 键打开qmenu或者rofi，随便输个字母再跳出，就修好了？？</p>
-<h2 id="_12">应用窗口管理</h2>
+<h2 id="_11">应用窗口管理</h2>
+<p>mangowc支持各种排列，我用的比较多的是
+ * super+n：切换各种模式
+ * alt+方向键：切换窗口
+ * super+方向：切换桌面（就是tag）
+ * ctlr+super+方向：当前窗口移到别的桌面去
+ * shift+super+方向：移动窗口的相对位置，但是保持同一种模式。
+ * ctrl+alt+方向：改变窗口大小</p>
 <h2 id="autostart">autostart</h2>
 <p>在.config/mango/autostart.sh</p>
 
