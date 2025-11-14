@@ -581,6 +581,57 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#1615" class="md-nav__link">
+    <span class="md-ellipsis">
+      16.15
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1616" class="md-nav__link">
+    <span class="md-ellipsis">
+      16.16
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#17" class="md-nav__link">
+    <span class="md-ellipsis">
+      17.垂直平分线
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#18" class="md-nav__link">
+    <span class="md-ellipsis">
+      18.面积
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="18.面积">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1811" class="md-nav__link">
+    <span class="md-ellipsis">
+      18.11
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -708,6 +759,30 @@ DAB平分为两个45度角。所以题目中有1：2,1：3的摆盘就注意了�
 把斜率1：3的底边平分。但这题把该等腰三角的顶点放纸外面去了，所以要在三
 角形的肚皮那里画条平行线找中点。</p>
 <p><img alt="img" src="1609.png" width="400" /></p>
+<h4 id="1615">16.15</h4>
+<p>两条给定线段的斜率都是1：2的比例，得知它们的对称轴是跟x轴呈45度角的线。
+要找从顶点出发的45度角的线，可以把整个角沿着这条线端x=1的距离得到一个
+新的顶点，两个顶点连线就行了。</p>
+<p><img alt="img" src="1615.png" width="400" /></p>
+<h4 id="1616">16.16</h4>
+<p>先说答案，这题需要用到圆周角定理。</p>
+<p><img alt="img" src="1616.png" width="400" /></p>
+<p>思路：圆周角定理说，角EAD是角ECD的两倍。如果能移动E让EAD=BCD，那就能得
+到BCD为ECDx2,达成CE平分BCD。</p>
+<p><img alt="img" src="1616a.png" width="400" /></p>
+<p>开始创造条件，让EA与BC平行。EA过A点，我们可以找另一条过A的BC平行线，利
+用这条和圆的交点来作为E。A平分三角形BCD的一条边，我们要找平分BD的点F，
+得到与BC平行的线段AF，AF所在线与圆的交点就是我们要的点E。平分BD的点怎
+么找？BD的y轴距离刚好是2,B往y轴挪1就可以，正好是BD和整数y的交点。</p>
+<p><img alt="img" src="1616b.png" width="400" /></p>
+<h3 id="17">17.垂直平分线</h3>
+<p>全部可以用凑斜率做。画脚手架凑分数距离有时候比较恶心。</p>
+<h3 id="18">18.面积</h3>
+<p>算面积，画脚手架凑斜率</p>
+<h4 id="1811">18.11</h4>
+<p>这题更多是找重心=面积对称点，因为两个都是长方形</p>
+<p><img alt="img" src="1811.png" width="400" /></p>
+<p><img alt="img" src="path" width="400" /></p>
 <p><img alt="img" src="path" width="400" /></p>
 
 
