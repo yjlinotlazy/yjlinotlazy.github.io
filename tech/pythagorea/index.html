@@ -688,6 +688,105 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    <span class="md-ellipsis">
+      23.旋转
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="23.旋转">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2318" class="md-nav__link">
+    <span class="md-ellipsis">
+      23.18
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24" class="md-nav__link">
+    <span class="md-ellipsis">
+      24.夹角
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="24.夹角">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2406" class="md-nav__link">
+    <span class="md-ellipsis">
+      24.06
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2407" class="md-nav__link">
+    <span class="md-ellipsis">
+      24.07
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25" class="md-nav__link">
+    <span class="md-ellipsis">
+      25.切线
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="25.切线">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2509" class="md-nav__link">
+    <span class="md-ellipsis">
+      25.09
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2510" class="md-nav__link">
+    <span class="md-ellipsis">
+      25.10
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2511" class="md-nav__link">
+    <span class="md-ellipsis">
+      25.11
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -844,12 +943,32 @@ DAB平分为两个45度角。所以题目中有1：2,1：3的摆盘就注意了�
 <h4 id="2213">22.13</h4>
 <p>遇到特殊情况，等腰三角形，可以走捷径直接连接中点而不需要找垂线。</p>
 <p><img alt="img" src="2213.png" width="400" /></p>
-<p><img alt="img" src="path" width="400" /></p>
-<p><img alt="img" src="path" width="400" /></p>
-<p><img alt="img" src="path" width="400" /></p>
-<p><img alt="img" src="path" width="400" /></p>
-<p><img alt="img" src="path" width="400" /></p>
-<p><img alt="img" src="path" width="400" /></p>
+<h3 id="23">23.旋转</h3>
+<p>找旋转中心的办法：连接旋转的起始点和终点，找线段中垂线。这种中垂线的交
+点就是中心。</p>
+<h4 id="2318">23.18</h4>
+<p>按照定义暴力解，两种起始点的组合，分别找中垂线交点，找到2个旋转点。</p>
+<p><img alt="img" src="2318.jpg" width="400" /></p>
+<h3 id="24">24.夹角</h3>
+<h4 id="2406">24.06</h4>
+<p>通过复制斜率来制造一个平行四边形BCDE,由斜率和X的位置看出，FE=BC，所以
+FE=ED，正好AE和EF垂直，所以D点就是F点对与AE的映射。</p>
+<p><img alt="img" src="2406b.png" width="400" /></p>
+<h4 id="2407">24.07</h4>
+<p>强行搓一个菱形</p>
+<p><img alt="img" src="2407.jpg" width="400" /></p>
+<h3 id="25">25.切线</h3>
+<h4 id="2509">25.09</h4>
+<p>找直径的垂线</p>
+<p><img alt="img" src="2509.jpg" width="400" /></p>
+<h4 id="2510">25.10</h4>
+<p>这是一个特殊的、半径为根号二的圆。作一条BD的中垂线，跟圆交点为C，可得
+到一个等腰三角形BCD, CD=BC，由于BC=BD，这个三角形也是等边三角形。A正好
+在D的延长线上并且AB=2BD=2BC，ABC刚好是一个带60度角的直角三角形，AC就正
+好是圆的切线了。另一个切线同理。</p>
+<p><img alt="img" src="2510.png" width="400" /></p>
+<h4 id="2511">25.11</h4>
+<p><img alt="img" src="2511.jpg" width="400" /></p>
 
 
 
