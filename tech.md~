@@ -13,6 +13,7 @@ Most notebooks are available in [this github repo](https://github.com/yjlinotlaz
  * [Random Forest](tech/ml/random_forest.ipynb)
  * [Perceptron Algorithm](tech/ml/perceptron_algorithm.ipynb)
  * [Basic Neural Network](tech/ml/basic_neural_net.ipynb)
+ * [Recurrent Neural Network](tech/ml/recurrent_neural_net.ipynb)
  * Clustering
  * XGBoost
  

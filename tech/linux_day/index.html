@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://yjlinotlazy.github.io/tech/image_magick/">
+        <link rel="canonical" href="https://yjlinotlazy.github.io/tech/linux_day/">
       
       
       
@@ -21,7 +21,7 @@
     
     
       
-        <title>用ImageMagick批处理图像 - 存盘强迫症</title>
+        <title>一个Arch Linux用户的一天 - 存盘强迫症</title>
       
     
     
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#imagemagick" class="md-skip">
+        <a href="#arch-linux" class="md-skip">
           Skip to content
         </a>
       
@@ -112,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              用ImageMagick批处理图像
+              一个Arch Linux用户的一天
             
           </span>
         </div>
@@ -398,68 +398,19 @@
 
 
 
-<h1 id="imagemagick">用ImageMagick批处理图像</h1>
-<p>写一个Makefile，专门准备一个文件夹放需要处理的图片，在这个文件夹终端跑</p>
-<pre><code>make small # 全部图片生成640x480大小的版本，并加上small前缀
-make medium # 同理
-make all # 生成480x360的特小版本作为thumb nail使用，并挂上th前缀
-make frame # 图片加上黑色细边框，并加上前缀f
-make fancy # 好像是图片加上黑色带阴影的边框
-</code></pre>
-<p>（补充：由于版本迭代，需要顺应新版的imagemagick，修改一下代码）</p>
-<pre><code>#conver image size
-all:
-    @for k in *.jpg; \
-        do \
-        echo $$k ; \
-        name=`echo $$k | cut -f1 -d.`; \
-        convert -geometry 480x360 $$k th$${name}.jpg; \
-        done
-small:
-    @for k in *.jpg; \
-        do \
-        echo $$k ; \
-        name=`echo $$k | cut -f1 -d.`; \
-        convert -geometry 640x480 $$k small$${name}.jpg; \
-        done
-medium:
-    @for k in *.jpg; \
-        do \
-        echo $$k ; \
-        name=`echo $$k | cut -f1 -d.`; \
-        convert -geometry 800x600 $$k medium$${name}.jpg; \
-        done
-frame:
-    @for k in *.jpg; \
-        do \
-        echo $$k ; \
-        name=`echo $$k | cut -f1 -d.`; \
-        magick $$k -bordercolor black -border 1 -depth 8 -colors 256 -quality 90 f$${name}.jpg; \
-        done
-
-fancy:
-    @for k in *.jpg; \
-        do \
-        echo $$k ; \
-        name=`echo $$k | cut -f1 -d.`; \
-        convert -bordercolor black -border 1 $$k -background none \( +clone -shadow 80x2+2+2 \) +swap -background white -flatten -depth 8 -colors 256 -quality 90 f$${name}.jpg; \
-        done
-fancy5:
-    @for k in *.jpg; \
-        do \
-        echo $$k ; \
-        name=`echo $$k | cut -f1 -d.`; \
-        convert -geometry 50%x50% -bordercolor black -border 1 $$k -background none \( +clone -shadow 80x2+2+2 \) +swap -background white -flatten -depth 8 -colors 256 -quality 90 f$${name}.jpg; \
-        done
-fancy4:
-    @for k in *.jpg; \
-        do \
-        echo $$k ; \
-        name=`echo $$k | cut -f1 -d.`; \
-        convert -geometry 40%x40% -bordercolor black -border 1 $$k -background none \( +clone -shadow 80x2+2+2 \) +swap -background white -flatten -depth 8 -colors 256 -quality 90 f$${name}.jpg; \
-        done
-
-</code></pre>
+<h1 id="arch-linux">一个Arch Linux用户的一天</h1>
+<p>好久没有滚挂了，btw。</p>
+<p>今天很忙，忍不住想在时间的夹缝里折腾一下还没坏掉的东西。SDDM的主题看厌
+了，就它了。在git下了一个炫酷的主题，充满期待的重启。</p>
+<p>黑屏，不详的预感，ctrl+alt+f3，什么也没有发生，完了，fk you nvidia。</p>
+<p>翻箱倒柜找出一个陈年U盘，进windows做了个启动盘，chroot进去，把sddm改成
+原本的样子，重启，黑屏，依然没有tty。</p>
+<p>反正之前系统的中文输入有个问题修补好，干脆重装系统算了。</p>
+<p>装完，又忘了fcitx怎么配的，不能用。折腾半天发现是要用fcitx5而不是fcitx，
+总算可以打字了。</p>
+<p>重新搞二号硬盘挂载，找以前的配置文件，看到熟悉的界面，长舒一口气。巧的
+是，之前有的两个老大难问题，居然顺便解决了，重装真香。</p>
+<p>再动SDDM我是狗。</p>
 
 
 

@@ -79,19 +79,21 @@ bind=alt+shift,n,spawn,wlr-randr --output DP-2 --off
 
 ## 应用
 
-* rofi
+### rofi
 
-### 修改默认终端
+透明背景实现，修改图标主题，修改默认终端：
 
-不知道为啥，默认终端是xterm，导致终端运行的程序都从xterm走。需要改配置，
-我刚装rofi还没有配置文件，所以
-需要生成一个
+```
+window {
+    transparency: "real";
+    background-color: rgba(36,39,58,0.9);
+	icon-theme: "candy-icons";
+	terminal: "kitty";
+	...
+ }
+```
 
-`rofi -dump-config > ~/.config/rofi/config.rasi`
-
-搜索关键词terminal，去掉注释，改成kitty
-
-`terminal: "kitty";`
+图标只认`~/.local/share/icons`，不认`/usr/share/icons`
 
 ## 状态栏
 
@@ -101,6 +103,8 @@ eww,polybar虽然可以用，我还是换成了waybar。其中比较烧脑的是
 `cat /sys/class/hwmon/hwmon*/name`
 
 来找哪个包含coretemp，再把对应的路径设置到temperature模块里。
+
+cava的样式注意字体一定要等宽，否则会反复横跳。
 
 ## 桌面壁纸
 
@@ -117,6 +121,22 @@ eww,polybar虽然可以用，我还是换成了waybar。其中比较烧脑的是
 
 ## 应用窗口管理
 
+mangowc支持各种排列，我用的比较多的是
+ * super+n：切换各种模式
+ * alt+方向键：切换窗口
+ * super+方向：切换桌面（就是tag）
+ * ctlr+super+方向：当前窗口移到别的桌面去
+ * shift+super+方向：移动窗口的相对位置，但是保持同一种模式。
+ * ctrl+alt+方向：改变窗口大小
+
 ## autostart
 
 在.config/mango/autostart.sh
+
+## 未解决问题
+
+这些问题在KDE下没有出现
+
+ * GeoGebra完全白屏
+ * Krita无法启动fcitx
+ * 手写板无法识别，wacom, huion都不行
