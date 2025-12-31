@@ -462,13 +462,24 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        电源管理
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#_7" class="md-nav__link">
+  <a href="#_8" class="md-nav__link">
     <span class="md-ellipsis">
       
         应用
@@ -496,7 +507,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_8" class="md-nav__link">
+  <a href="#_9" class="md-nav__link">
     <span class="md-ellipsis">
       
         桌面壁纸
@@ -507,7 +518,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_9" class="md-nav__link">
+  <a href="#_10" class="md-nav__link">
     <span class="md-ellipsis">
       
         状态栏
@@ -518,7 +529,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_10" class="md-nav__link">
+  <a href="#_11" class="md-nav__link">
     <span class="md-ellipsis">
       
         中文输入
@@ -529,7 +540,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_11" class="md-nav__link">
+  <a href="#_12" class="md-nav__link">
     <span class="md-ellipsis">
       
         应用窗口管理
@@ -551,7 +562,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_12" class="md-nav__link">
+  <a href="#_13" class="md-nav__link">
     <span class="md-ellipsis">
       
         未解决问题
@@ -644,7 +655,13 @@ accel_speed=1
 bind=alt+shift,n,spawn,wlr-randr --output DP-2 --off
 </code></pre>
 <p>显示器名字用wlr-randr来找</p>
-<h2 id="_7">应用</h2>
+<h3 id="_7">电源管理</h3>
+<p>关上笔记本电脑盖子，我这的默认模式是登出，需要修改
+<code>/etc/systemd/logind.conf</code>并重启。以下两行取消注释。</p>
+<pre><code>HandleLidSwitch=suspend
+HandleLidSwitchExternalPower=suspend
+</code></pre>
+<h2 id="_8">应用</h2>
 <h3 id="rofi">rofi</h3>
 <p>透明背景实现，修改图标主题，修改默认终端：</p>
 <pre><code>window {
@@ -656,7 +673,7 @@ bind=alt+shift,n,spawn,wlr-randr --output DP-2 --off
  }
 </code></pre>
 <p>图标只认<code>~/.local/share/icons</code>，不认<code>/usr/share/icons</code></p>
-<h2 id="_8">桌面壁纸</h2>
+<h2 id="_9">桌面壁纸</h2>
 <p>(旧方案)</p>
 <p>参考<a href="../dynamic_wallpaper/">这篇</a>实现动态桌面，自启动里加上一条：</p>
 <p><code>swaybg -i ~/.config/wallpaper/wall.jpg &gt;/dev/null 2&gt;&amp;1 &amp;</code></p>
@@ -672,14 +689,14 @@ sorting = &quot;random&quot;
 [any]
 path = &quot;&lt;your path to wallpaper&gt;&quot;
 </code></pre>
-<h2 id="_9">状态栏</h2>
+<h2 id="_10">状态栏</h2>
 <p><a href="https://github.com/yjlinotlazy/dotfiles/tree/main/mango/waybar">我的配置参考在这</a>。其中比较烧脑的是找正确的温度监测。需要跑</p>
 <p><code>cat /sys/class/hwmon/hwmon*/name</code></p>
 <p>来找哪个包含coretemp，再把对应的路径设置到temperature模块里。</p>
 <p>cava的样式注意字体一定要等宽，否则会反复横跳。</p>
-<h2 id="_10">中文输入</h2>
+<h2 id="_11">中文输入</h2>
 <p>按正常配置fcitx5就行了。</p>
-<h2 id="_11">应用窗口管理</h2>
+<h2 id="_12">应用窗口管理</h2>
 <p>mangowc支持各种排列，我用的比较多的是</p>
 <ul>
 <li>super+n：切换各种模式</li>
@@ -691,11 +708,9 @@ path = &quot;&lt;your path to wallpaper&gt;&quot;
 </ul>
 <h2 id="autostart">autostart</h2>
 <p>在.config/mango/autostart.sh</p>
-<h2 id="_12">未解决问题</h2>
+<h2 id="_13">未解决问题</h2>
 <p>这些问题在KDE下没有出现</p>
 <ul>
-<li>GeoGebra完全白屏</li>
-<li>Krita无法启动fcitx</li>
 <li>手写板无法识别，wacom, huion都不行</li>
 </ul>
 
