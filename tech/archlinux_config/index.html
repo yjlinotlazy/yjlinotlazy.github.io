@@ -390,6 +390,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#mangowc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        mangowc
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#kdekwin" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -404,7 +415,18 @@
   <a href="#ewwpolybar" class="md-nav__link">
     <span class="md-ellipsis">
       
-        eww+polybar
+        eww+polybar（已过气）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#waybar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        waybar
       
     </span>
   </a>
@@ -427,6 +449,28 @@
     <span class="md-ellipsis">
       
         kitty
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#git" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        配置git
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#steam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        steam
       
     </span>
   </a>
@@ -478,6 +522,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#yazi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        yazi
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -517,17 +572,21 @@
 
 
 <h1 id="_1">小霸王机器学习机配置</h1>
+<h2 id="mangowc">mangowc</h2>
+<p>我的当前主力窗口管理器，按照<a href="https://mangowc.vercel.app/docs/installation">官
+网</a>装。作者是中国人，所
+以可以直接抄fcitx作业，各种配置也比较对我胃口，所以我去直接拿他的
+<a href="https://github.com/DreamMaoMao/mango-config">dotfile</a>修改。唯一遗憾是
+尚未支持数位板，作者本人没有这个需求和设备，现在有个第三方pull request
+等merge，也许以后版本会支持。</p>
 <h2 id="kdekwin">KDE(自带kwin)</h2>
-<p>初衷是配一个具备一些可定制功能，又容易上手的系统用来学习机器学习。试过
-hyprland,bspwm都被直接菜鸟劝退。KDE plasma出厂可用，图形界面点鼠标就能
-实现不少花里胡哨的配置，所以作为基本的傻瓜型窗口管理器很合格。另一个选
-择是xfce，不过我想试点新玩具，而xfce曾经是我的主力。</p>
-<p>我的下一组要求是，在不放弃鼠标操作的条件下，有平铺式窗口管理和键盘操作
-的选项。plasma自带的kwin就能满足，依靠几个快捷键来把选定窗口放到事先设
-定好的平铺格子里。另外emacs, tilix本身就带平铺功能，不依赖于窗口管理器。</p>
-<h2 id="ewwpolybar">eww+polybar</h2>
-<p>下一个要求是，看见别人有漂亮的小窗口部件，也想抄一个。conky配置失败，
-发现eww是当红选择，也有很多作业抄。我看上了<a href="github/bspwm-dots-2.0/Configs/bspwm/" target="_blank">这个github
+<p>兼容性大爷。KDE plasma出厂可用，图形界面点鼠标就能实现不少花里胡哨的配
+置，所以作为基本的傻瓜型窗口管理器很合格。另一个选择是xfce。</p>
+<p>plasma自带的kwin能满足基本的平铺窗口管理，依靠几个快捷键来把选定窗口放
+到事先设定好的平铺格子里。另外emacs, konsole本身就带平铺功能，不依赖于窗
+口管理器。</p>
+<h2 id="ewwpolybar">eww+polybar（已过气）</h2>
+<p>有很多作业抄。我看上了<a href="github/bspwm-dots-2.0/Configs/bspwm/" target="_blank">这个github
 repo</a>的配置。
 这个repo是eww+bspwm的组合，效果图非常漂亮，但我需要的只有eww，所以把
 autostart里不相关的部分删掉，并让kde的autostart跑这个脚本。另一个需要
@@ -558,6 +617,9 @@ autostart里不相关的部分删掉，并让kde的autostart跑这个脚本。�
 <p>可以看出，plasma本身没有太夸张，X，eww，kwin就贡献了不少。brave浏览器
 也占了可观的一部分，但还是比chrome好多。如果不做任何特殊任务，基本内存
 消耗大约3-4G。如果要使用IDE或者大部头应用，就另说了。</p>
+<h2 id="waybar">waybar</h2>
+<p>建议到mangowc作者的<a href="https://github.com/DreamMaoMao/mango-config">repo</a>
+去抄作业。</p>
 <h2 id="zsh">zsh</h2>
 <p>火起来的bash替代品，智能很多，插件也很多。我忘记从哪里装的了，但是官网
 是<a href="https://ohmyz.sh/">这里</a></p>
@@ -570,6 +632,28 @@ autostart里不相关的部分删掉，并让kde的autostart跑这个脚本。�
 <pre><code>background_opacity 0.85
 shell zsh
 </code></pre>
+<h2 id="git">配置git</h2>
+<ul>
+<li>首先需要拿到access token。进入Settings -&gt; Developer Settings -&gt;
+   Personal access tokens。我选择的是Personal access tokens (classic)</li>
+<li><code>git config --global credential.helper store</code>。</li>
+</ul>
+<h2 id="steam">steam</h2>
+<p>默认的安装没有问题，但是显卡要处理一下，nvidia的。一进去卡成狗，结果是
+独显没认出来。查看：</p>
+<pre><code>nvidia-smi
+</code></pre>
+<p>正常情况应该会吐出一堆数据，但我的报错，说driver library version
+mismatch，于是重装：</p>
+<pre><code>sudo pacman -S nvidia-dkms nvidia-utils
+sudo reboot
+</code></pre>
+<p>重启之后就好了，博德之门3跑起来了。花了半个多小时捏了个女装大佬德鲁伊
+开局，五分钟初见杀，走两步就挂了。</p>
+<p>另一个问题是，图像显示像素化严重并且颜色不对，launch option加上：</p>
+<pre><code>--graphics Vulkan
+</code></pre>
+<p>重启游戏</p>
 <h2 id="_2">中文</h2>
 <p>用fcitx，记得要fcitx5，有最新qt支持的。自从kde plasma换成wayland后，突
 然只有浏览器里能切换了，解决办法是</p>
@@ -611,6 +695,9 @@ exec fcitx &amp;
 <code>/etc/nanorc</code>，高亮参考<a href="https://wiki.archlinux.org/title/Nano#Syntax_highlighting">这
 里</a>。我还安
 装了nano-syntax-highlighting包，也许不是必须的。</p>
+<h2 id="yazi">yazi</h2>
+<p>建议直接搜最新的文档。主题搭配可以参考<a href="https://github.com/yazi-rs/flavors/tree/main/dracula.yazi">这
+篇</a></p>
 <h2 id="_4">其它</h2>
 <p>有些程序在图形界面可以设置透明背景，比如vscode通过插件，konsole,tilix，
 就不赘述了。</p>

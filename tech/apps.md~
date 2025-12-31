@@ -15,15 +15,15 @@ systemctl start auto-cpufreq
  - rsync ：同步文件夹。适合写脚本。
  - yazi：鸭子。终端模式的文件管理器，需要一点上手，但我很喜欢它的标记
    再操作功能，防止手滑。
-   - 空格：选取文件
-   - shift+enter：选择打开方式
-   - y：复制，p：粘贴
-   - bt：增加新tab
-   - `[`,`]`，切换tab。
-   - a：添加文件。如果输入名字后加一个`/`，就改为创建文件夹。
-   - r：改名
-   - d：删除
-   - ctrl+c：关闭tab，如果只剩下一个tab，就退出程序
+    - 空格：选取文件
+    - shift+enter：选择打开方式
+    - y：复制，p：粘贴，x：剪切
+    - t：增加新tab
+    - `[`,`]`，切换tab。
+    - a：添加文件。如果输入名字后加一个`/`，就改为创建文件夹。
+    - r：改名
+    - d：删除
+    - ctrl+c：关闭tab，如果只剩下一个tab，就退出程序
  - kwin：kde自带的窗口平铺管理器，适合想用一些平铺，又不愿意放弃kde全
    家桶的人。
  - findimagedupes：寻找相似的图片。`findimagedupes -R -- . > dups.log`。
@@ -73,3 +73,4 @@ systemctl start auto-cpufreq
    还挺方便，比如terminal直接看图`display a.jpg`。批量给图片加边框也很
    方便。
  - brave：浏览器。用起来很舒服，内存耗的可以接受。
+ - GeoGebra：最好的几何作图软件。

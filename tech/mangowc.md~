@@ -3,11 +3,22 @@
 对平铺式窗口管理器我一直跃跃欲试，但是没有很合适的切入点，不想完全从零
 配起。但是mangowc吸引了我的注意，简洁，容易配置，开盒版本就挺好看了。
 最难的是，中文支持顺滑，全局跑一个fcitx5，在所有应用里都可以输入中文，
-包括终端。让我认真从kde plasma6切换到mangowc的是，在plasma6下我把brave
-的中文输入滚挂了，网上找不到解决方案，毕竟本来brave就是小众。
+包括终端。让我认真从kde plasma6切换到mangowc的契机是，在plasma6下我把
+brave的中文输入滚挂了，当时网上找不到解决方案（后续某次更新后自动解决
+了）。
 
 mangowc的缺点：文档非常少，有问题一搜，出来的结果都是讲水果的。只能往
 上游找攻略，搜dwl, wayland相关的解决方案。
+
+安装参考[官网](https://mangowc.vercel.app/docs/installation)，我用了最新的git版本：
+
+```
+yay -S mangowc-git
+```
+
+配置文件可参考作者本人的[git
+repo](https://github.com/DreamMaoMao/mango-config)。开盒即用，调一下快
+捷键和waybar的内容。
 
 ## 硬件
 
@@ -122,6 +133,7 @@ cava的样式注意字体一定要等宽，否则会反复横跳。
 ## 应用窗口管理
 
 mangowc支持各种排列，我用的比较多的是
+
  * super+n：切换各种模式
  * alt+方向键：切换窗口
  * super+方向：切换桌面（就是tag）

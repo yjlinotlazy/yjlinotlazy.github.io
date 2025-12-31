@@ -21,7 +21,7 @@
     
     
       
-        <title>配置平铺式窗口管理器Mangowc - 存盘强迫症</title>
+        <title>安装配置平铺式窗口管理器Mangowc - 存盘强迫症</title>
       
     
     
@@ -112,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              配置平铺式窗口管理器Mangowc
+              安装配置平铺式窗口管理器Mangowc
             
           </span>
         </div>
@@ -578,7 +578,7 @@
 
 
 
-<h1 id="mangowc">配置平铺式窗口管理器Mangowc</h1>
+<h1 id="mangowc">安装配置平铺式窗口管理器Mangowc</h1>
 <p>对平铺式窗口管理器我一直跃跃欲试，但是没有很合适的切入点，不想完全从零
 配起。但是mangowc吸引了我的注意，简洁，容易配置，开盒版本就挺好看了。
 最难的是，中文支持顺滑，全局跑一个fcitx5，在所有应用里都可以输入中文，
@@ -621,9 +621,16 @@ bind=none,XF86AudioStop,spawn,playerctl stop
 bind=none,XF86AudioPlay,spawn,playerctl play
 </code></pre>
 <h4 id="_4">屏幕亮度</h4>
+<p>(旧方案)</p>
 <p>安装swayosd，在自启动程序里加上<code>swayosd-server &gt;/dev/null 2&gt;&amp;1 &amp;</code></p>
 <pre><code>bind=none,XF86KbdBrightnessUp,spawn,swayosd-client --brightness +2
 bind=none,XF86KbdBrightnessDown,spawn,swayosd-client --brightness -2
+</code></pre>
+<p>(新方案)</p>
+<p>安装brightnessctl</p>
+<pre><code># screen
+bind=none,XF86KbdBrightnessUp,spawn,brightnessctl s 5+
+bind=none,XF86KbdBrightnessDown,spawn,brightnessctl s 5-
 </code></pre>
 <h3 id="_5">鼠标，触摸板</h3>
 <p>调成自然滚动模式，并把加速度拉满</p>

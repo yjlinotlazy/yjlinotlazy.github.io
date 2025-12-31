@@ -423,28 +423,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#git" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        配置git
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#steam" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        steam
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -508,6 +486,7 @@
    的关闭。于是回到arch，安装asusctrl。安装末尾会报错，但其实还是装上
    了，利用<code>asusctl aura-power lightbar</code>，按照-h的指示就可以关掉了。可
    以选择睡觉时关灯，醒来开灯。</li>
+<li>按照<a href="https://github.com/Jguer/yay">这个教程</a>安装yay，来装AUR里的包裹</li>
 </ul>
 <p>劝退点</p>
 <ul>
@@ -516,7 +495,10 @@
 <li>系统启动依然没有很稳定地每次都进入linux boot menu，有时直接跳win，有时候蓝屏（bitlocker）。</li>
 </ul>
 <h2 id="_1">基本工具</h2>
-<p>在<a href="../apps/">这篇里可以找到</a></p>
+<ul>
+<li>在<a href="../apps/">这篇</a>里可以找到推荐应用。</li>
+<li>在<a href="../archlinux_config/">这里</a>可以找到如何配置系统和软件。</li>
+</ul>
 <h2 id="_2">共享硬盘</h2>
 <p>共享硬盘，包括加装的第二块硬盘，都没有出场即用的读写支持。原理是
 windows分区ntfs无法理解linux下的权限，所以干脆就以只读模式挂载。解法是
@@ -537,28 +519,6 @@ sudo blkid  # 寻找对应的UUID
 arch btw你赢了，我再也不开windows行了口巴。</p>
 <p>重要：如此打补丁的分区steam和dropbox都不认。我后来重新格成etx4了，格了
 之后UUID会变，要修改fstab重新挂载。</p>
-<h2 id="git">配置git</h2>
-<ul>
-<li>首先需要拿到access token。进入Settings -&gt; Developer Settings -&gt;
-   Personal access tokens。我选择的是Personal access tokens (classic)</li>
-<li><code>git config --global credential.helper store</code>。</li>
-</ul>
-<h2 id="steam">steam</h2>
-<p>默认的安装没有问题，但是显卡要处理一下，nvidia的。一进去卡成狗，结果是
-独显没认出来。查看：</p>
-<pre><code>nvidia-smi
-</code></pre>
-<p>正常情况应该会吐出一堆数据，但我的报错，说driver library version
-mismatch，于是重装：</p>
-<pre><code>sudo pacman -S nvidia-dkms nvidia-utils
-sudo reboot
-</code></pre>
-<p>重启之后就好了，博德之门3跑起来了。花了半个多小时捏了个女装大佬德鲁伊
-开局，五分钟初见杀，走两步就挂了。</p>
-<p>另一个问题是，图像显示像素化严重并且颜色不对，launch option加上：</p>
-<pre><code>--graphics Vulkan
-</code></pre>
-<p>重启游戏</p>
 <h2 id="_3">其它问题解决方案</h2>
 <p>/boot无法扩容导致的更新失败：512mb的分区不够用怎么办？空间占用最大的是
 fallback image，这个不推荐删但是可以删。不推荐是因为如果系统坏掉可以有
