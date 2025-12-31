@@ -499,7 +499,7 @@
   <a href="#_8" class="md-nav__link">
     <span class="md-ellipsis">
       
-        状态栏
+        桌面壁纸
       
     </span>
   </a>
@@ -510,7 +510,7 @@
   <a href="#_9" class="md-nav__link">
     <span class="md-ellipsis">
       
-        桌面壁纸
+        状态栏
       
     </span>
   </a>
@@ -656,19 +656,29 @@ bind=alt+shift,n,spawn,wlr-randr --output DP-2 --off
  }
 </code></pre>
 <p>图标只认<code>~/.local/share/icons</code>，不认<code>/usr/share/icons</code></p>
-<h2 id="_8">状态栏</h2>
-<p>eww,polybar虽然可以用，我还是换成了waybar。其中比较烧脑的是找正确的温
-度监测。需要跑</p>
+<h2 id="_8">桌面壁纸</h2>
+<p>(旧方案)</p>
+<p>参考<a href="../dynamic_wallpaper/">这篇</a>实现动态桌面，自启动里加上一条：</p>
+<p><code>swaybg -i ~/.config/wallpaper/wall.jpg &gt;/dev/null 2&gt;&amp;1 &amp;</code></p>
+<p>(新方案)</p>
+<p>wpaperd。在autostart.sh里加上<code>wpaperd -d</code>。设置文件在
+<code>~/.config/wpaperd/config.toml</code>，我设置5分钟一变，从某文件夹随机选取一
+张图。</p>
+<pre><code>[default]
+duration = &quot;5m&quot;
+mode = &quot;center&quot;
+sorting = &quot;random&quot;
+
+[any]
+path = &quot;&lt;your path to wallpaper&gt;&quot;
+</code></pre>
+<h2 id="_9">状态栏</h2>
+<p><a href="https://github.com/yjlinotlazy/dotfiles/tree/main/mango/waybar">我的配置参考在这</a>。其中比较烧脑的是找正确的温度监测。需要跑</p>
 <p><code>cat /sys/class/hwmon/hwmon*/name</code></p>
 <p>来找哪个包含coretemp，再把对应的路径设置到temperature模块里。</p>
 <p>cava的样式注意字体一定要等宽，否则会反复横跳。</p>
-<h2 id="_9">桌面壁纸</h2>
-<p>参考<a href="../dynamic_wallpaper/">这篇</a>实现动态桌面，自启动里加上一条：</p>
-<p><code>swaybg -i ~/.config/wallpaper/wall.jpg &gt;/dev/null 2&gt;&amp;1 &amp;</code></p>
-<p>更新：不如用wpaperd</p>
 <h2 id="_10">中文输入</h2>
-<p>有个神奇的bug，启动fcitx5后所有新窗口的输入完全失效。解决办法：用快捷
-键打开qmenu或者rofi，随便输个字母再跳出，就修好了？？</p>
+<p>按正常配置fcitx5就行了。</p>
 <h2 id="_11">应用窗口管理</h2>
 <p>mangowc支持各种排列，我用的比较多的是</p>
 <ul>
