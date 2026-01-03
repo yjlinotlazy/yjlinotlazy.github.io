@@ -1,0 +1,10 @@
+# zsh搬家去fish
+
+yay装好后把fish设置为默认shell
+
+```
+chsh -s /usr/bin/fish
+```
+
+有些终端可能要手动改，对症下药
+

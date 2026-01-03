@@ -533,7 +533,29 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#dotfiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        dotfiles管理
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        登陆管理器
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
     <span class="md-ellipsis">
       
         其它
@@ -544,7 +566,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
+  <a href="#_6" class="md-nav__link">
     <span class="md-ellipsis">
       
         不折腾不出问题，一折腾就出的新问题
@@ -639,6 +661,7 @@ shell zsh
    Personal access tokens。我选择的是Personal access tokens (classic)</li>
 <li><code>git config --global credential.helper store</code>。</li>
 </ul>
+<p>如果遇到权限验证的问题，按照<a href="https://github.com/orgs/community/discussions/127820">这篇</a>解决，记得用基于url的repo</p>
 <h2 id="steam">steam</h2>
 <p>默认的安装没有问题，但是显卡要处理一下，nvidia的。一进去卡成狗，结果是
 独显没认出来。查看：</p>
@@ -699,13 +722,17 @@ exec fcitx &amp;
 <h2 id="yazi">yazi</h2>
 <p>建议直接搜最新的文档。主题搭配可以参考<a href="https://github.com/yazi-rs/flavors/tree/main/dracula.yazi">这
 篇</a></p>
-<h2 id="_4">其它</h2>
+<h2 id="dotfiles">dotfiles管理</h2>
+<p>使用<a href="https://www.chezmoi.io/quick-start/">chezmoi</a>，很方便。</p>
+<h2 id="_4">登陆管理器</h2>
+<p>推荐ly，按照<a href="https://wiki.archlinux.org/title/Ly">archlinux wiki</a>。</p>
+<h2 id="_5">其它</h2>
 <p>有些程序在图形界面可以设置透明背景，比如vscode通过插件，konsole,tilix，
 就不赘述了。</p>
 <p>一系列操作完毕后，透明背景达成，可以随时看到一点点好看的桌面背景。</p>
 <p>最终效果</p>
 <p><img alt="img" src="../personal_web_imgs/screenshot2.png" /></p>
-<h2 id="_5">不折腾不出问题，一折腾就出的新问题</h2>
+<h2 id="_6">不折腾不出问题，一折腾就出的新问题</h2>
 <p>待解决：任何tilinig wm都无法使用，而且装来装去还把SDDM搞坏了</p>
 <p>现状是，SDDM下无法选择window manager/desktop environment，只剩个plasma
 x11光杆司令。出现过的另一个问题是，登陆进去啥也不能干，包括使用网上搜
