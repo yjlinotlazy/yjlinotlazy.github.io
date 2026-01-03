@@ -393,7 +393,7 @@
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        基本使用
+        安装
       
     </span>
   </a>
@@ -402,6 +402,17 @@
       
         <li class="md-nav__item">
   <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        基本使用
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         延展功能
@@ -413,7 +424,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
         配置主题
@@ -424,7 +435,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#_5" class="md-nav__link">
     <span class="md-ellipsis">
       
         书签
@@ -460,10 +471,12 @@
 <p><img alt="img" src="../yazi1.png" />
 <img alt="img" src="../yazi2.png" />
 <img alt="img" src="../yazi3.png" /></p>
-<p>yazi：鸭子。终端模式的文件管理器，需要一点上手，但我很喜欢它的标记再操
-作功能，防止手滑。很多插件有版本要求，建议手动编译最新版本。只需要自带
-功能的话就没必要。AUR里的最新版本比当前旧半年，就有插件不支持用了，所
-以我选择编译。最新编译命令建议看<a href="https://yazi-rs.github.io/docs/installation/">官
+<p>yazi：鸭子。终端模式的文件管理器，需要一点时间上手，但非常灵活，能自定
+义的东西很多。</p>
+<h2 id="_1">安装</h2>
+<p>可以直接装打包好的，但很多插件有版本要求，建议手动编译最新版本，只需要
+自带功能的话就没必要。AUR里的最新版本比当前旧半年，就有插件不支持用了，
+所以我选择编译。最新编译命令建议看<a href="https://yazi-rs.github.io/docs/installation/">官
 网</a>。以下是当前的：</p>
 <pre><code>git clone https://github.com/sxyazi/yazi.git
 cd yazi
@@ -473,7 +486,7 @@ cargo build --release --locked
 
 sudo mv target/release/yazi target/release/ya /usr/local/bin/
 </code></pre>
-<h2 id="_1">基本使用</h2>
+<h2 id="_2">基本使用</h2>
 <p>日常用的如下。官网上还列举了很多别的。</p>
 <ul>
 <li>空格：选取文件</li>
@@ -492,9 +505,9 @@ sudo mv target/release/yazi target/release/ya /usr/local/bin/
 </ul>
 </li>
 </ul>
-<h2 id="_2">延展功能</h2>
+<h2 id="_3">延展功能</h2>
 <p>安装插件用<code>ya pkg add &lt;pluging name&gt;</code>，有些教程用的pack已经失效。</p>
-<h3 id="_3">配置主题</h3>
+<h3 id="_4">配置主题</h3>
 <p>我装了个吸血鬼主题</p>
 <pre><code>ya pkg add yazi-rs/flavors:dracula
 </code></pre>
@@ -503,7 +516,7 @@ sudo mv target/release/yazi target/release/ya /usr/local/bin/
 dark=&quot;dracula&quot;
 </code></pre>
 <p>其它主题安装方式大同小异</p>
-<h3 id="_4">书签</h3>
+<h3 id="_5">书签</h3>
 <p>我用的是<a href="https://github.com/dedukun/bookmarks.yazi">bookmarks.yazi</a></p>
 <p>按照作者的文档设置快捷键等等，但是不完全能用，加书签功能需要玄学，手动
 加到<code>~/.local/state/yazi/.dds</code>里就可以了。</p>
