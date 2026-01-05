@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://yjlinotlazy.github.io/tech/apps/">
+        <link rel="canonical" href="https://yjlinotlazy.github.io/tech/retroarch/">
       
       
       
@@ -21,7 +21,7 @@
     
     
       
-        <title>软件心得和推荐 - 存盘强迫症</title>
+        <title>RetroArch复古游戏模拟器集成管理 - 存盘强迫症</title>
       
     
     
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#_1" class="md-skip">
+        <a href="#retroarch" class="md-skip">
           Skip to content
         </a>
       
@@ -112,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              软件心得和推荐
+              RetroArch复古游戏模拟器集成管理
             
           </span>
         </div>
@@ -390,10 +390,21 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        基本安装和使用
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        系统工具
+        显示优化
       
     </span>
   </a>
@@ -404,7 +415,7 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        文档编辑器
+        中文化
       
     </span>
   </a>
@@ -415,29 +426,7 @@
   <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
-        终端
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        系统检测
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        其它
+        手柄
       
     </span>
   </a>
@@ -461,87 +450,86 @@
 
 
 
-<h1 id="_1">软件心得和推荐</h1>
-<h2 id="_2">系统工具</h2>
-<p>大部分是命令行工具。</p>
-<ul>
-<li>tree: 树状文件浏览，辅助ls</li>
-<li>less: 预览文件。arch linux连这个都不预装是我没想到的。。</li>
-<li>auto-cpufreq: 据说是省电小助手</li>
-</ul>
-<pre><code>sudo pacman -S auto-cpufreq
-systemctl enable auto-cpufreq
-systemctl start auto-cpufreq
+<h1 id="retroarch">RetroArch复古游戏模拟器集成管理</h1>
+<p><img alt="img" src="1.png" /></p>
+<p>RetroArch是很流行的老游戏模拟器管理前端。只要亿点设置就能舒服的使用。
+此篇是按archlinux写的，但是其它系统可以参考。</p>
+<h2 id="_1">基本安装和使用</h2>
+<p>archlinux下可以直接下载retroarch。</p>
+<p>键盘控制在settings-&gt;input。其中retropad binds设置游戏操作键，hotkeys设
+置菜单快捷键，包括存盘读盘，切换全屏，切换shader等等重要功能，记下来，
+等会调试的时候需要用。</p>
+<p>下载core，我直接去下arch包裹<a href="https://archlinux.org/groups/x86_64/libretro/">libretro-包裹名
+字</a>，有些地方说可以在
+retroarch里面下，但我没有成功。按照不同的平台选core，不确定哪个更好就
+都下了一个个试。</p>
+<p>下载ROM就不说了，条条大路通罗马，下载不到就刷卡。</p>
+<p>settings-&gt;video-&gt;output-&gt;video设置驱动，我选了gl，等会加shader会方便些。
+有推荐vulkan的，如果相应shader能找到也可以。再深入就没研究了。</p>
+<p>这样就能运行基本款了。retroarch玩游戏分两步，先加载核心再加载游戏。加
+载核心：main menu-&gt;load core，按游戏平台选一个。加载游戏：load content，
+选游戏ROM，可以修改start directory以后方便找。</p>
+<p>到达这一步，游戏就能玩了。游戏打开后按F1进入快捷菜单，选择收藏，以后可
+以用收藏游戏菜单快速访问。</p>
+<h2 id="_2">显示优化</h2>
+<p>游戏中按f1可以进入快速菜单，这里也是修改测试shader（着色器）的入口。</p>
+<p>基本款像素化严重，不喜欢的话需要加shader。有教材说在online updater里找，
+但我装的不知道去了哪个文件夹，反正不是默认文件夹。所以还是走AUR装了
+libretro-shaders-all-git，就能在/usr/share/libretro/shaders找到了，可
+以从快捷菜单里读到。shaders-&gt;load preset，会自动进入上面的默认文件夹，
+选scalefx-&gt;scalefx.glslp，回到游戏就是平滑的效果了。如果对这个shader满
+意，就存成全局的：shaders-&gt;manage presets-&gt;save global preset。不满意
+就换一个继续调整。很多shader其实不能用，估计是视频驱动匹配的问题，我至
+今不知道valkan能用什么shader，还是gl容易匹配。</p>
+<p>shader并不是加了就一定好，有些游戏，尤其是汉化的，加了反而糊，不如保留
+原汁原味。这个时候hotkey就用上了，默认是用逗号键一键切换是否加shader。
+不同游戏最适合的shader可能不一样，在quick menu-&gt;shaders-&gt;manage
+presets里勾选remember last used shader directory，方便调试。</p>
+<p>主题可以改：设置-&gt;界面-&gt;外观-&gt;色彩主题。</p>
+<h2 id="_3">中文化</h2>
+<p>默认情况下读中文文件名有小方块，需要改字体。只认ttf格式的字体，不认更
+现代的ttc格式，我下载了wenquanyi的ttf文件，放到
+<code>/usr/share/fonts/TTF/</code>里。放哪其实无所谓，让retroarch找到就行。重启
+retroarch后就可以在选择文件的菜单里正确显示中文了。为了保险，我在
+<code>~/.config/retroarch/retroarch.cfg</code>里把<code>video_font_path</code>也改成了中文字
+体路径。测试了几个中文游戏，能成功运行。</p>
+<h2 id="_4">手柄</h2>
+<p>适用八位堂手柄，其它未测试。</p>
+<p>USB手柄：即插即用，但是要检查一下映射，比如左右摇杆就要手动加。</p>
+<p>蓝牙手柄：用bluetoothctl匹配蓝牙，终端bluetoothctl进入控制台</p>
+<pre><code>&gt; power on
+&gt; agent on
+&gt; default-agent
+&gt; scan on
+# 稍等片刻，直到看到手柄被检测到
+&gt; scan off
+&gt; devices
+# 此时应该看得到手柄的MAC地址，一堆数字，大写字母，冒号那个
+&gt; pair &lt;MAC地址&gt; # 匹配上
+&gt; trust &lt;MAC地址&gt; # 以后方便自动匹配
+&gt; connect &lt;MAC地址&gt;
 </code></pre>
-<ul>
-<li>rsync ：同步文件夹。适合写脚本。</li>
-<li>yazi：鸭子。终端模式的文件管理器，需要一点上手，但我很喜欢它的标记
-   再操作功能，防止手滑。细节看<a href="../yazi/">这篇</a></li>
-<li>kwin：kde自带的窗口平铺管理器，适合想用一些平铺，又不愿意放弃kde全
-   家桶的人。</li>
-<li>findimagedupes：寻找相似的图片。<code>findimagedupes -R -- . &gt; dups.log</code>。
-   注意是相似，不一定相同，不要依赖它来删除同样的图片。</li>
-<li>yt-dlp：下载youtube视频到本地的命令行工具。</li>
-<li>cmus：极简风格的音乐播放器。由于MOC装不上，就换成了cmus，体验良好</li>
-<li>evince：看pdf</li>
-</ul>
-<h2 id="_3">文档编辑器</h2>
-<p>作为文档编辑器爱好者，我项目管理靠用不同的编辑器，一个编辑器管一块业务。</p>
-<ul>
-<li>nano: 对于不喜欢vim的人来说，这个在终端用很合适，我只要有terminal就
-   会配置一个。用了n年后我才发现支持语法高亮，一直都黑白配裸奔。</li>
-<li>emacs: 这几年emacs热度骤降，市场份额比vim低一个数量级，但org mode还
-   是香。不想折腾的可以参考<a href="../emacs/">我的配置</a>。</li>
-<li>code: VS code的linux版</li>
-<li>neovim/lazyvim。我很遗憾当初因为圣战而没有入坑，现在年纪大了再学一
-   套快捷键体系很难。相见恨晚，完全可以取代IDE，对于老人程序猿来说，
-   vim恐怕是最友好的，不需要鼠标，而且几乎整个屏幕都是编辑界面，适合老
-   人大字体。</li>
-<li>atom：快要被zed迭代了（同一公司），但是我喜欢它的简洁风格。</li>
-<li>zed(zeditor)：有了它之后我就再也不用vs code了。开箱即用的功能有：开
-   终端，git整合，直接看到上次commit，语法检查，显示method的定义和注释。
-   它不多不少正好有我需要的东西，没有我不需要的。透明背景设置要放在
-   experimental里，不能直接放theme里：</li>
-</ul>
-<pre><code> {
-    ...
-    &quot;experimental.theme_overrides&quot;: {
-       &quot;background.appearance&quot;: &quot;blurred&quot;,
-    }
-    ...
- }
+<p>蓝牙手柄连接成功后，终端跑bluetoothctl会显示。没有正确驱动还是无法识别，
+我装了8bitdo-ultimate-controller-udev，game-devices-udev，重启电脑，就
+可以了。读取游戏的时候会出现消息说没有设置，进去之后从快捷菜单修改按键
+映射即可。可以根据不同的核心=游戏平台设置不同的映射，映射调整全部能在
+retroarch里完成，教程很多就不赘述了。</p>
+<p>连接第二个蓝牙手柄：幸运的是，可以如法炮制，不会有冲突。</p>
+<p>连接电视：htmi连上后，可能需要手动切换外接，先用wlr-randr找到设备名，
+再切换，比如</p>
+<pre><code>wlr-randr --output HDMI-A-3 --off
 </code></pre>
-<ul>
-<li>mousepad：xfce的记事本，够简单，我当便签使用。</li>
-</ul>
-<h2 id="_4">终端</h2>
-<ul>
-<li>tilix: 可以平铺窗口的终端。（某次被arch滚挂了，不知道跟wayland有没
-   有关系）</li>
-<li>kitty：当红轻量级、可定制终端，支持透明</li>
-<li>konsole：kde默认终端，我用它作为默认终端来跑终端模式的程序。分屏很
-   方便。</li>
-<li>foot：也突然红起来了</li>
-</ul>
-<h2 id="_5">系统检测</h2>
-<ul>
-<li>btop：非常用户友好，就是占地面积大</li>
-</ul>
-<h2 id="_6">其它</h2>
-<ul>
-<li>darktable：照片编辑和管理。据说用过之后就不想用lightroom了</li>
-<li>RawTherapee：也是照片编辑和管理，各有优点。</li>
-<li>krita：替代photoshop。</li>
-<li>gimp：虽然我不习惯它的快捷键，还是要赞一下终于把反人类的每个部件单
-   独一个窗口改掉了，变成整合的了。快捷键吐槽：谁家软件用ctrl+D来退出。
- <img alt="img" src="../gimp.png" /></li>
-<li>imagemagick；一系列处理图片的命令行。虽然听着反直觉，但是有些小东西
-   还挺方便，比如terminal直接看图<code>display a.jpg</code>。批量给图片加边框也很
-   方便。</li>
-<li>brave：浏览器。用起来很舒服，内存耗的可以接受。</li>
-<li>GeoGebra：最好的几何作图软件。记得要装geogebra-qt6-bin，否则wayland
-   下有可能白屏。</li>
-</ul>
+<p>为了方便手柄操作，在快捷键设置里加上退出游戏的手柄映射。</p>
+<p>wii: rvz格式不认，需要用dolphin-emu转化为iso</p>
+<p>dc：整个文件夹都需要，加载gdi文件。gdi文件里应该有写需要哪些bin文件。</p>
+<p>完成以上后，终于是个中古游戏前端完全体，可以横着走了。走去板砖，先不玩
+游戏了。</p>
+<p><img alt="img" src="2.png" /></p>
+<p><img alt="img" src="3.png" /></p>
+<p><img alt="img" src="4.png" /></p>
+<p><img alt="img" src="5.png" /></p>
+<p><img alt="img" src="6.png" /></p>
+<p><img alt="img" src="7.png" /></p>
 
 
 

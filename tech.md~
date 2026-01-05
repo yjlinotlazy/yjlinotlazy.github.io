@@ -18,6 +18,7 @@ Most notebooks are available in [this github repo](https://github.com/yjlinotlaz
  * XGBoost
  
 ## 捣腾配置，软件
+ * [yazi，鸭子，在终端起飞的高效文件管理器](tech/yazi.md)
  * [用ImageMagick批处理图片](tech/image_magick.md)
  * [Update root partition](tech/update_root_partition.md)
  * [Arch Linux + windows 11 双启动](tech/archlinux_win.md)
@@ -29,8 +30,9 @@ Most notebooks are available in [this github repo](https://github.com/yjlinotlaz
  * [emacs配置](tech/emacs.md)
  * [neovim配置](tech/neovim.md)
  * [吐槽linux+小问题解决方案](tech/whining.md)
- * [软件心得](tech/apps.md)
- * [一个linux用户的一天](tech/linux_day.md)
+ * [软件推荐和心得](tech/apps.md)
+ * [一个archlinux用户的一天](tech/linux_day.md)
+ * [zsh搬家去fish](tech/zsh_to_fish.md)
 
 ## 小镇做题虾
 

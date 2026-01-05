@@ -14,16 +14,7 @@ systemctl start auto-cpufreq
 ```
  - rsync ：同步文件夹。适合写脚本。
  - yazi：鸭子。终端模式的文件管理器，需要一点上手，但我很喜欢它的标记
-   再操作功能，防止手滑。
-    - 空格：选取文件
-    - shift+enter：选择打开方式
-    - y：复制，p：粘贴，x：剪切
-    - t：增加新tab
-    - `[`,`]`，切换tab。
-    - a：添加文件。如果输入名字后加一个`/`，就改为创建文件夹。
-    - r：改名
-    - d：删除
-    - ctrl+c：关闭tab，如果只剩下一个tab，就退出程序
+   再操作功能，防止手滑。细节看[这篇](../tech/yazi.md)
  - kwin：kde自带的窗口平铺管理器，适合想用一些平铺，又不愿意放弃kde全
    家桶的人。
  - findimagedupes：寻找相似的图片。`findimagedupes -R -- . > dups.log`。
@@ -59,6 +50,11 @@ systemctl start auto-cpufreq
  - kitty：当红轻量级、可定制终端，支持透明
  - konsole：kde默认终端，我用它作为默认终端来跑终端模式的程序。分屏很
    方便。
+ - foot：也突然红起来了
+
+## 系统检测
+
+ - btop：非常用户友好，就是占地面积大
 
 ## 其它
 
