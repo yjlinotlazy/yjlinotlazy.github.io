@@ -35,6 +35,7 @@
    的关闭。于是回到arch，安装asusctrl。安装末尾会报错，但其实还是装上
    了，利用`asusctl aura-power lightbar`，按照-h的指示就可以关掉了。可
    以选择睡觉时关灯，醒来开灯。
+ - 按照[这个教程](https://github.com/Jguer/yay)安装yay，来装AUR里的包裹
 
 劝退点
 
@@ -45,7 +46,8 @@
 
 ## 基本工具
 
-在[这篇里可以找到](../tech/apps.md)
+ * 在[这篇](../tech/apps.md)里可以找到推荐应用。
+ * 在[这里](../tech/archlinux_config.md)可以找到如何配置系统和软件。
 
 ## 共享硬盘
 
@@ -80,40 +82,6 @@ arch btw你赢了，我再也不开windows行了口巴。
 重要：如此打补丁的分区steam和dropbox都不认。我后来重新格成etx4了，格了
 之后UUID会变，要修改fstab重新挂载。
 
-## 配置git
-
- - 首先需要拿到access token。进入Settings -> Developer Settings ->
-   Personal access tokens。我选择的是Personal access tokens (classic)
- - `git config --global credential.helper store`。
-
-## steam
-
-默认的安装没有问题，但是显卡要处理一下，nvidia的。一进去卡成狗，结果是
-独显没认出来。查看：
-
-```
-nvidia-smi
-```
-
-正常情况应该会吐出一堆数据，但我的报错，说driver library version
-mismatch，于是重装：
-
-```
-sudo pacman -S nvidia-dkms nvidia-utils
-sudo reboot
-```
-
-重启之后就好了，博德之门3跑起来了。花了半个多小时捏了个女装大佬德鲁伊
-开局，五分钟初见杀，走两步就挂了。
-
-另一个问题是，图像显示像素化严重并且颜色不对，launch option加上：
-
-```
---graphics Vulkan
-```
-
-重启游戏
-
 ## 其它问题解决方案
 
 /boot无法扩容导致的更新失败：512mb的分区不够用怎么办？空间占用最大的是
@@ -126,3 +94,4 @@ fallback image，这个不推荐删但是可以删。不推荐是因为如果系
 默认设定是`PRESETS=('default' 'fallback')`，改成`PRESETS=('default')`，
 把fallback相关的设定都注释掉，就可以删掉initramfs-linux-fallback.img
 了
+

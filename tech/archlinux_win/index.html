@@ -426,6 +426,17 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
+        扫描仪/打印机
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
         其它问题解决方案
       
     </span>
@@ -519,7 +530,15 @@ sudo blkid  # 寻找对应的UUID
 arch btw你赢了，我再也不开windows行了口巴。</p>
 <p>重要：如此打补丁的分区steam和dropbox都不认。我后来重新格成etx4了，格了
 之后UUID会变，要修改fstab重新挂载。</p>
-<h2 id="_3">其它问题解决方案</h2>
+<h2 id="_3">扫描仪/打印机</h2>
+<p>需要的包裹，根据型号有所不同，AUR上会写</p>
+<pre><code>yay -S sane, brscan4, brother-mfc-l2750dw, simple-scan
+</code></pre>
+<p>连接，需要在打印机上寻找ip，根据官网的指示</p>
+<pre><code>sudo brsaneconfig4 -a name=Brother model=MFC-L2705DW ip=&lt;ip&gt;
+</code></pre>
+<p>再进入simple-scan就可以了。</p>
+<h2 id="_4">其它问题解决方案</h2>
 <p>/boot无法扩容导致的更新失败：512mb的分区不够用怎么办？空间占用最大的是
 fallback image，这个不推荐删但是可以删。不推荐是因为如果系统坏掉可以有
 个备用的用来修，但是如果坏掉我不如干脆重装顺便把/boot格了重新搞个大的。
