@@ -7,7 +7,10 @@ make small # 全部图片生成640x480大小的版本，并加上small前缀
 make medium # 同理
 make all # 生成480x360的特小版本作为thumb nail使用，并挂上th前缀
 make frame # 图片加上黑色细边框，并加上前缀f
+make fancy # 好像是图片加上黑色带阴影的边框
 ```
+
+（补充：由于版本迭代，需要顺应新版的imagemagick，修改一下代码）
 
 ```
 #conver image size

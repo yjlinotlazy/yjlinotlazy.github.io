@@ -383,6 +383,36 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        加边框
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        以下已过期
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -399,6 +429,14 @@
 
 
 <h1 id="imagemagick">用ImageMagick批处理图像</h1>
+<h2 id="_1">加边框</h2>
+<pre><code>#!/usr/bin/env fish
+# Add border of 1 px
+for img in *.png
+    magick $img -bordercolor black -border 1 $img
+end
+</code></pre>
+<h2 id="_2">以下已过期</h2>
 <p>写一个Makefile，专门准备一个文件夹放需要处理的图片，在这个文件夹终端跑</p>
 <pre><code>make small # 全部图片生成640x480大小的版本，并加上small前缀
 make medium # 同理
