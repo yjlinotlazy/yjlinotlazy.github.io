@@ -242,7 +242,7 @@
   <span class="md-ellipsis">
     
   
-    Projects
+    项目
   
 
     
@@ -269,7 +269,7 @@
   <span class="md-ellipsis">
     
   
-    Tech
+    技术
   
 
     
@@ -350,7 +350,7 @@
   <span class="md-ellipsis">
     
   
-    About
+    关于
   
 
     
@@ -547,6 +547,9 @@ fallback image，这个不推荐删但是可以删。不推荐是因为如果系
 <p>默认设定是<code>PRESETS=('default' 'fallback')</code>，改成<code>PRESETS=('default')</code>，
 把fallback相关的设定都注释掉，就可以删掉initramfs-linux-fallback.img
 了</p>
+<p>系统更新的时候遇到报错<code>(invalid or corrupted package (PGP
+signature)).</code>，跑一下<code>sudo pacman -Sy --needed archlinux-keyrin</code>。再
+yay就行了。</p>
 
 
 

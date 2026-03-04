@@ -82,6 +82,22 @@ arch btw你赢了，我再也不开windows行了口巴。
 重要：如此打补丁的分区steam和dropbox都不认。我后来重新格成etx4了，格了
 之后UUID会变，要修改fstab重新挂载。
 
+## 扫描仪/打印机
+
+需要的包裹，根据型号有所不同，AUR上会写
+
+```
+yay -S sane, brscan4, brother-mfc-l2750dw, simple-scan
+```
+
+连接，需要在打印机上寻找ip，根据官网的指示
+
+```
+sudo brsaneconfig4 -a name=Brother model=MFC-L2705DW ip=<ip>
+```
+
+再进入simple-scan就可以了。
+
 ## 其它问题解决方案
 
 /boot无法扩容导致的更新失败：512mb的分区不够用怎么办？空间占用最大的是

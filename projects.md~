@@ -2,7 +2,13 @@
 
 有小程序的想法都扔在这，但不一定能写出来，写出来也不一定能用
 
- - 每日当季鸡汤：每日随机生成无厘头短句子。[github](https://github.com/yjlinotlazy/daily-fortune){:target="_blank"}
+ - 左右互搏：两个机器人，一个出题，一个做题。
+ - smart pacman：两个机器人，一个捉，一个躲和吃
+ - [lazy todo](projects/lazy.md)
+ - [灵机一动，动弹不得](projects/ideas.md)
+ - [吃啥](https://github.com/yjlinotlazy/eat_what){:target="_blank"}:
+   每周菜谱规划，可添加菜谱。
+ - [每日当季鸡汤](https://github.com/yjlinotlazy/daily-fortune){:target="_blank"}：每日随机生成无厘头短句子。
  - [备份文件侠](projects/dotfile_syncer.md)：方便的全局备份大量配置文
    件。[github](https://github.com/yjlinotlazy/bulk_sync){:target="_blank"}
  - [终端随机机械图](projects/mech_colorscript.md)(未开始)
