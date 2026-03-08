@@ -1,0 +1,13 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #7251B5;
+  font-weight: 700;
+  border-left: 4px solid #C19EE0;
+  border-bottom: 2px solid #C19EE0;
+  padding-left: 0.5rem;
+  padding-bottom: 0.2rem;
+}
