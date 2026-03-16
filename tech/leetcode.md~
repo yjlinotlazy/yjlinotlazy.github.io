@@ -1,7 +1,41 @@
 # Leetcode套路总结
 
-## linked list
+推荐题库
 
- - Find edge cases
+ - Blind 75
+
+## Linked list
+
+ - Basic traversal. Consistent node relationship.
+ - Cover all edge cases
+   - Empty list
+   - Single node where the head is also the tail
+   - When removing or adding nodes, will new tail/head be created?
+   - Head and tail handling
+ - If multiple methods modify nodes, are they consistent? They need to
+   follow the same requirements.
+ - If there are multiple lists to be handled, check boundaries of all
+   lists. Make sure no list go out of boundary.
  
-代表题：LRU cache
+### 代表题：
+
+ - LRU cache
+ - 21. Merge Two Sorted Lists
+
+## Hash table
+
+活用lookup=O(1)的特性，来优化需要频繁搜索的解法。
+
+### 代表题：
+
+ - 128. Longest Consecutive Sequence
+
+## Sliding Window
+
+ - Edge cases.
+ - All indices are visited with no repeatition
+ - Slide to the right position
+
+### 代表题
+
+ - 3. Longest Substring Without Repeating Characters

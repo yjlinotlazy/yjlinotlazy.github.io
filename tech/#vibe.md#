@@ -1,0 +1,30 @@
+# 窝囊式vibe coding
+
+我的目标是，做我需要的东西，目标1用户。无需运营，本地部署，无需用户调
+研，制作成本几小时。顺便学习AI，防止被淘汰。
+
+好处：完全量身定做，我不需要的功能一概没有，满足我任何奇葩的操作习惯和
+审美（曼妙的终端配色）。
+
+## 流程
+
+全部单线程，烧脑的多agent不要。我需要的是AI给我腾出时间来盯着终端听音
+乐脑袋放空。
+
+ - 我写readme，包含项目简介，用户需求，交互规则，前后端要求，测试方案。
+ - 让AI读readme,写design doc,mermaid画设计图。
+ - 以上是第一个commit,上班摸鱼时不时翻出来看看想想。
+ - 跟AI讨论几轮直到敲定方案。让AI建立milestones,tasks,让我可以层层把关。
+ - AI写代码，我把关，保证测试是否都通过。没有通过的则添加issues让AI返
+   工。每次对话结束都让AI更新readme,design，context.md,execution plan。
+ - 投入使用。
+
+## 工具
+
+ - codex：按理说claude code更强大但是codex够用了。我这种小作坊用哪家都
+   差不多。
+ - zed: 懒人ide。
+ - mdfried：看markdown文档，可渲染图片。
+ - 一个顺手的终端，比如kitty,foot。
+ - mmdc：渲染mermaid图，codex知道去直接调用。
+ - cmus：音乐播放软件是必需品。
