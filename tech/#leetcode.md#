@@ -1,0 +1,70 @@
+# Leetcode套路总结
+
+推荐题库
+
+ - Blind 75
+
+## Linked list
+
+ - Basic traversal. Consistent node relationship.
+ - Cover all edge cases
+   - Empty list
+   - Single node where the head is also the tail
+   - When removing or adding nodes, will new tail/head be created?
+   - Head and tail handling
+ - If multiple methods modify nodes, are they consistent? They need to
+   follow the same requirements.
+ - If there are multiple lists to be handled, check boundaries of all
+   lists. Make sure no list go out of boundary.
+ 
+### 代表题：
+
+ - LRU cache
+ - 21. Merge Two Sorted Lists 热身
+ - 143. Reorder List 本质不难但是容易翻车
+
+## Hash table
+
+活用lookup=O(1)的特性，来优化需要频繁搜索的解法。
+
+### 代表题：
+
+ - 128. Longest Consecutive Sequence
+
+## Sliding Window
+
+ - Edge cases.
+ - All indices are visited with no repeatition
+ - Slide to the right position
+
+### 代表题
+
+ - 3. Longest Substring Without Repeating Characters
+
+## Stack
+
+ - Know the time complexity
+ - Get the order right
+ - Know when the stack is emptied vs has remaining items.
+
+### 代表题
+
+ - 20. Valid Parentheses 热身
+
+## 树
+
+ - 顺利把数列转化为树结构。
+ - 对run time complexity有概念。
+
+### 代表题
+
+ - 572. Subtree of Another Tree
+
+## 指针
+
+ - 左右位置，边界条件
+ - 重复元素的处理到
+
+### 代表题
+
+ - 15. 3sum 3sum的优化版是双指针

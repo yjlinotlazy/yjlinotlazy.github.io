@@ -1,5 +1,17 @@
 # 用ImageMagick批处理图像
 
+## 加边框
+
+```
+#!/usr/bin/env fish
+# Add border of 1 px
+for img in *.png
+    magick $img -bordercolor black -border 1 $img
+end
+```
+
+## 以下已过期
+
 写一个Makefile，专门准备一个文件夹放需要处理的图片，在这个文件夹终端跑
 
 ```

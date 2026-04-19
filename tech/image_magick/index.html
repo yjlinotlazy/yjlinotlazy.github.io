@@ -404,6 +404,17 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
+        调色
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
         以下已过期
       
     </span>
@@ -436,7 +447,25 @@ for img in *.png
     magick $img -bordercolor black -border 1 $img
 end
 </code></pre>
-<h2 id="_2">以下已过期</h2>
+<h2 id="_2">调色</h2>
+<p>扫描仪扫出来的色彩可能会发灰。不同画材受的影响不一样，所以可能需要根据
+画材调整。</p>
+<pre><code># 适合丙烯，彩铅，不适合水彩
+  magick &quot;$input&quot; \
+    -normalize \
+    -level '5%,95%' \
+    -sharpen 0x1 \
+    -modulate 100,120,100 \
+    &quot;$output_a&quot;
+
+# 适合水彩
+  magick &quot;$input&quot; \
+    -level '5%,95%' \
+    -sharpen 0x1 \
+    -modulate 100,120,100 \
+    &quot;$output_b&quot;
+</code></pre>
+<h2 id="_3">以下已过期</h2>
 <p>写一个Makefile，专门准备一个文件夹放需要处理的图片，在这个文件夹终端跑</p>
 <pre><code>make small # 全部图片生成640x480大小的版本，并加上small前缀
 make medium # 同理

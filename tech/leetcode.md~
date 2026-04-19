@@ -20,7 +20,7 @@
 ### 代表题：
 
  - LRU cache
- - 21. Merge Two Sorted Lists
+ - 21. Merge Two Sorted Lists 热身
 
 ## Hash table
 
@@ -39,3 +39,13 @@
 ### 代表题
 
  - 3. Longest Substring Without Repeating Characters
+
+## Stack
+
+ - Know the time complexity
+ - Get the order right
+ - Know when the stack is emptied vs has remaining items.
+
+### 代表题
+
+ - 20. Valid Parentheses 热身
