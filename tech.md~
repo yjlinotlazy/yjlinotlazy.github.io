@@ -18,6 +18,7 @@ Most notebooks are available in [this github repo](https://github.com/yjlinotlaz
  * XGBoost
  
 ## 捣腾配置，软件
+ * [窝囊式vibe coding](tech/vibe.md)
  * [RetroArch复古游戏模拟器集成管理](tech/retroarch.md)
  * [yazi，鸭子，在终端起飞的高效文件管理器](tech/yazi.md)
  * [用ImageMagick批处理图片](tech/image_magick.md)
