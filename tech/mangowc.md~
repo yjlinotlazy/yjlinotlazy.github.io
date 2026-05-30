@@ -99,6 +99,16 @@ bind=alt+shift,n,spawn,wlr-randr --output DP-2 --off
 
 显示器名字用wlr-randr来找
 
+### 电源管理
+
+关上笔记本电脑盖子，我这的默认模式是登出，需要修改
+`/etc/systemd/logind.conf`并重启。以下两行取消注释。
+
+```
+HandleLidSwitch=suspend
+HandleLidSwitchExternalPower=suspend
+```
+
 ## 应用
 
 ### rofi
