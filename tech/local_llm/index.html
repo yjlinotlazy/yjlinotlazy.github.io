@@ -476,9 +476,10 @@
 <li>ollama: 官网的脚本直接装。选择下载，不要选择云服务，无需注册。</li>
 <li>模型：我选了最新的千问qwen。https://www.ollama.com/library 里找模型
    和安装命令。</li>
-<li>opencode，也是直接复制官网给的命令，多平台支持。codex也可以直接用，
-   但是要用ollama触发。<code>ollama launch codex --model qwen-large</code>这样的。</li>
-<li>笔记本电脑散热垫，用来冷却滚烫的思考。</li>
+<li>编程套壳我选择pi。pi coding agent官网下载脚本安装。opencode和
+   codex也可以，但是token烧的多，对本地不友好，本地用轻量级。亲测对比pi
+   和opencode的GPU使用率是30% vs 100%。</li>
+<li>笔记本电脑散热垫，用来冷却滚烫的思想。</li>
 </ul>
 <h2 id="_2">基本使用</h2>
 <pre><code>ollama run qwen3.6
@@ -488,7 +489,7 @@
 <h3 id="gpu">监测GPU</h3>
 <pre><code>nvidia-smi --id=0 --query-gpu=utilization.gpu --format=csv,noheader,nounits
 </code></pre>
-<p>可以欣慰的看到，即使没有玩游戏，独显也没有浪费，分分钟冲100%。</p>
+<p>可以欣慰的看到，即使没有玩游戏，独显也没有浪费，分分钟往上冲。</p>
 <h3 id="_4">写代码</h3>
 <p>出厂配置无法写代码，症状是，它处理提词到一半就不动了，没有输出，再问也
 不回答。于是得先导出当前配置文件，修改后存成新版本重新加载：</p>
@@ -505,7 +506,7 @@ PARAMETER top_k 20
 <pre><code>ollama create qwen-large -f Modelfile
 </code></pre>
 <p>重新启动</p>
-<pre><code>ollama launch opencode --model qwen-large
+<pre><code>ollama launch pi --model qwen-large
 </code></pre>
 <p>就是完全体了。</p>
 
