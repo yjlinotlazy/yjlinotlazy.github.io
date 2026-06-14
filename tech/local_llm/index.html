@@ -390,6 +390,18 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#token_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        无限token不求人：本地跑大语言模型
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="无限token不求人：本地跑大语言模型">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -399,46 +411,12 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
         基本使用
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        配置
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="配置">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#gpu" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        监测GPU
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        写代码
       
     </span>
   </a>
@@ -468,10 +446,11 @@
 
 
 <h1 id="token">无限token不求人：本地跑大语言模型</h1>
+<h2 id="token_1">无限token不求人：本地跑大语言模型</h2>
 <p>大厂作妖的环境下，我掉入了消费陷阱：上班不限量token产垃圾，下班搞业余
 项目也是屁大的事都让ai代劳，中旬不到就把codex整个月的份额用完了，手搓
 能力早已丢失，项目直接卡壳。于是研究了本地跑模型，意外地简单。</p>
-<h2 id="_1">安装：</h2>
+<h3 id="_1">安装：</h3>
 <ul>
 <li>ollama: 官网的脚本直接装。选择下载，不要选择云服务，无需注册。</li>
 <li>模型：我选了最新的千问qwen。https://www.ollama.com/library 里找模型
@@ -481,17 +460,15 @@
    和opencode的GPU使用率是30% vs 100%。</li>
 <li>笔记本电脑散热垫，用来冷却滚烫的思想。</li>
 </ul>
-<h2 id="_2">基本使用</h2>
+<h3 id="_2">基本使用</h3>
 <pre><code>ollama run qwen3.6
 </code></pre>
 <p>开始聊天，并欣赏qwen内心戏</p>
-<h2 id="_3">配置</h2>
-<h3 id="gpu">监测GPU</h3>
+<p>监测GPU</p>
 <pre><code>nvidia-smi --id=0 --query-gpu=utilization.gpu --format=csv,noheader,nounits
 </code></pre>
 <p>可以欣慰的看到，即使没有玩游戏，独显也没有浪费，分分钟往上冲。</p>
-<h3 id="_4">写代码</h3>
-<p>出厂配置无法写代码，症状是，它处理提词到一半就不动了，没有输出，再问也
+<p><strong>写代码</strong>：出厂配置无法写代码，症状是，它处理提词到一半就不动了，没有输出，再问也
 不回答。于是得先导出当前配置文件，修改后存成新版本重新加载：</p>
 <pre><code>ollama show --modelfile qwen3.6 &gt; Modelfile
 </code></pre>
