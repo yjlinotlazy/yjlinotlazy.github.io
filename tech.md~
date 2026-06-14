@@ -14,6 +14,7 @@ Most notebooks are available in [this github repo](https://github.com/yjlinotlaz
  * [Perceptron Algorithm](tech/ml/perceptron_algorithm.ipynb)
  * [Basic Neural Network](tech/ml/basic_neural_net.ipynb)
  * [Recurrent Neural Network](tech/ml/recurrent_neural_net.ipynb)
+ * [LSTM](tech/ml/lstm.ipynb)
  * Clustering
  * XGBoost
  
