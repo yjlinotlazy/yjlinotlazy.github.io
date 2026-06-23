@@ -1,12 +1,68 @@
 # 无限token不求人：本地跑大语言模型
 
+## 无限token不求人：本地跑大语言模型
+
 大厂作妖的环境下，我掉入了消费陷阱：上班不限量token产垃圾，下班搞业余
 项目也是屁大的事都让ai代劳，中旬不到就把codex整个月的份额用完了，手搓
 能力早已丢失，项目直接卡壳。于是研究了本地跑模型，意外地简单。
 
-零部件：
+### 安装：
+
  - ollama: 官网的脚本直接装。选择下载，不要选择云服务，无需注册。
- - 模型：我选了最新的千问qwen。https://www.ollama.com/library 里找模型
+ - 模型：我选了最新的千问qwen。[ollama官网](https://www.ollama.com/library)里找模型
    和安装命令。
- - opencode，也是直接复制官网给的命令，多平台支持。codex也可以直接用，
-   但是要用ollama触发。`ollama launch codex --model qwen-large`这样的。
+ - 编程套壳我选择omp，轻量级和开箱即用的平衡很好。官网下载脚本安装。
+   opencode和codex也可以，但是token烧的多，对本地不友好。亲测对比omp和
+   opencode的GPU使用率是30% vs 100%。
+ - 笔记本电脑散热垫，用来冷却滚烫的思想。
+
+### 基本使用
+
+```
+ollama run qwen3.6
+```
+
+开始聊天，并欣赏qwen内心戏
+
+监测GPU
+
+```
+nvidia-smi --id=0 --query-gpu=utilization.gpu --format=csv,noheader,nounits
+```
+
+可以欣慰的看到，即使没有玩游戏，独显也没有浪费，分分钟往上冲。
+
+**写代码**：出厂配置无法写代码，症状是，它处理提词到一半就不动了，没有输出，再问也
+不回答。于是得先导出当前配置文件，修改后存成新版本重新加载：
+
+```
+ollama show --modelfile qwen3.6 > Modelfile
+```
+
+修改内容
+
+```
+FROM qwen3.6:latest
+PARAMETER top_k 20
+PARAMETER top_p 0.5 
+PARAMETER min_p 0
+PARAMETER num_ctx 65536
+PARAMETER num_predict -1
+PARAMETER presence_penalty 1.5
+PARAMETER repeat_penalty 1.1
+PARAMETER temperature 0.2
+```
+
+chomod 777改权限，存成新版本：
+
+```
+ollama create qwen-large -f Modelfile
+```
+
+重新启动
+
+```
+ollama launch pi --model qwen-large
+```
+
+就是完全体了。
