@@ -384,6 +384,72 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      摸鱼项目流程
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="摸鱼项目流程">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      项目起始
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      项目执行
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      参考
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="参考">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#agentsmd" class="md-nav__link">
+    <span class="md-ellipsis">
+      AGENTS.md
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prompts" class="md-nav__link">
+    <span class="md-ellipsis">
+      prompts
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -445,7 +511,85 @@ PARAMETER temperature 1
 件</a>，生成代码结构图，实时
 跟踪代码改动。</p>
 <p>我增加了基本指示，放在<code>~/.pi/agent/AGENTS.md</code>，让它有问题就问我，别太
-内耗</p>
+内耗。末尾有我的AGENTS.md供参考，我感觉可以再精简点。中心思想是不懂就
+问，别原地打转。</p>
+<p>这个文件虽然会显示在context里，但是本地模型不会主动读，于是我又加了一
+个command,放在<code>~/.pi/agent/extensions/follow.ts</code></p>
+<pre><code class="language-typescript">import { join } from &quot;path&quot;;
+import { readFileSync } from &quot;fs&quot;;
+
+export default function (pi: PiExtensionAPI) {
+  pi.registerCommand(&quot;follow&quot;, {
+    description: &quot;Re-read ~/.pi/agent/AGENTS.md and inject the rules into the current turn.&quot;,
+    handler: async (_args, ctx) =&gt; {
+      // Resolve the path to AGENTS.md globally as requested
+      const homeDir = process.env.HOME || &quot;/home/yli&quot;;
+      const configPath = join(homeDir, &quot;.pi&quot;, &quot;agent&quot;, &quot;AGENTS.md&quot;);
+
+      try {
+        const content = readFileSync(configPath, &quot;utf-8&quot;);
+
+        // Construct the message that simulates a new user input containing the rules
+        const payload = {
+          customType: &quot;follow-injection&quot;,
+          display: {
+            title: &quot;Agentic Rules Reset&quot;,
+            body: `I have re-read and integrated the instructions from \`${configPath}\`.\n\n\`\`\`\n${content}\n\`\`\`\n\n(I will now proceed strictly under these constraints.)`,
+          },
+          content: content // The actual raw text for the context
+        };
+
+        pi.sendMessage(payload, { triggerTurn: true });
+      } catch (error: any) {
+        pi.sendMessage({
+          customType: &quot;error&quot;,
+          display: { title: &quot;Error&quot;, body: `Failed to load AGENTS.md: ${error.message}` },
+          content: &quot;&quot;
+        });
+      }
+    },
+  });
+}
+</code></pre>
+<p><code>/reload</code>重新加载。以后每次打开都先跑<code>/follow</code>让它读一遍。</p>
+<p>不建议关掉thinking模式。本地模型本来就不是很快，关掉就不知道它哪里卡壳，
+没法叫停。最大的消耗不是thinking，而是反复绕圈子。</p>
+<h2 id="_3">摸鱼项目流程</h2>
+<p>摸鱼做个人小项目，不需要生产级别，差不多就行，所以本地模型+个人知识储
+备正好凑出个能用的应用。</p>
+<h3 id="_4">项目起始</h3>
+<p>我的流程是自己手写一份基本需求、用户交互方式。塞给强力的商业大模型，比
+如GPT,DEEPSEEK,讨论一轮架构，让它出一个文档，存到本地。</p>
+<ul>
+<li>REQUIREMENTS.md：最顶层的用户需求，类似于产品经理写的那种，技术细节
+   不需要太多。这个用来跟大模型讨论架构。</li>
+<li>ARCHITECTURE.md：跟商业模型讨论完毕就存到这个文档，作为本地模型的标
+   准参考。对于个人使用的本地小项目来说，商业模型一次就能写个八九不离
+   十，不太需要再修改了。也可以自己起草，让商业模型改，注意强调这东西
+   是要给本地小模型用。</li>
+<li>EXECUTION_PLAN.md：拆解步骤，说你要用来喂本地模型，商业模型会给拆解
+   得很细，每个里程碑都有具体的该做什么，该怎么测试，怎样算做完。这个
+   文档边用边改。</li>
+<li>TASKS.md：只放当前任务，从EXECUTION_PLAN.md里摘抄。这个摘抄工作可以
+   让本地模型去做。</li>
+</ul>
+<p>第一个任务是搭好框架，搭好后可以跑<code>codegraph init</code>，项目就正式开启了。</p>
+<h3 id="_5">项目执行</h3>
+<p>打开pi,<code>/follow</code>让它读一遍行为指南，接下来让它复习上面几个文档，它会自
+动调用CodeGraph。</p>
+<p>让它读TASKS.md，集中攻击当前小任务，注意不要关闭thinking模式。</p>
+<p>执行过程中，context window经常超，用的越久越容易干活干到一半就停了。需
+要去输入个continue,期间正好等电脑冷却。</p>
+<p>有空就观察本地模型的小脑瓜在想啥天马行空的，跑偏就截停给点指示。没空放
+着让它自己琢磨也行，反正最终它要通过EXECUTION_PLAN.md里写的要求，只要
+harness做得好就不至于瞎写还不自知。有了AGENT.md的方针，原地打转几轮就
+会自己停下来等我给提示，不会空转。</p>
+<p>水平堪忧是没办法的事，所以我如果时间有盈余，就会接手自己写然后告诉它我
+写完了，这样避免它从缓存捞旧版本然后覆盖我写的。商业模型可以几小时写完
+的，本地模型+我摸鱼合作写可能磨洋工几天才能写完，但是我只需要把握大的
+框架+出手相助，已经很回本了。</p>
+<h2 id="_6">参考</h2>
+<h3 id="agentsmd">AGENTS.md</h3>
 <pre><code>## Rules when running on locall models via ollama
 
 You are operating with a limited-capability local language model.
@@ -541,6 +685,9 @@ export default function (pi: PiExtensionAPI) {
 <p><code>/reload</code>重新加载。以后每次打开都先跑<code>/follow</code>让它读一遍。</p>
 <p>不建议关掉thinking模式。本地模型本来就不是很快，关掉就不知道它哪里卡壳，
 没法叫停。最大的消耗不是thinking，而是反复绕圈子。</p>
+<h3 id="prompts">prompts</h3>
+<pre><code>check ARCHITECTURE.md for the design, REQUIREMENTS.md for user requirements, and EXECUTION_PLAN.md for the overall plan. Check TASKS.md for the current tasks. Update TASKS.md and EXECUTION_PLAN.md as you go. 
+</code></pre>
 
 
 

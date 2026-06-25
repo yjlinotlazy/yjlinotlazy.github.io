@@ -11,9 +11,9 @@
  - ollama: 官网的脚本直接装。选择下载，不要选择云服务，无需注册。
  - 模型：我选了最新的千问qwen。[ollama官网](https://www.ollama.com/library)里找模型
    和安装命令。
- - 编程套壳我选择omp，轻量级和开箱即用的平衡很好。官网下载脚本安装。
-   opencode和codex也可以，但是token烧的多，对本地不友好。亲测对比omp和
-   opencode的GPU使用率是30% vs 100%。
+ - 编程套壳我推荐以下轻量级的，减少token消耗。
+   - omp，轻量和开箱即用的平衡很好。官网下载脚本安装。
+   - pi，从约等于零开始打造属于自己的coding agent。
  - 笔记本电脑散热垫，用来冷却滚烫的思想。
 
 ### 基本使用
@@ -44,13 +44,9 @@ ollama show --modelfile qwen3.6 > Modelfile
 ```
 FROM qwen3.6:latest
 PARAMETER top_k 20
-PARAMETER top_p 0.5 
-PARAMETER min_p 0
-PARAMETER num_ctx 65536
-PARAMETER num_predict -1
-PARAMETER presence_penalty 1.5
-PARAMETER repeat_penalty 1.1
-PARAMETER temperature 0.2
+PARAMETER num_ctx 32768
+PARAMETER num_predict 4096
+PARAMETER temperature 1
 ```
 
 chomod 777改权限，存成新版本：
@@ -65,4 +61,115 @@ ollama create qwen-large -f Modelfile
 ollama launch pi --model qwen-large
 ```
 
-就是完全体了。
+就可以开始龟速写代码了。
+
+### 优化pi coding agent
+
+为了减少agent研究代码的成本，推荐[codegraph插
+件](https://pi.dev/packages/@vndv/pi-codegraph)，生成代码结构图，实时
+跟踪代码改动。
+
+我增加了基本指示，放在`~/.pi/agent/AGENTS.md`，让它有问题就问我，别太
+内耗
+
+```
+## Rules when running on locall models via ollama
+
+You are operating with a limited-capability local language model.
+
+Your primary goal is to make reliable progress, not to appear autonomous.
+
+### Core Principle
+
+When uncertain, ask the user.
+
+A short clarification question is preferred over speculative reasoning, repeated failed attempts, or excessive token usage.
+
+When exploring the codebase, use the CodeGraph extension
+
+### Escalation Rules
+
+Immediately ask the user for guidance if any of the following occur:
+
+ - You have trouble finding a file
+ - You have tried two substantially different approaches and neither succeeded.
+ - You are unable to determine the user's intent with high confidence.
+ - You need to choose between multiple architectural directions.
+ - You encounter ambiguous code or requirements.
+ - You are repeatedly generating the same reasoning without producing new evidence.
+ - You are spending more than 5 reasoning steps without a concrete action.
+ - You are tempted to "keep thinking" instead of gathering information.
+ - You are about to make a potentially destructive change.
+ - You are unsure whether a detected issue is the root cause.
+ - You find yourself revisiting the same files repeatedly without making progress.
+
+### Anti-Spinning Policy
+
+Do not continue reasoning indefinitely.
+
+Warning signs:
+
+* Repeating previous thoughts.
+* Re-reading the same files.
+* Re-running the same commands.
+* Suggesting the same fix multiple times.
+* Producing long analyses without actions.
+
+If any warning sign is detected:
+
+STOP.
+
+Summarize:
+
+* What you know.
+* What you tried.
+* What is blocking progress.
+
+Then ask a concise question.
+```
+
+这个文件虽然会显示在context里，但是本地模型不会主动读，于是我又加了一
+个command,放在`~/.pi/agent/extensions/follow.ts`
+
+```typescript
+import { join } from "path";
+import { readFileSync } from "fs";
+
+export default function (pi: PiExtensionAPI) {
+  pi.registerCommand("follow", {
+    description: "Re-read ~/.pi/agent/AGENTS.md and inject the rules into the current turn.",
+    handler: async (_args, ctx) => {
+      // Resolve the path to AGENTS.md globally as requested
+      const homeDir = process.env.HOME || "/home/yli";
+      const configPath = join(homeDir, ".pi", "agent", "AGENTS.md");
+
+      try {
+        const content = readFileSync(configPath, "utf-8");
+        
+        // Construct the message that simulates a new user input containing the rules
+        const payload = {
+          customType: "follow-injection",
+          display: {
+            title: "Agentic Rules Reset",
+            body: `I have re-read and integrated the instructions from \`${configPath}\`.\n\n\`\`\`\n${content}\n\`\`\`\n\n(I will now proceed strictly under these constraints.)`,
+          },
+          content: content // The actual raw text for the context
+        };
+
+        pi.sendMessage(payload, { triggerTurn: true });
+      } catch (error: any) {
+        pi.sendMessage({
+          customType: "error",
+          display: { title: "Error", body: `Failed to load AGENTS.md: ${error.message}` },
+          content: ""
+        });
+      }
+    },
+  });
+}
+```
+
+`/reload`重新加载。以后每次打开都先跑`/follow`让它读一遍。
+
+不建议关掉thinking模式。本地模型本来就不是很快，关掉就不知道它哪里卡壳，
+没法叫停。最大的消耗不是thinking，而是反复绕圈子。
