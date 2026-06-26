@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://yjlinotlazy.github.io/tech/local_llm/">
+        <link rel="canonical" href="https://yjlinotlazy.github.io/tech/local_llm_coding/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>无限token不求人：本地跑大语言模型 - 存盘强迫症</title>
+        <title>本地大模型摸鱼写代码配置 - 存盘强迫症</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#token" class="md-skip">
+        <a href="#_1" class="md-skip">
           Skip to content
         </a>
       
@@ -110,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              无限token不求人：本地跑大语言模型
+              本地大模型摸鱼写代码配置
             
           </span>
         </div>
@@ -343,28 +343,85 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#token_1" class="md-nav__link">
+  <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
-      无限token不求人：本地跑大语言模型
+      工具：尽量精简
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="无限token不求人：本地跑大语言模型">
+    <nav class="md-nav" aria-label="工具：尽量精简">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
+  <a href="#pi-coding-agent" class="md-nav__link">
     <span class="md-ellipsis">
-      安装：
+      优化pi coding agent
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      摸鱼项目流程
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="摸鱼项目流程">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      项目起始
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+  <a href="#_5" class="md-nav__link">
     <span class="md-ellipsis">
-      基本使用
+      项目执行
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      碎碎念
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      参考
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="参考">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#agentsmd" class="md-nav__link">
+    <span class="md-ellipsis">
+      AGENTS.md
     </span>
   </a>
   
@@ -390,47 +447,132 @@
                   
 
 
-<h1 id="token">无限token不求人：本地跑大语言模型</h1>
-<h2 id="token_1">无限token不求人：本地跑大语言模型</h2>
-<p>大厂作妖的环境下，我掉入了消费陷阱：上班不限量token产垃圾，下班搞业余
-项目也是屁大的事都让ai代劳，中旬不到就把codex整个月的份额用完了，手搓
-能力早已丢失，项目直接卡壳。于是研究了本地跑模型，意外地简单。</p>
-<h3 id="_1">安装：</h3>
+<h1 id="_1">本地大模型摸鱼写代码配置</h1>
+<p>目标：用本地跑的大语言模型辅助写个人小项目，对效率要求不高，摸鱼时间写，
+只要能代替一部分我的操作就行，它写不了的我可以兜底。</p>
+<h2 id="_2">工具：尽量精简</h2>
 <ul>
-<li>ollama: 官网的脚本直接装。选择下载，不要选择云服务，无需注册。</li>
-<li>模型：我选了最新的千问qwen。<a href="https://www.ollama.com/library">ollama官网</a>里找模型
-   和安装命令。</li>
-<li>编程套壳我推荐以下轻量级的，减少token消耗。</li>
-<li>omp，轻量和开箱即用的平衡很好。官网下载脚本安装。</li>
-<li>pi，从约等于零开始打造属于自己的coding agent。</li>
-<li>笔记本电脑散热垫，用来冷却滚烫的思想。</li>
+<li>pi coding agent。oh my pi也可以但我还是选了最轻量级的pi,能用就行。</li>
+<li>whichllm，用来估算本地跑各个模型的参数，比如多少会被发配到CPU,token
+   效率，模型更新时间等等。</li>
+<li>模型试了一圈后选了qwen3.6,35B，在我的硬件上跑来是龟速，但是再降智就
+   没法写代码了。</li>
+<li>codegraph：帮助模型理解代码结构。</li>
 </ul>
-<h3 id="_2">基本使用</h3>
-<pre><code>ollama run qwen3.6
+<h3 id="pi-coding-agent">优化pi coding agent</h3>
+<p>为了减少agent研究代码的成本，使用<a href="https://pi.dev/packages/@vndv/pi-codegraph">codegraph插
+件</a>，生成代码结构图，实时
+跟踪代码改动。</p>
+<p>然后给pi添加了行为指南，放在<code>~/.pi/agent/AGENTS.md</code>，让它有问题就问我，
+别内耗。文章末尾有我的AGENTS.md供参考，我感觉可以再精简点。中心思想是
+不懂就问，别原地打转。有个坑是，这个文件虽然会显示在context里，但是本
+地模型并没有主动读，于是我又加了一个命令（相当于skill）叫做follow,放在
+<code>~/.pi/agent/extensions/follow.ts</code>，它只需要做一件事，就是读AGENTS.md。
+每次打开pi都先跑<code>/follow</code>让它读一遍。</p>
+<p>不建议关掉thinking模式。本地模型本来就不是很快，关掉就不知道它哪里卡壳，
+没法叫停。我开始走了一个弯路是靠关掉thinking来省token，后来发现最耗能
+的是反复绕圈子，关了thinking它就在一个黑盒子里空转。</p>
+<h2 id="_3">摸鱼项目流程</h2>
+<p>摸鱼做个人小项目，不需要生产级别，差不多就行，所以本地模型+个人知识储
+备两个菜鸡正好凑出个能用的应用。</p>
+<h3 id="_4">项目起始</h3>
+<p>我的流程是自己手写一份基本需求、用户交互方式，塞给强力的商业大模型，比
+如GPT,DEEPSEEK,讨论一轮架构，让它出一个文档，存到本地当教学大纲。写几
+个重要文件：</p>
+<ul>
+<li>REQUIREMENTS.md：最顶层的用户需求，类似于产品经理写的那种，技术细节
+   不需要太多。这个用来跟大模型讨论架构。</li>
+<li>ARCHITECTURE.md：跟商业模型讨论完毕就存到这个文档，作为本地模型的参
+   考标准。chatgpt一次能写个八九不离十，我过个目再改改就够用了。</li>
+<li>EXECUTION_PLAN.md：拆解步骤，强调你要用来喂本地模型，商业模型会量身
+   定做给拆解得很细，每个里程碑都有具体的该做什么，怎么测试，怎样算做
+   完。这个文档边用边改。</li>
+<li>TASKS.md：只放当前任务，从EXECUTION_PLAN.md里摘抄。这个摘抄工作可以
+   让本地模型去做。</li>
+</ul>
+<p>第一个任务是搭好框架，搭好后可以跑<code>codegraph init</code>，项目就正式开启了。
+这个步骤可以让本地模型做也可以自己做，本地模型不一定有自己写来得快。反
+正只是创建一些文件夹和文件，自己做也很快。</p>
+<h3 id="_5">项目执行</h3>
+<p>打开pi,<code>/follow</code>让它读一遍行为指南，接下来让它复习上面几个文档，它会自
+动调用CodeGraph。</p>
+<p>每个新的session都让它读TASKS.md，集中攻击当前小任务。执行过程中，
+context window经常超，用的越久越容易干活干到一半就停了。需要去输入个
+continue,期间正好等电脑冷却。我有时嫌麻烦了就干脆退出重开个新的session。</p>
+<p>有空摸鱼就观察本地模型的小脑瓜在想啥天马行空的，跑偏就截停给点指示。没
+空放着让它自己琢磨也行，反正最终它要通过EXECUTION_PLAN.md里写的需求。
+只要指引做得好就不至于瞎写还不自知。有了AGENT.md的方针，原地打转几轮就
+会自己停下来等我给提示，不会空转。</p>
+<p>水平堪忧是没办法的事，所以我如果时间有盈余，会接手自己写然后告诉它我写
+完了，这样避免它从缓存捞旧版本然后覆盖我写的。商业模型可以几小时写完的，
+本地模型+我摸鱼合作写可能磨洋工几天才能写完，但是我只需要把握大的框架+
+出手相助，大部分繁琐的细节不需要操心，已经很回本了。</p>
+<h2 id="_6">碎碎念</h2>
+<p>自己机器本地模型写程序的整体思路跟上班刷token区别很大，甚至相悖。上班
+（假装）提效想的是自动化，多线程，skills，赶潮流。我跑本地模型则是琢磨
+怎样让这个初中生水平的模型跟我一起合作，达到将就能用、胜在免费的效果，
+所以会很大程度保留人的参与度。由于硬件低配的限制，不会有错过ai届最新动
+向的焦虑，能找回一点手搓代码的心流。</p>
+<h2 id="_7">参考</h2>
+<h3 id="agentsmd">AGENTS.md</h3>
+<pre><code>Greet user with 大佬你好 when starting up
+
+Every response begins with 大佬我想好了
+
+## Rules when running on locall models via ollama
+
+You are operating with a limited-capability local language model.
+
+Your primary goal is to make reliable progress, not to appear autonomous.
+
+### Core Principle
+
+When uncertain, ask the user.
+
+A short clarification question is preferred over speculative reasoning, repeated failed attempts, or excessive token usage.
+
+When exploring the codebase, use the CodeGraph extension
+
+### Escalation Rules
+
+Immediately ask the user for guidance if any of the following occur:
+
+ - You have trouble finding a file
+ - You have tried two substantially different approaches and neither succeeded.
+ - You are unable to determine the user's intent with high confidence.
+ - You need to choose between multiple architectural directions.
+ - You encounter ambiguous code or requirements.
+ - You are repeatedly generating the same reasoning without producing new evidence.
+ - You are spending more than 5 reasoning steps without a concrete action.
+ - You are tempted to &quot;keep thinking&quot; instead of gathering information.
+ - You are about to make a potentially destructive change.
+ - You are unsure whether a detected issue is the root cause.
+ - You find yourself revisiting the same files repeatedly without making progress.
+
+### Anti-Spinning Policy
+
+Do not continue reasoning indefinitely.
+
+Warning signs:
+
+* Repeating previous thoughts.
+* Re-reading the same files.
+* Re-running the same commands.
+* Suggesting the same fix multiple times.
+* Producing long analyses without actions.
+
+If any warning sign is detected:
+
+STOP.
+
+Summarize:
+
+* What you know.
+* What you tried.
+* What is blocking progress.
+
+Then ask a concise question.
 </code></pre>
-<p>开始聊天，并欣赏qwen内心戏</p>
-<p>监测GPU</p>
-<pre><code>nvidia-smi --id=0 --query-gpu=utilization.gpu --format=csv,noheader,nounits
-</code></pre>
-<p>可以欣慰的看到，即使没有玩游戏，独显也没有浪费，分分钟往上冲。</p>
-<p><strong>写代码</strong>：出厂配置无法写代码，症状是，它处理提词到一半就不动了，没有输出，再问也
-不回答。于是得先导出当前配置文件，修改后存成新版本重新加载：</p>
-<pre><code>ollama show --modelfile qwen3.6 &gt; Modelfile
-</code></pre>
-<p>修改内容</p>
-<pre><code>FROM qwen3.6:latest
-PARAMETER top_k 20
-PARAMETER num_ctx 32768
-PARAMETER num_predict 4096
-PARAMETER temperature 1
-</code></pre>
-<p>chomod 777改权限，存成新版本：</p>
-<pre><code>ollama create qwen-large -f Modelfile
-</code></pre>
-<p>重新启动</p>
-<pre><code>ollama launch pi --model qwen-large
-</code></pre>
-<p>就可以开始龟速写代码了。</p>
 
 
 

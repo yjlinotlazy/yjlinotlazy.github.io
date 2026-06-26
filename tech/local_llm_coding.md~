@@ -1,0 +1,164 @@
+# 本地大模型摸鱼写代码配置
+
+目标：用本地跑的大语言模型辅助写个人小项目，对效率要求不高，摸鱼时间写，
+只要能代替一部分我的操作就行，它写不了的我可以兜底。
+
+### 优化pi coding agent
+
+为了减少agent研究代码的成本，推荐[codegraph插
+件](https://pi.dev/packages/@vndv/pi-codegraph)，生成代码结构图，实时
+跟踪代码改动。
+
+我增加了基本指示，放在`~/.pi/agent/AGENTS.md`，让它有问题就问我，别太
+内耗。末尾有我的AGENTS.md供参考，我感觉可以再精简点。中心思想是不懂就
+问，别原地打转。
+
+这个文件虽然会显示在context里，但是本地模型不会主动读，于是我又加了一
+个command,放在`~/.pi/agent/extensions/follow.ts`
+
+```typescript
+import { join } from "path";
+import { readFileSync } from "fs";
+
+export default function (pi: PiExtensionAPI) {
+  pi.registerCommand("follow", {
+    description: "Re-read ~/.pi/agent/AGENTS.md and inject the rules into the current turn.",
+    handler: async (_args, ctx) => {
+      // Resolve the path to AGENTS.md globally as requested
+      const homeDir = process.env.HOME || "/home/yli";
+      const configPath = join(homeDir, ".pi", "agent", "AGENTS.md");
+
+      try {
+        const content = readFileSync(configPath, "utf-8");
+        
+        // Construct the message that simulates a new user input containing the rules
+        const payload = {
+          customType: "follow-injection",
+          display: {
+            title: "Agentic Rules Reset",
+            body: `I have re-read and integrated the instructions from \`${configPath}\`.\n\n\`\`\`\n${content}\n\`\`\`\n\n(I will now proceed strictly under these constraints.)`,
+          },
+          content: content // The actual raw text for the context
+        };
+
+        pi.sendMessage(payload, { triggerTurn: true });
+      } catch (error: any) {
+        pi.sendMessage({
+          customType: "error",
+          display: { title: "Error", body: `Failed to load AGENTS.md: ${error.message}` },
+          content: ""
+        });
+      }
+    },
+  });
+}
+```
+
+`/reload`重新加载。以后每次打开都先跑`/follow`让它读一遍。
+
+不建议关掉thinking模式。本地模型本来就不是很快，关掉就不知道它哪里卡壳，
+没法叫停。最大的消耗不是thinking，而是反复绕圈子。
+
+## 摸鱼项目流程
+
+摸鱼做个人小项目，不需要生产级别，差不多就行，所以本地模型+个人知识储
+备正好凑出个能用的应用。
+
+### 项目起始
+
+我的流程是自己手写一份基本需求、用户交互方式。塞给强力的商业大模型，比
+如GPT,DEEPSEEK,讨论一轮架构，让它出一个文档，存到本地。
+
+ - REQUIREMENTS.md：最顶层的用户需求，类似于产品经理写的那种，技术细节
+   不需要太多。这个用来跟大模型讨论架构。
+ - ARCHITECTURE.md：跟商业模型讨论完毕就存到这个文档，作为本地模型的标
+   准参考。对于个人使用的本地小项目来说，商业模型一次就能写个八九不离
+   十，不太需要再修改了。也可以自己起草，让商业模型改，注意强调这东西
+   是要给本地小模型用。
+ - EXECUTION_PLAN.md：拆解步骤，说你要用来喂本地模型，商业模型会给拆解
+   得很细，每个里程碑都有具体的该做什么，该怎么测试，怎样算做完。这个
+   文档边用边改。
+ - TASKS.md：只放当前任务，从EXECUTION_PLAN.md里摘抄。这个摘抄工作可以
+   让本地模型去做。
+
+第一个任务是搭好框架，搭好后可以跑`codegraph init`，项目就正式开启了。
+
+### 项目执行
+
+打开pi,`/follow`让它读一遍行为指南，接下来让它复习上面几个文档，它会自
+动调用CodeGraph。
+
+让它读TASKS.md，集中攻击当前小任务，注意不要关闭thinking模式。
+
+执行过程中，context window经常超，用的越久越容易干活干到一半就停了。需
+要去输入个continue,期间正好等电脑冷却。
+
+有空就观察本地模型的小脑瓜在想啥天马行空的，跑偏就截停给点指示。没空放
+着让它自己琢磨也行，反正最终它要通过EXECUTION_PLAN.md里写的要求，只要
+harness做得好就不至于瞎写还不自知。有了AGENT.md的方针，原地打转几轮就
+会自己停下来等我给提示，不会空转。
+
+水平堪忧是没办法的事，所以我如果时间有盈余，就会接手自己写然后告诉它我
+写完了，这样避免它从缓存捞旧版本然后覆盖我写的。商业模型可以几小时写完
+的，本地模型+我摸鱼合作写可能磨洋工几天才能写完，但是我只需要把握大的
+框架+出手相助，已经很回本了。
+
+## 参考
+
+### AGENTS.md
+
+```
+## Rules when running on locall models via ollama
+
+You are operating with a limited-capability local language model.
+
+Your primary goal is to make reliable progress, not to appear autonomous.
+
+### Core Principle
+
+When uncertain, ask the user.
+
+A short clarification question is preferred over speculative reasoning, repeated failed attempts, or excessive token usage.
+
+When exploring the codebase, use the CodeGraph extension
+
+### Escalation Rules
+
+Immediately ask the user for guidance if any of the following occur:
+
+ - You have trouble finding a file
+ - You have tried two substantially different approaches and neither succeeded.
+ - You are unable to determine the user's intent with high confidence.
+ - You need to choose between multiple architectural directions.
+ - You encounter ambiguous code or requirements.
+ - You are repeatedly generating the same reasoning without producing new evidence.
+ - You are spending more than 5 reasoning steps without a concrete action.
+ - You are tempted to "keep thinking" instead of gathering information.
+ - You are about to make a potentially destructive change.
+ - You are unsure whether a detected issue is the root cause.
+ - You find yourself revisiting the same files repeatedly without making progress.
+
+### Anti-Spinning Policy
+
+Do not continue reasoning indefinitely.
+
+Warning signs:
+
+* Repeating previous thoughts.
+* Re-reading the same files.
+* Re-running the same commands.
+* Suggesting the same fix multiple times.
+* Producing long analyses without actions.
+
+If any warning sign is detected:
+
+STOP.
+
+Summarize:
+
+* What you know.
+* What you tried.
+* What is blocking progress.
+
+Then ask a concise question.
+```
